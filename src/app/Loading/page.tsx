@@ -8,6 +8,7 @@ import Text from "@/components/Text";
 import Title from "@/components/Title";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { profileService } from "@/services/profile";
+import { surveyService } from "@/services/survey";
 
 const twinkle = keyframes`
   0% { opacity: 0; }
@@ -113,7 +114,8 @@ export default function Loading() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.replace("/result");
+      const mbtiResult = surveyService.calculateMBTI();
+      router.push(`/result?mbti=${mbtiResult}`);
     }, 3000);
 
     return () => clearTimeout(timer);

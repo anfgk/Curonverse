@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import Title from "@/components/Title";
@@ -11,6 +11,7 @@ import StepBadge from "@/components/StepBadge";
 import Question from "@/components/Question";
 import QuesBadge from "@/components/QuesBadge";
 import CheckBox from "@/components/CheckBox";
+import { surveyService } from "@/services/survey";
 
 const Container = styled.div`
   width: 375px;
@@ -81,28 +82,27 @@ interface QuestionPageProps {
 
 const options = ["매우 아니다", "아니다", "보통이다", "그렇다", "매우 그렇다"];
 
-export default function QuestionPage({
+const QuestionPage: React.FC<QuestionPageProps> = ({
   currentStep,
   questions,
   previousPath,
   nextPath,
-}: QuestionPageProps) {
+}) => {
   const router = useRouter();
-  const [answers, setAnswers] = useState<Record<string, string>>(
-    Object.fromEntries(questions.map((q) => [q.id, ""]))
-  );
+  const [answers, setAnswers] = useState<Record<string, number>>({});
   const [focusedQuestion, setFocusedQuestion] = useState<string>(
     questions[0].id
   );
 
-  const handleAnswerSelect = (questionId: string, answer: string) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [questionId]: answer,
-    }));
+  const handleAnswer = (questionId: string, score: number) => {
+    const newAnswers = { ...answers, [questionId]: score };
+    setAnswers(newAnswers);
+    surveyService.saveAnswer(questionId, score);
 
-    // 답변 선택 시 다음 질문으로 포커스 이동
+    // 현재 질문의 인덱스 찾기
     const currentIndex = questions.findIndex((q) => q.id === questionId);
+
+    // 다음 질문이 있고, 아직 답변하지 않은 경우 다음 질문으로 포커스 이동
     if (
       currentIndex < questions.length - 1 &&
       !answers[questions[currentIndex + 1].id]
@@ -116,7 +116,7 @@ export default function QuestionPage({
   };
 
   const handleNextClick = () => {
-    if (Object.values(answers).every((answer) => answer !== "")) {
+    if (Object.values(answers).every((answer) => answer !== undefined)) {
       router.push(nextPath);
     }
   };
@@ -129,8 +129,16 @@ export default function QuestionPage({
   };
 
   const answeredQuestions = Object.values(answers).filter(
-    (answer) => answer !== ""
+    (answer) => answer !== undefined
   ).length;
+
+  const answerOptions = [
+    { label: "매우 아니다", score: 1, size: 36 },
+    { label: "아니다", score: 2, size: 32 },
+    { label: "보통이다", score: 3, size: 24 },
+    { label: "그렇다", score: 4, size: 32 },
+    { label: "매우 그렇다", score: 5, size: 36 },
+  ];
 
   return (
     <Container>
@@ -164,27 +172,17 @@ export default function QuestionPage({
               isFocused={focusedQuestion === question.id}
             />
             <CheckBoxGroup className="checkbox-group">
-              {options.map((option) => {
-                let size;
-                if (option === "보통이다") {
-                  size = 24;
-                } else if (option === "아니다" || option === "그렇다") {
-                  size = 32;
-                } else {
-                  size = 36;
-                }
-                return (
-                  <CheckBox
-                    key={option}
-                    label={option}
-                    isSelected={answers[question.id] === option}
-                    onClick={() => handleAnswerSelect(question.id, option)}
-                    size={size}
-                    isFocused={focusedQuestion === question.id}
-                    hasAnySelection={!!answers[question.id]}
-                  />
-                );
-              })}
+              {answerOptions.map((option) => (
+                <CheckBox
+                  key={option.score}
+                  label={option.label}
+                  isSelected={answers[question.id] === option.score}
+                  onClick={() => handleAnswer(question.id, option.score)}
+                  size={option.size}
+                  isFocused={focusedQuestion === question.id}
+                  hasAnySelection={!!answers[question.id]}
+                />
+              ))}
             </CheckBoxGroup>
           </QuestionContainer>
         ))}
@@ -193,10 +191,14 @@ export default function QuestionPage({
           <BeforeButton onClick={handleBeforeClick} />
           <NextButton
             onClick={handleNextClick}
-            disabled={!Object.values(answers).every((answer) => answer !== "")}
+            disabled={
+              !Object.values(answers).every((answer) => answer !== undefined)
+            }
           />
         </ButtonWrapper>
       </ContentWrapper>
     </Container>
   );
-}
+};
+
+export default QuestionPage;
