@@ -9,12 +9,9 @@ import {
   AnalysisItem,
   AnalysisHeader,
   AnalysisTitle,
-  AnalysisContent,
-  AnalysisText,
-  ArrowIcon,
-  PageIcon,
 } from "../styles/ResultPageStyles";
 import { mbtiColors } from "../data/mbtiData";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 interface GradientSectionProps {
   mbtiColor: string;
@@ -53,6 +50,7 @@ const MapTitle = styled.div`
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 10px;
   letter-spacing: 2px;
+  font-weight: bold;
 `;
 
 const MapSubtitle = styled.div`
@@ -120,6 +118,8 @@ interface CircleProps {
   size: string;
   color: string;
   opacity: number;
+  isCurrentRhythm?: boolean;
+  rhythmName?: string;
 }
 
 const Circle = styled.div<CircleProps>`
@@ -128,11 +128,37 @@ const Circle = styled.div<CircleProps>`
   height: ${(props) => props.size};
   border-radius: 50%;
   background: ${(props) => props.color};
-  opacity: ${(props) => props.opacity};
+  opacity: ${(props) => (props.isCurrentRhythm ? 1 : 0.6)};
   top: ${(props) => props.top};
   left: ${(props) => props.left};
   right: ${(props) => props.right};
   transform: ${(props) => (props.left === "50%" ? "translateX(-50%)" : "none")};
+  box-shadow: ${(props) =>
+    props.isCurrentRhythm
+      ? `0 0 10px 5px ${props.color}60,
+         0 0 20px 10px ${props.color}40,
+         0 0 30px 15px ${props.color}20,
+         0 0 40px 20px ${props.color}10`
+      : `0 0 10px 5px rgba(255, 255, 255, 0.15),
+         0 0 20px 10px rgba(255, 255, 255, 0.1),
+         0 0 30px 15px rgba(255, 255, 255, 0.05)`};
+  transition: all 0.3s ease;
+  z-index: ${(props) => (props.isCurrentRhythm ? 2 : 1)};
+  filter: ${(props) =>
+    props.isCurrentRhythm ? "none" : "grayscale(0.7) brightness(0.8)"};
+
+  &::after {
+    content: ${(props) =>
+      props.isCurrentRhythm ? `"${props.rhythmName}"` : "none"};
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: ${(props) => props.color};
+    white-space: nowrap;
+    text-shadow: 0 0 10px ${(props) => props.color}40;
+  }
 `;
 
 interface StarProps {
@@ -156,18 +182,32 @@ const Star = styled.div<StarProps>`
 const AnalysisTitle2 = styled.h3`
   font-size: 16px;
   font-weight: 500;
-  margin-bottom: 20px;
+  padding-bottom: 10px;
   padding-left: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
 const AnalysisTitle3 = styled(AnalysisTitle)`
-  font-size: 16px;
+  font-size: 14px;
+  display: flex;
+  margin-top: 10px;
 `;
 
 const SecondPageBottomSection = styled(StyledBottomSection)`
   background-color: #18152a;
   padding: 20px;
   bottom: -100px;
+`;
+
+const CurationIcon = styled.span`
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  color: #000;
+  margin-right: 10px;
+  padding: 3px;
+  font-size: 14px;
 `;
 
 interface ResultSecondPageProps {
@@ -186,12 +226,10 @@ const ResultSecondPage: React.FC<ResultSecondPageProps> = ({
   currentMBTI,
   mbtiRhythms,
   mbtiRhythmDescriptions,
-  openSections,
   toggleSection,
-  currentPage,
-  prevPage,
 }) => {
   const mbtiColor = mbtiColors[currentMBTI];
+  const currentRhythm = mbtiRhythms[currentMBTI];
 
   return (
     <>
@@ -222,43 +260,55 @@ const ResultSecondPage: React.FC<ResultSecondPageProps> = ({
               top="30px"
               left="50%"
               size="35px"
-              color="#AFFF6E"
-              opacity={0.8}
+              color="#A4D6A7"
+              opacity={1}
+              isCurrentRhythm={currentRhythm === "Quiet Sync"}
+              rhythmName="Quiet Sync"
             />
             <Circle
-              top="80px"
-              left="80px"
+              top="25px"
+              left="115px"
               size="35px"
-              color="#FFBB00"
-              opacity={0.9}
+              color="#FBC875"
+              opacity={1}
+              isCurrentRhythm={currentRhythm === "Warm Flow"}
+              rhythmName="Warm Flow"
             />
             <Circle
-              top="100px"
-              left="140px"
+              top="200px"
+              left="105px"
+              size="35px"
+              color="#ECE8F3"
+              opacity={1}
+              isCurrentRhythm={currentRhythm === "Hidden Pearl"}
+              rhythmName="Hidden Pearl"
+            />
+            <Circle
+              top="70px"
+              left="85px"
+              size="35px"
+              color="#C3DCE9"
+              opacity={1}
+              isCurrentRhythm={currentRhythm === "Healing Loop"}
+              rhythmName="Healing Loop"
+            />
+            <Circle
+              top="70px"
+              right="70px"
+              size="35px"
+              color="#F25C2A"
+              opacity={1}
+              isCurrentRhythm={currentRhythm === "Spark Flame"}
+              rhythmName="Spark Flame"
+            />
+            <Circle
+              top="150px"
+              right="110px"
               size="35px"
               color="#BAADFA"
-              opacity={0.8}
-            />
-            <Circle
-              top="80px"
-              left="40px"
-              size="35px"
-              color="#4CC0D6"
-              opacity={0.8}
-            />
-            <Circle
-              top="140px"
-              right="80px"
-              size="35px"
-              color="#FE7F7F"
-              opacity={0.7}
-            />
-            <Circle
-              top="120px"
-              right="40px"
-              size="35px"
-              color="#CB59FF"
-              opacity={0.6}
+              opacity={1}
+              isCurrentRhythm={currentRhythm === "Silent Echo"}
+              rhythmName="Silent Echo"
             />
 
             <Star top="20px" left="20px" size="16px">
@@ -283,15 +333,15 @@ const ResultSecondPage: React.FC<ResultSecondPageProps> = ({
       <SecondPageBottomSection>
         <AnalysisSection>
           <AnalysisTitle2>감정 리듬 상세 분석</AnalysisTitle2>
-
           <AnalysisItem>
-            <AnalysisHeader onClick={() => toggleSection(10)}>
-              <AnalysisTitle3>어떤 내음을 냄으면 좋을까요?</AnalysisTitle3>
-              <ArrowIcon isOpen={openSections.includes(10)}>∨</ArrowIcon>
-            </AnalysisHeader>
-            <AnalysisContent isOpen={openSections.includes(10)}>
-              <AnalysisText>생각해 봅시다.</AnalysisText>
-            </AnalysisContent>
+            <AnalysisTitle3>
+              <CurationIcon>
+                <FaArrowRightLong />
+              </CurationIcon>
+              강한 감정 반응을 보이며 즉각적으로 표현하는 리듬. 분노, 열정, 좌절
+              같은 고에너지 감정이 빠르게 타오름. 감정은 빨리 움직이고, 외부로
+              쉽게 퍼져나간다.
+            </AnalysisTitle3>
           </AnalysisItem>
         </AnalysisSection>
       </SecondPageBottomSection>

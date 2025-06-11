@@ -16,7 +16,6 @@ const ResultPage: React.FC = () => {
   const {
     currentMBTI,
     keywords,
-    analysisData,
     openSections,
     toggleSection,
     mbtiFullDescriptions,

@@ -56,7 +56,7 @@ export default function Onboarding() {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.replace("/profile");
-    }, 500);
+    }, 100);
 
     return () => clearTimeout(timer);
   }, [router]);
