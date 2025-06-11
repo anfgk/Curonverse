@@ -18,11 +18,11 @@ import {
   CurationIcon,
   CurationText,
   StyledBottomSection,
-} from "../styles/ResultPageStyles";
-import { mbtiColors, mbtiCurationData } from "../data/mbtiData";
+} from "@/styles/ResultPageStyles";
+import { mbtiColors, mbtiCurationData } from "@/data/mbtiData";
 import { FaArrowRightLong } from "react-icons/fa6";
 
-interface ResultFirstPageProps {
+interface ResultMbtiProps {
   userName: string;
   currentMBTI: string;
   keywords: string[];
@@ -45,14 +45,14 @@ const FirstPageBottomSection = styled(StyledBottomSection)`
   background-color: #393939;
 `;
 
-const ResultFirstPage: React.FC<ResultFirstPageProps> = ({
+const ResultMbti: React.FC<ResultMbtiProps> = ({
   userName,
   currentMBTI,
   keywords,
   mbtiFullDescriptions,
   nextPage,
 }) => {
-  console.log("Current MBTI in ResultFirstPage:", currentMBTI);
+  console.log("Current MBTI in ResultMbti:", currentMBTI);
   const mbtiColor = mbtiColors[currentMBTI];
   const curationItems =
     mbtiCurationData[currentMBTI] || mbtiCurationData["EPSA"];
@@ -119,4 +119,4 @@ const ResultFirstPage: React.FC<ResultFirstPageProps> = ({
   );
 };
 
-export default ResultFirstPage;
+export default ResultMbti;

@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import ResultFirstPage from "../../components/ResultFirstPage";
-import ResultSecondPage from "../../components/ResultSecondPage";
+import ResultMbti from "./ResultMbti";
+import ResultRhythm from "./ResultRhythm";
 import PageTransitionContainer from "@/components/PageTransitionContainer";
 import { profileService } from "@/services/profile";
 import { useMBTIData } from "@/hooks/useMBTIData";
@@ -22,8 +22,7 @@ const ResultPage: React.FC = () => {
     mbtiRhythms,
     mbtiRhythmDescriptions,
   } = useMBTIData();
-  const { currentPage, mounted, setMounted, nextPage, prevPage } =
-    usePageTransition();
+  const { currentPage, mounted, setMounted, nextPage } = usePageTransition();
 
   useEffect(() => {
     const profile = profileService.getProfile();
@@ -37,7 +36,7 @@ const ResultPage: React.FC = () => {
     <PageTransitionContainer mounted={mounted}>
       <MBTISelector />
       {currentPage === 1 ? (
-        <ResultFirstPage
+        <ResultMbti
           userName={userName}
           currentMBTI={currentMBTI}
           keywords={keywords}
@@ -45,15 +44,13 @@ const ResultPage: React.FC = () => {
           nextPage={nextPage}
         />
       ) : (
-        <ResultSecondPage
+        <ResultRhythm
           userName={userName}
           currentMBTI={currentMBTI}
           mbtiRhythms={mbtiRhythms}
           mbtiRhythmDescriptions={mbtiRhythmDescriptions}
           openSections={openSections}
           toggleSection={toggleSection}
-          currentPage={currentPage}
-          prevPage={prevPage}
         />
       )}
     </PageTransitionContainer>

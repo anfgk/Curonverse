@@ -1,0 +1,233 @@
+import React from "react";
+import styled from "styled-components";
+import { FaArrowRightLong } from "react-icons/fa6";
+
+const MapContainer = styled.div`
+  text-align: center;
+  position: relative;
+`;
+
+const MapTitle = styled.div`
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+`;
+
+const MapSubtitle = styled.div`
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 15px;
+`;
+
+const CircleContainer = styled.div`
+  position: relative;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const CircleBorder = styled.div`
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+const SecondCircleBorder = styled.div`
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+const ThirdCircleBorder = styled.div`
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+const FourthCircleBorder = styled.div`
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+interface CircleProps {
+  top: string;
+  left?: string;
+  right?: string;
+  size: string;
+  color: string;
+  opacity: number;
+  isCurrentRhythm?: boolean;
+  rhythmName?: string;
+}
+
+const Circle = styled.div<CircleProps>`
+  position: absolute;
+  width: ${(props) => props.size};
+  height: ${(props) => props.size};
+  border-radius: 50%;
+  background: ${(props) => props.color};
+  opacity: ${(props) => (props.isCurrentRhythm ? 1 : 0.6)};
+  top: ${(props) => props.top};
+  left: ${(props) => props.left};
+  right: ${(props) => props.right};
+  transform: ${(props) => (props.left === "50%" ? "translateX(-50%)" : "none")};
+  box-shadow: ${(props) =>
+    props.isCurrentRhythm
+      ? `0 0 10px 5px ${props.color}60,
+         0 0 20px 10px ${props.color}40,
+         0 0 30px 15px ${props.color}20,
+         0 0 40px 20px ${props.color}10`
+      : `0 0 10px 5px rgba(255, 255, 255, 0.15),
+         0 0 20px 10px rgba(255, 255, 255, 0.1),
+         0 0 30px 15px rgba(255, 255, 255, 0.05)`};
+  transition: all 0.3s ease;
+  z-index: ${(props) => (props.isCurrentRhythm ? 2 : 1)};
+  filter: ${(props) =>
+    props.isCurrentRhythm ? "none" : "grayscale(0.7) brightness(0.8)"};
+
+  &::after {
+    content: ${(props) =>
+      props.isCurrentRhythm ? `"${props.rhythmName}"` : "none"};
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: ${(props) => props.color};
+    white-space: nowrap;
+    text-shadow: 0 0 10px ${(props) => props.color}40;
+  }
+`;
+
+interface StarProps {
+  top?: string;
+  bottom?: string;
+  left?: string;
+  right?: string;
+  size: string;
+}
+
+const Star = styled.div<StarProps>`
+  position: absolute;
+  color: white;
+  font-size: ${(props) => props.size};
+  top: ${(props) => props.top};
+  bottom: ${(props) => props.bottom};
+  left: ${(props) => props.left};
+  right: ${(props) => props.right};
+`;
+
+interface EmotionalMapProps {
+  currentRhythm: string;
+}
+
+const EmotionalMap: React.FC<EmotionalMapProps> = ({ currentRhythm }) => {
+  return (
+    <MapContainer>
+      <MapTitle>CURONVERSE EMOTIONAL MAP</MapTitle>
+      <MapSubtitle>Surface Level</MapSubtitle>
+
+      <CircleContainer>
+        <CircleBorder />
+        <SecondCircleBorder />
+        <ThirdCircleBorder />
+        <FourthCircleBorder />
+        <Circle
+          top="30px"
+          left="50%"
+          size="35px"
+          color="#A4D6A7"
+          opacity={1}
+          isCurrentRhythm={currentRhythm === "Quiet Sync"}
+          rhythmName="Quiet Sync"
+        />
+        <Circle
+          top="25px"
+          left="115px"
+          size="35px"
+          color="#FBC875"
+          opacity={1}
+          isCurrentRhythm={currentRhythm === "Warm Flow"}
+          rhythmName="Warm Flow"
+        />
+        <Circle
+          top="200px"
+          left="105px"
+          size="35px"
+          color="#ECE8F3"
+          opacity={1}
+          isCurrentRhythm={currentRhythm === "Hidden Pearl"}
+          rhythmName="Hidden Pearl"
+        />
+        <Circle
+          top="70px"
+          left="85px"
+          size="35px"
+          color="#C3DCE9"
+          opacity={1}
+          isCurrentRhythm={currentRhythm === "Healing Loop"}
+          rhythmName="Healing Loop"
+        />
+        <Circle
+          top="70px"
+          right="70px"
+          size="35px"
+          color="#F25C2A"
+          opacity={1}
+          isCurrentRhythm={currentRhythm === "Spark Flame"}
+          rhythmName="Spark Flame"
+        />
+        <Circle
+          top="150px"
+          right="110px"
+          size="35px"
+          color="#BAADFA"
+          opacity={1}
+          isCurrentRhythm={currentRhythm === "Silent Echo"}
+          rhythmName="Silent Echo"
+        />
+
+        <Star top="20px" left="20px" size="16px">
+          ★
+        </Star>
+        <Star top="60px" right="30px" size="12px">
+          ★
+        </Star>
+        <Star bottom="40px" left="30px" size="10px">
+          ✦
+        </Star>
+        <Star bottom="20px" right="50px" size="14px">
+          ✦
+        </Star>
+        <Star bottom="60px" right="20px" size="8px">
+          ★
+        </Star>
+      </CircleContainer>
+    </MapContainer>
+  );
+};
+
+export default EmotionalMap;

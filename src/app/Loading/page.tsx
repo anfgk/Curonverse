@@ -64,7 +64,7 @@ export default function Loading() {
     const timer = setTimeout(() => {
       const mbtiResult = surveyService.calculateMBTI();
       router.push(`/result?mbti=${mbtiResult}`);
-    }, 3000);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, [router]);
