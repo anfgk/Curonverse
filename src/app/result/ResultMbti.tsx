@@ -2,9 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import {
   TopSection as BaseTopSection,
-  Header,
-  PageNumber,
-  MainTitle,
   KeywordSection,
   KeywordContainer,
   KeywordCircle,
@@ -21,6 +18,7 @@ import {
 } from "@/styles/ResultPageStyles";
 import { mbtiColors, mbtiCurationData } from "@/data/mbtiData";
 import { FaArrowRightLong } from "react-icons/fa6";
+import ResultHeader from "@/components/ResultHeader";
 
 interface ResultMbtiProps {
   userName: string;
@@ -60,26 +58,18 @@ const ResultMbti: React.FC<ResultMbtiProps> = ({
   return (
     <>
       <TopSection mbtiColor={mbtiColor}>
-        <Header>
-          <PageNumber>01</PageNumber>
-          <MainTitle>
-            현재 {userName}님은,
-            <br />'{currentMBTI}' 감정 성향을
-            <br />
-            가지고 있어요.
-          </MainTitle>
-          <div
-            style={{
-              fontSize: "18px",
-              fontWeight: "500",
-              marginBottom: "15px",
-              opacity: 0.95,
-              whiteSpace: "pre-line",
-            }}
-          >
-            {mbtiFullDescriptions[currentMBTI]?.title}
-          </div>
-        </Header>
+        <ResultHeader
+          pageNumber="01"
+          title={
+            <>
+              현재 {userName}님은,
+              <br />'{currentMBTI}' 감정 성향을
+              <br />
+              가지고 있어요.
+            </>
+          }
+          description={mbtiFullDescriptions[currentMBTI]?.title}
+        />
 
         <KeywordSection>
           <KeywordContainer>

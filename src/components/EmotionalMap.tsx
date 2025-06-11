@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { CIRCLE_BORDERS, RHYTHM_CIRCLES, STARS } from "@/data/rhythmData";
 
 const MapContainer = styled.div`
   text-align: center;
@@ -28,43 +28,14 @@ const CircleContainer = styled.div`
   justify-content: center;
 `;
 
-const CircleBorder = styled.div`
-  position: absolute;
-  width: 220px;
-  height: 220px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
+interface CircleBorderProps {
+  size: number;
+}
 
-const SecondCircleBorder = styled.div`
+const CircleBorder = styled.div<CircleBorderProps>`
   position: absolute;
-  width: 170px;
-  height: 170px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const ThirdCircleBorder = styled.div`
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const FourthCircleBorder = styled.div`
-  position: absolute;
-  width: 70px;
-  height: 70px;
+  width: ${(props) => props.size}px;
+  height: ${(props) => props.size}px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   top: 50%;
@@ -151,80 +122,36 @@ const EmotionalMap: React.FC<EmotionalMapProps> = ({ currentRhythm }) => {
       <MapSubtitle>Surface Level</MapSubtitle>
 
       <CircleContainer>
-        <CircleBorder />
-        <SecondCircleBorder />
-        <ThirdCircleBorder />
-        <FourthCircleBorder />
-        <Circle
-          top="30px"
-          left="50%"
-          size="35px"
-          color="#A4D6A7"
-          opacity={1}
-          isCurrentRhythm={currentRhythm === "Quiet Sync"}
-          rhythmName="Quiet Sync"
-        />
-        <Circle
-          top="25px"
-          left="115px"
-          size="35px"
-          color="#FBC875"
-          opacity={1}
-          isCurrentRhythm={currentRhythm === "Warm Flow"}
-          rhythmName="Warm Flow"
-        />
-        <Circle
-          top="200px"
-          left="105px"
-          size="35px"
-          color="#ECE8F3"
-          opacity={1}
-          isCurrentRhythm={currentRhythm === "Hidden Pearl"}
-          rhythmName="Hidden Pearl"
-        />
-        <Circle
-          top="70px"
-          left="85px"
-          size="35px"
-          color="#C3DCE9"
-          opacity={1}
-          isCurrentRhythm={currentRhythm === "Healing Loop"}
-          rhythmName="Healing Loop"
-        />
-        <Circle
-          top="70px"
-          right="70px"
-          size="35px"
-          color="#F25C2A"
-          opacity={1}
-          isCurrentRhythm={currentRhythm === "Spark Flame"}
-          rhythmName="Spark Flame"
-        />
-        <Circle
-          top="150px"
-          right="110px"
-          size="35px"
-          color="#BAADFA"
-          opacity={1}
-          isCurrentRhythm={currentRhythm === "Silent Echo"}
-          rhythmName="Silent Echo"
-        />
+        {CIRCLE_BORDERS.map((size) => (
+          <CircleBorder key={size} size={size} />
+        ))}
 
-        <Star top="20px" left="20px" size="16px">
-          ★
-        </Star>
-        <Star top="60px" right="30px" size="12px">
-          ★
-        </Star>
-        <Star bottom="40px" left="30px" size="10px">
-          ✦
-        </Star>
-        <Star bottom="20px" right="50px" size="14px">
-          ✦
-        </Star>
-        <Star bottom="60px" right="20px" size="8px">
-          ★
-        </Star>
+        {RHYTHM_CIRCLES.map((circle) => (
+          <Circle
+            key={circle.rhythmName}
+            top={circle.top}
+            left={circle.left}
+            right={circle.right}
+            size="35px"
+            color={circle.color}
+            opacity={1}
+            isCurrentRhythm={currentRhythm === circle.rhythmName}
+            rhythmName={circle.rhythmName}
+          />
+        ))}
+
+        {STARS.map((star, index) => (
+          <Star
+            key={index}
+            top={star.top}
+            bottom={star.bottom}
+            left={star.left}
+            right={star.right}
+            size={star.size}
+          >
+            {star.content || "★"}
+          </Star>
+        ))}
       </CircleContainer>
     </MapContainer>
   );

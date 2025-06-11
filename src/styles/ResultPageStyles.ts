@@ -46,6 +46,15 @@ export const MainTitle = styled.h1`
   margin-bottom: 20px;
 `;
 
+export const Description = styled.div<{ color?: string }>`
+  color: ${(props) => props.color || "inherit"};
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 15px;
+  opacity: 0.95;
+  white-space: pre-line;
+`;
+
 export const SubTitle = styled.p`
   font-size: 16px;
   font-weight: bold;

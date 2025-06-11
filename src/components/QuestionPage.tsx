@@ -80,8 +80,6 @@ interface QuestionPageProps {
   nextPath: string;
 }
 
-const options = ["매우 아니다", "아니다", "보통이다", "그렇다", "매우 그렇다"];
-
 const QuestionPage: React.FC<QuestionPageProps> = ({
   currentStep,
   questions,
