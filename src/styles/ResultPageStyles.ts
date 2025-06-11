@@ -3,7 +3,7 @@ import { mbtiCircleColors } from "../data/mbtiData";
 
 export const Container = styled.div`
   width: 375px;
-  min-height: 812px;
+  height: 812px;
   margin: 0 auto;
   color: white;
   display: flex;
@@ -17,17 +17,18 @@ export const TopSection = styled.div`
 `;
 
 export const StyledBottomSection = styled.div`
-  background-color: #2c2c2c;
-  min-height: 312px;
-  padding: 30px 20px;
+  min-height: 350px;
+  padding: 15px 20px;
   width: 100%;
   display: flex;
+  position: absolute;
+  bottom: -30px;
   flex-direction: column;
   justify-content: space-between;
 `;
 
 export const Header = styled.div`
-  padding: 20px 20px 20px;
+  padding: 0px 20px 10px;
   text-align: left;
 `;
 
@@ -40,14 +41,14 @@ export const PageNumber = styled.div`
 
 export const MainTitle = styled.h1`
   font-size: 24px;
-  font-weight: 500;
+  font-weight: bold;
   line-height: 1.4;
   margin-bottom: 20px;
 `;
 
 export const SubTitle = styled.p`
   font-size: 16px;
-  font-weight: 300;
+  font-weight: bold;
   line-height: 1.8;
   opacity: 0.9;
   white-space: pre-line;
@@ -78,10 +79,7 @@ export const SubTitle = styled.p`
   scrollbar-color: rgba(255, 255, 255, 0.4) rgba(255, 255, 255, 0.1);
 `;
 
-export const KeywordSection = styled.div`
-  padding: 40px 20px;
-  margin-top: 60px;
-`;
+export const KeywordSection = styled.div``;
 
 export const KeywordContainer = styled.div`
   display: flex;
@@ -118,8 +116,8 @@ export const KeywordCircle = styled.div<{ index: number; mbtiType: string }>`
 export const KeywordLabel = styled.div`
   text-align: center;
   font-size: 14px;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.7);
+  font-weight: bold;
+  color: #fff;
   margin-top: 20px;
   position: relative;
 
@@ -132,14 +130,12 @@ export const KeywordLabel = styled.div`
 `;
 
 export const AnalysisSection = styled.div`
-  padding: 0;
   width: 100%;
   flex: 1;
 `;
 
 export const AnalysisItem = styled.div`
   margin-bottom: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
 export const AnalysisHeader = styled.div`
@@ -179,78 +175,63 @@ export const ArrowIcon = styled.span<{ isOpen: boolean }>`
 
 export const PageIndicator = styled.div`
   text-align: center;
-  padding: 30px 0 40px;
+  padding: 20px 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-`;
-
-export const PageDot = styled.div<{ active?: boolean }>`
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: ${(props) =>
-    props.active ? "white" : "rgba(255, 255, 255, 0.3)"};
-  cursor: pointer;
-  transition: background 0.3s ease;
+  gap: 12px;
 `;
 
 export const PageIcon = styled.div`
-  width: 32px;
-  height: 32px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 8px;
 
   &::before {
     content: "↓";
-    color: white;
-    font-size: 16px;
+    color: #cb59ff;
+    font-size: 18px;
     opacity: 0.8;
   }
 `;
 
 export const PageText = styled.span`
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 500;
-  margin-left: 10px;
 `;
 
 export const CurationTitle = styled.h3`
   font-size: 18px;
   font-weight: 500;
   color: white;
-  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-left: 4px;
+  padding-bottom: 12px;
 `;
 
 export const CurationItem = styled.div`
   display: flex;
-  align-items: flex-start;
-  padding: 20px 4px;
+  padding: 10px 4px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-  &:last-child {
-    border-bottom: none;
-  }
 `;
 
 export const CurationIcon = styled.span`
-  color: white;
-  margin-right: 16px;
-  font-size: 24px;
-  opacity: 0.8;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  color: #000;
+  margin-right: 10px;
+  padding-top: 2.5px;
+  padding-left: 2.5px;
+  font-size: 14px;
 `;
 
 export const CurationText = styled.p`
-  color: rgba(255, 255, 255, 0.9);
   font-size: 16px;
-  margin: 0;
   flex: 1;
-  line-height: 1.6;
-  letter-spacing: -0.3px;
 `;

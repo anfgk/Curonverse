@@ -12,10 +12,7 @@ import {
   AnalysisContent,
   AnalysisText,
   ArrowIcon,
-  PageIndicator,
-  PageDot,
   PageIcon,
-  PageText,
 } from "../styles/ResultPageStyles";
 import { mbtiColors } from "../data/mbtiData";
 
@@ -24,12 +21,8 @@ interface GradientSectionProps {
 }
 
 const GradientSection = styled.div<GradientSectionProps>`
-  background: linear-gradient(
-    135deg,
-    ${(props) => props.mbtiColor} 0%,
-    rgba(64, 64, 122, 0.8) 100%
-  );
-  min-height: 400px;
+  background: #18152a;
+  min-height: 300px;
   position: relative;
   overflow: hidden;
 `;
@@ -40,12 +33,18 @@ const WhitePageNumber = styled(PageNumber)`
 
 const WhiteMainTitle = styled(MainTitle)`
   color: white;
-  font-size: 20px;
+  font-size: 24px;
+`;
+
+const RhythmDescription = styled.div`
+  color: #fff;
+  font-size: 14px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 const MapContainer = styled.div`
   text-align: center;
-  padding: 20px;
   position: relative;
 `;
 
@@ -59,7 +58,7 @@ const MapTitle = styled.div`
 const MapSubtitle = styled.div`
   font-size: 10px;
   color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 `;
 
 const CircleContainer = styled.div`
@@ -72,8 +71,41 @@ const CircleContainer = styled.div`
 
 const CircleBorder = styled.div`
   position: absolute;
-  width: 180px;
-  height: 180px;
+  width: 220px;
+  height: 220px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+const SecondCircleBorder = styled.div`
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+const ThirdCircleBorder = styled.div`
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+const FourthCircleBorder = styled.div`
+  position: absolute;
+  width: 70px;
+  height: 70px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   top: 50%;
@@ -132,15 +164,17 @@ const AnalysisTitle3 = styled(AnalysisTitle)`
   font-size: 16px;
 `;
 
-const RotatedPageIcon = styled(PageIcon)`
-  cursor: pointer;
-  transform: rotate(180deg);
+const SecondPageBottomSection = styled(StyledBottomSection)`
+  background-color: #18152a;
+  padding: 20px;
+  bottom: -100px;
 `;
 
 interface ResultSecondPageProps {
   userName: string;
   currentMBTI: string;
   mbtiRhythms: Record<string, string>;
+  mbtiRhythmDescriptions: Record<string, string>;
   openSections: number[];
   toggleSection: (index: number) => void;
   currentPage: number;
@@ -151,6 +185,7 @@ const ResultSecondPage: React.FC<ResultSecondPageProps> = ({
   userName,
   currentMBTI,
   mbtiRhythms,
+  mbtiRhythmDescriptions,
   openSections,
   toggleSection,
   currentPage,
@@ -169,6 +204,9 @@ const ResultSecondPage: React.FC<ResultSecondPageProps> = ({
             <br />
             위에 머무르고 있어요.
           </WhiteMainTitle>
+          <RhythmDescription>
+            {mbtiRhythmDescriptions[mbtiRhythms[currentMBTI]]}
+          </RhythmDescription>
         </Header>
 
         <MapContainer>
@@ -177,46 +215,49 @@ const ResultSecondPage: React.FC<ResultSecondPageProps> = ({
 
           <CircleContainer>
             <CircleBorder />
+            <SecondCircleBorder />
+            <ThirdCircleBorder />
+            <FourthCircleBorder />
             <Circle
               top="30px"
               left="50%"
-              size="40px"
-              color="#9b59b6"
+              size="35px"
+              color="#AFFF6E"
               opacity={0.8}
             />
             <Circle
               top="80px"
               left="80px"
               size="35px"
-              color="#f39c12"
+              color="#FFBB00"
               opacity={0.9}
             />
             <Circle
               top="100px"
               left="140px"
-              size="30px"
-              color="#2ecc71"
+              size="35px"
+              color="#BAADFA"
               opacity={0.8}
             />
             <Circle
               top="80px"
               left="40px"
-              size="32px"
-              color="#3498db"
+              size="35px"
+              color="#4CC0D6"
               opacity={0.8}
             />
             <Circle
               top="140px"
               right="80px"
-              size="28px"
-              color="#e74c3c"
+              size="35px"
+              color="#FE7F7F"
               opacity={0.7}
             />
             <Circle
               top="120px"
               right="40px"
-              size="25px"
-              color="#9b59b6"
+              size="35px"
+              color="#CB59FF"
               opacity={0.6}
             />
 
@@ -239,7 +280,7 @@ const ResultSecondPage: React.FC<ResultSecondPageProps> = ({
         </MapContainer>
       </GradientSection>
 
-      <StyledBottomSection>
+      <SecondPageBottomSection>
         <AnalysisSection>
           <AnalysisTitle2>감정 리듬 상세 분석</AnalysisTitle2>
 
@@ -253,14 +294,7 @@ const ResultSecondPage: React.FC<ResultSecondPageProps> = ({
             </AnalysisContent>
           </AnalysisItem>
         </AnalysisSection>
-
-        <PageIndicator>
-          <RotatedPageIcon onClick={prevPage} />
-          <PageDot active={currentPage === 1} />
-          <PageDot active={currentPage === 2} />
-          <PageText>03</PageText>
-        </PageIndicator>
-      </StyledBottomSection>
+      </SecondPageBottomSection>
     </>
   );
 };

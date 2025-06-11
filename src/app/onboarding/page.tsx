@@ -7,6 +7,7 @@ import styled, { keyframes } from "styled-components";
 import Text from "@/components/Text";
 import Title from "@/components/Title";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import StarBackground from "@/components/StarBackground";
 
 const twinkle = keyframes`
   0% { opacity: 0; }
@@ -21,23 +22,6 @@ const Container = styled.div`
   position: fixed;
   margin: 0 auto;
   overflow: hidden;
-`;
-
-const Star = styled.div<{
-  delay: number;
-  top: number;
-  left: number;
-  size: number;
-}>`
-  position: absolute;
-  width: ${(props) => props.size}px;
-  height: ${(props) => props.size}px;
-  background: #f0e0fbb5;
-  border-radius: 50%;
-  top: ${(props) => props.top}%;
-  left: ${(props) => props.left}%;
-  animation: ${twinkle} 2s ease-in-out infinite;
-  animation-delay: ${(props) => props.delay}s;
 `;
 
 const ContentWrapper = styled.div`
@@ -72,29 +56,14 @@ export default function Onboarding() {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.replace("/profile");
-    }, 2000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [router]);
 
-  const stars = Array.from({ length: 250 }, (_, i) => ({
-    delay: Math.random() * 3,
-    top: Math.random() * 100,
-    left: Math.random() * 100,
-    size: Math.random() * 2 + 1,
-  }));
-
   return (
     <Container>
-      {stars.map((star, i) => (
-        <Star
-          key={i}
-          delay={star.delay}
-          top={star.top}
-          left={star.left}
-          size={star.size}
-        />
-      ))}
+      <StarBackground />
       <ContentWrapper>
         <Text text="잠시만 기다려주세요." variant="subtitle" />
         <Title

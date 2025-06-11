@@ -5,14 +5,12 @@ import {
   Header,
   PageNumber,
   MainTitle,
-  SubTitle,
   KeywordSection,
   KeywordContainer,
   KeywordCircle,
   KeywordLabel,
   AnalysisSection,
   PageIndicator,
-  PageDot,
   PageIcon,
   PageText,
   CurationTitle,
@@ -22,16 +20,13 @@ import {
   StyledBottomSection,
 } from "../styles/ResultPageStyles";
 import { mbtiColors, mbtiCurationData } from "../data/mbtiData";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 interface ResultFirstPageProps {
   userName: string;
   currentMBTI: string;
   keywords: string[];
-  mbtiFullDescriptions: Record<string, { title: string; description: string }>;
-  analysisData: Array<{ title: string; content: string }>;
-  openSections: number[];
-  toggleSection: (index: number) => void;
-  currentPage: number;
+  mbtiFullDescriptions: Record<string, { title: string }>;
   nextPage: () => void;
 }
 
@@ -46,15 +41,15 @@ const TopSection = styled(BaseTopSection)<TopSectionProps>`
   min-height: 488px;
 `;
 
+const FirstPageBottomSection = styled(StyledBottomSection)`
+  background-color: #393939;
+`;
+
 const ResultFirstPage: React.FC<ResultFirstPageProps> = ({
   userName,
   currentMBTI,
   keywords,
   mbtiFullDescriptions,
-  analysisData,
-  openSections,
-  toggleSection,
-  currentPage,
   nextPage,
 }) => {
   console.log("Current MBTI in ResultFirstPage:", currentMBTI);
@@ -79,11 +74,11 @@ const ResultFirstPage: React.FC<ResultFirstPageProps> = ({
               fontWeight: "500",
               marginBottom: "15px",
               opacity: 0.95,
+              whiteSpace: "pre-line",
             }}
           >
             {mbtiFullDescriptions[currentMBTI]?.title}
           </div>
-          <SubTitle>{mbtiFullDescriptions[currentMBTI]?.description}</SubTitle>
         </Header>
 
         <KeywordSection>
@@ -98,13 +93,15 @@ const ResultFirstPage: React.FC<ResultFirstPageProps> = ({
         </KeywordSection>
       </TopSection>
 
-      <StyledBottomSection>
+      <FirstPageBottomSection>
         <AnalysisSection>
           <CurationTitle>맞춤형 힐링 큐레이션</CurationTitle>
 
           {curationItems.map((item, index) => (
             <CurationItem key={index}>
-              <CurationIcon>➜</CurationIcon>
+              <CurationIcon>
+                <FaArrowRightLong />
+              </CurationIcon>
               <CurationText>
                 {item[0]}
                 <br />
@@ -112,15 +109,12 @@ const ResultFirstPage: React.FC<ResultFirstPageProps> = ({
               </CurationText>
             </CurationItem>
           ))}
+          <PageIndicator>
+            <PageIcon onClick={nextPage} style={{ cursor: "pointer" }} />
+            <PageText>02</PageText>
+          </PageIndicator>
         </AnalysisSection>
-
-        <PageIndicator>
-          <PageDot active={currentPage === 1} />
-          <PageDot active={currentPage === 2} />
-          <PageIcon onClick={nextPage} style={{ cursor: "pointer" }} />
-          <PageText>02</PageText>
-        </PageIndicator>
-      </StyledBottomSection>
+      </FirstPageBottomSection>
     </>
   );
 };
