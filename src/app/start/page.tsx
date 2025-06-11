@@ -6,7 +6,7 @@ import styled, { keyframes } from "styled-components";
 import Image from "next/image";
 import Text from "@/components/Text";
 import Title from "@/components/Title";
-import Description from "@/components/Description";
+import Description from "@/components/description";
 import Button from "@/components/Button";
 
 const twinkle = keyframes`
