@@ -22,6 +22,8 @@ interface TextProps {
   center?: boolean;
 }
 
+// Text 컴포넌트 정의
+// React.FC<TextProps>를 사용하여 props 타입을 명시
 const Text = ({ text, variant = "subtitle", center = false }: TextProps) => {
   return (
     <StyledText variant={variant} center={center}>

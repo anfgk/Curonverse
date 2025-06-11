@@ -40,8 +40,11 @@ interface NextButtonProps {
   disabled?: boolean;
 }
 
+// NextButton 컴포넌트 정의, props로 onClick 함수와 disabled 상태를 받음
 const NextButton = ({ onClick, disabled = false }: NextButtonProps) => {
+  // 버튼 클릭 시 실행될 내부 함수 정의
   const handleClick = () => {
+    // disabled가 false일 때만 onClick 함수 실행 (버튼이 활성화된 경우)
     if (!disabled) {
       onClick();
     }

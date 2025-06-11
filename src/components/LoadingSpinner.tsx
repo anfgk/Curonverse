@@ -57,6 +57,8 @@ const LoadingSpinner = memo(() => {
   );
 });
 
+// React DevTools 등에서 컴포넌트 이름을 명확하게 보여주기 위해
+// LoadingSpinner 컴포넌트의 displayName을 "LoadingSpinner"로 설정
 LoadingSpinner.displayName = "LoadingSpinner";
 
 export default LoadingSpinner;

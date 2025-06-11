@@ -62,6 +62,7 @@ interface ResultRhythmProps {
   toggleSection: (index: number) => void;
 }
 
+// ResultRhythm 컴포넌트 정의
 const ResultRhythm: React.FC<ResultRhythmProps> = ({
   userName,
   currentMBTI,

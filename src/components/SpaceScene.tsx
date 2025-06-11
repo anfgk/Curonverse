@@ -2,6 +2,7 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import Image from "next/image";
 
+// 왼쪽으로 이동하는 애니메이션 키프레임 정의
 const floatLeft = keyframes`
   0% {
     transform: translate(-80%, -80%);
@@ -14,6 +15,7 @@ const floatLeft = keyframes`
   }
 `;
 
+// 오른쪽으로 이동하는 애니메이션 키프레임 정의
 const floatRight = keyframes`
   0% {
     transform: translate(-80%, -80%);

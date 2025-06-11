@@ -43,6 +43,7 @@ const FirstPageBottomSection = styled(StyledBottomSection)`
   background-color: #393939;
 `;
 
+// ResultMbti 컴포넌트 정의
 const ResultMbti: React.FC<ResultMbtiProps> = ({
   userName,
   currentMBTI,

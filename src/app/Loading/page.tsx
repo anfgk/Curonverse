@@ -53,19 +53,29 @@ const TextContainer = styled.div`
   align-items: center;
 `;
 
+// Loading 페이지 컴포넌트 정의
 export default function Loading() {
   const router = useRouter();
+  // 사용자 이름 상태 관리
   const [userName, setUserName] = useState(() => {
+    // 프로필 정보 가져오기
     const profile = profileService.getProfile();
+    // 프로필 정보가 있으면 사용자 이름 설정
     return profile?.name || "";
   });
 
+  // 페이지 마운트 시 실행되는 효과
   useEffect(() => {
+    // 1초 후에 결과 페이지로 이동
     const timer = setTimeout(() => {
+      // MBTI 결과 계산
       const mbtiResult = surveyService.calculateMBTI();
+      // 결과 페이지로 이동
       router.push(`/result?mbti=${mbtiResult}`);
+      // 타이머 정리
     }, 1000);
 
+    // 타이머 정리
     return () => clearTimeout(timer);
   }, [router]);
 

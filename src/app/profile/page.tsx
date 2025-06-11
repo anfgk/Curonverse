@@ -49,32 +49,50 @@ const Information = styled.div`
   color: #b0b0b0;
   margin: 12px 20px 0;
 `;
+
+// Profile 페이지 컴포넌트 정의
 export default function Profile() {
+  // Next.js의 useRouter 훅을 사용해 페이지 이동 및 라우팅 관련 기능 사용
   const router = useRouter();
+  // 사용자 이름 상태 관리
   const [name, setName] = useState("");
+  // 사용자 성별 상태 관리
   const [gender, setGender] = useState("");
+  // 사용자 생년월일 상태 관리
   const [date, setDate] = useState("");
+  // 포커스된 필드 상태 관리
   const [focusedField, setFocusedField] = useState<string | null>(null);
 
+  // 사용자 이름 변경 시 실행되는 함수
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 사용자 이름 상태 업데이트
     setName(e.target.value);
   };
 
+  // 사용자 성별 변경 시 실행되는 함수
   const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 사용자 성별 상태 업데이트
     setGender(e.target.value);
   };
 
+  // 사용자 생년월일 변경 시 실행되는 함수
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 사용자 생년월일 상태 업데이트
     setDate(e.target.value);
   };
 
+  // 다음 버튼 클릭 시 실행되는 함수
   const handleNextClick = () => {
+    // 폼 유효성 검사
     if (isFormValid) {
+      // 프로필 정보 저장
       profileService.saveProfile({ name, gender, date });
+      // 다음 페이지로 이동
       router.replace("/step1");
     }
   };
 
+  // 폼 유효성 검사
   const isFormValid = name !== "" && gender !== "" && date !== "";
 
   return (

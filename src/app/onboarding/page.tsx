@@ -50,14 +50,20 @@ const TextContainer = styled.div`
   align-items: center;
 `;
 
+// Onboarding 페이지 컴포넌트 정의
 export default function Onboarding() {
+  // Next.js의 useRouter 훅을 사용해 페이지 이동 및 라우팅 관련 기능 사용
   const router = useRouter();
 
+  // 페이지 마운트 시 실행되는 효과
   useEffect(() => {
+    // 100ms 후에 프로필 페이지로 이동
     const timer = setTimeout(() => {
+      // 프로필 페이지로 이동
       router.push("/profile");
     }, 100);
 
+    // 타이머 정리
     return () => clearTimeout(timer);
   }, [router]);
 

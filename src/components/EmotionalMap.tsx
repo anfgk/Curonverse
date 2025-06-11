@@ -65,13 +65,18 @@ const Circle = styled.div<CircleProps>`
   left: ${(props) => props.left};
   right: ${(props) => props.right};
   transform: ${(props) => (props.left === "50%" ? "translateX(-50%)" : "none")};
+  // box-shadow 스타일을 동적으로 설정
+  // props.isCurrentRhythm 값에 따라 그림자 효과를 다르게 적용
   box-shadow: ${(props) =>
     props.isCurrentRhythm
-      ? `0 0 10px 5px ${props.color}60,
+      ? // 현재 리듬(혹은 선택된 상태)인 경우: 강조된 컬러 그림자 효과 적용
+        // 여러 단계로 그림자를 겹쳐서 점점 퍼지는 빛나는 효과를 생성
+        `0 0 10px 5px ${props.color}60,
          0 0 20px 10px ${props.color}40,
          0 0 30px 15px ${props.color}20,
          0 0 40px 20px ${props.color}10`
-      : `0 0 10px 5px rgba(255, 255, 255, 0.15),
+      : // 현재 리듬이 아닌 경우: 흰색 계열의 은은한 그림자 적용
+        `0 0 10px 5px rgba(255, 255, 255, 0.15),
          0 0 20px 10px rgba(255, 255, 255, 0.1),
          0 0 30px 15px rgba(255, 255, 255, 0.05)`};
   transition: all 0.3s ease;
@@ -79,9 +84,15 @@ const Circle = styled.div<CircleProps>`
   filter: ${(props) =>
     props.isCurrentRhythm ? "none" : "grayscale(0.7) brightness(0.8)"};
 
+  // ::after 가상 요소를 사용하여 요소 뒤에 텍스트를 삽입
   &::after {
     content: ${(props) =>
-      props.isCurrentRhythm ? `"${props.rhythmName}"` : "none"};
+      // 만약 현재 리듬이라면
+      props.isCurrentRhythm
+        ? // 리듬 이름(rhythmName)을 문자열로 표시 (ex: "Rhythm A")
+          `"${props.rhythmName}"`
+        : // 아니라면 아무 것도 표시하지 않음
+          "none"};
     position: absolute;
     top: calc(100% + 10px);
     left: 50%;

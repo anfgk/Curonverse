@@ -1,3 +1,4 @@
+// 각 리듬 원의 테두리 크기를 정의한 배열
 export const CIRCLE_BORDERS = [220, 170, 120, 70];
 
 export const RHYTHM_CIRCLES = [

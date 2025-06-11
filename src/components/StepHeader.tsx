@@ -46,7 +46,9 @@ const StepHeader = ({ currentStep, currentQuestion }: StepHeaderProps) => {
   return (
     <HeaderContainer>
       <ProgressContainer>
+        {/* 각 스텝의 진행도를 계산하여 표시 */}
         {[1, 2, 3, 4].map((step) => (
+          // 각 스텝의 진행도를 계산하여 표시
           <ProgressBar
             key={step}
             isActive={step === currentStep}

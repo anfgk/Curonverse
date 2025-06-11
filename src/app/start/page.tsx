@@ -24,8 +24,11 @@ const ContentWrapper = styled.div`
   position: relative;
 `;
 
+// Start 페이지 컴포넌트 정의
 export default function Start() {
+  // 탐험 시작 버튼 클릭 시 실행되는 함수
   const handleStartClick = () => {
+    // 탐험 시작 버튼 클릭 시 페이지 이동
     window.location.href = "/onboarding";
   };
 

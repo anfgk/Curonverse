@@ -2,21 +2,30 @@ interface SurveyAnswers {
   [key: string]: number;
 }
 
+// SurveyService 클래스 정의
 class SurveyService {
+  // 싱글톤 인스턴스를 관리하는 정적 변수
   private static instance: SurveyService;
+  // 답변을 저장하는 객체
   private answers: SurveyAnswers = {};
 
+  // 생성자를 private으로 설정하여 외부에서 인스턴스 생성 불가
   private constructor() {}
 
+  // 싱글톤 인스턴스를 반환하는 정적 메서드
   public static getInstance(): SurveyService {
+    // 인스턴스가 존재하지 않으면 새로 생성
     if (!SurveyService.instance) {
+      // 인스턴스가 존재하지 않으면 새로 생성
       SurveyService.instance = new SurveyService();
     }
+    // 싱글톤 인스턴스를 반환
     return SurveyService.instance;
   }
 
   // 답변 저장
   saveAnswer(questionId: string, score: number) {
+    // 답변을 저장
     this.answers[questionId] = score;
   }
 
@@ -27,10 +36,14 @@ class SurveyService {
 
   // 특정 문항들의 평균 점수 계산
   private calculateAverageScore(questionIds: string[]): number {
+    // 문항들의 점수 합계 계산
     const sum = questionIds.reduce(
+      // 문항들의 점수 합계 계산
       (acc, id) => acc + (this.answers[id] || 0),
+      // 초기값 0
       0
     );
+    // 문항들의 점수 평균 계산
     return sum / questionIds.length;
   }
 
