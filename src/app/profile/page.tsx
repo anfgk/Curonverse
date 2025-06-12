@@ -88,7 +88,7 @@ export default function Profile() {
       // 프로필 정보 저장
       profileService.saveProfile({ name, gender, date });
       // 다음 페이지로 이동
-      router.replace("/step1");
+      router.replace("/step");
     }
   };
 

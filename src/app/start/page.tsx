@@ -4,8 +4,8 @@ import React from "react";
 import styled from "styled-components";
 import Text from "@/components/Text";
 import Title from "@/components/Title";
-import Description from "@/components/description";
-import Button from "@/components/button";
+import Description from "@/components/common/description";
+import Button from "@/components/common/button";
 import StarBackground from "@/components/StarBackground";
 import SpaceScene from "@/components/SpaceScene";
 
