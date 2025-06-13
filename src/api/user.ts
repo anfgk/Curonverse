@@ -3,7 +3,7 @@ import { API_BASE_URL } from "@/constants/api";
 
 export async function getUserData(userId: string) {
   try {
-    const response = await fetch(`${API_BASE_URL}`+`/user/${userId}`, {
+    const response = await fetch(`${API_BASE_URL}` + `/user/${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -16,34 +16,36 @@ export async function getUserData(userId: string) {
 
     const userData = await response.json();
     return userData;
-  }
-  catch (error) {
+  } catch (error) {
     console.error("Error fetching user data:", error);
     return null;
   }
 }
 
 export async function postUserProfile(req: NextRequest) {
-    try {
-        const userData = await req.json();
-        console.log("Received user data:", userData);
+  try {
+    const userData = await req.json();
+    console.log("Received user data:", userData);
 
-        const response = await fetch(`${API_BASE_URL}/user/profile`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData),
-        });
+    const response = await fetch(`${API_BASE_URL}/user/profile`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
 
-        if (!response.ok) {
-            throw new Error("Failed to post user profile");
-        }
-
-        const result = await response.json();
-        return NextResponse.json(result);
-    } catch (error) {
-        console.error("Error posting user profile:", error);
-        return NextResponse.json({ error: "Failed to post user profile" }, { status: 500 });
+    if (!response.ok) {
+      throw new Error("Failed to post user profile");
     }
+
+    const result = await response.json();
+    return NextResponse.json(result);
+  } catch (error) {
+    console.error("Error posting user profile:", error);
+    return NextResponse.json(
+      { error: "Failed to post user profile" },
+      { status: 500 }
+    );
+  }
 }

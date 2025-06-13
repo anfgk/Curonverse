@@ -3,12 +3,12 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
-import Text from "@/components/SubText";
 import Title from "@/components/Title";
 import Description from "@/components/common/description";
 import Button from "@/components/common/button";
 import StarBackground from "@/components/StarBackground";
 import SpaceScene from "@/components/SpaceScene";
+import SubText from "@/components/SubText";
 
 const Container = styled.div`
   width: 375px;
@@ -38,7 +38,7 @@ export default function Start() {
     <Container>
       <StarBackground />
       <ContentWrapper>
-        <Text text="어서오세요." variant="subtitle" />
+        <SubText text="어서오세요." variant="subtitle" />
         <Title
           mainText="나의 감정은 현재"
           highlightText="어떤 행성"

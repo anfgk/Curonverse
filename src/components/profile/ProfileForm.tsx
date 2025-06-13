@@ -1,7 +1,7 @@
-import Text from "@/components/SubText";
 import Title from "@/components/Title";
 import NextButton from "@/components/NextButton";
 import ProfileInput from "@/components/ProfileInput";
+import SubText from "../SubText";
 
 export default function ProfileForm({
   name,
@@ -16,7 +16,7 @@ export default function ProfileForm({
 }: any) {
   return (
     <>
-      <Text text="프로필 설정" variant="subtitle" />
+      <SubText text="프로필 설정" variant="subtitle" />
       <Title
         mainText="탑승권에 기입 될"
         highlightText="프로필 정보를 입력"
