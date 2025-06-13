@@ -26,6 +26,7 @@ const LoadingLayout = ({
   <Container>
     <StarBackground />
     <ContentWrapper>
+      {showTextContainer ? <TextContainer>{children}</TextContainer> : children}
       {showRocket && (
         <RocketImage
           src={rocketImageSrc}
@@ -35,7 +36,6 @@ const LoadingLayout = ({
           priority
         />
       )}
-      {showTextContainer ? <TextContainer>{children}</TextContainer> : children}
       {showSpinner && <LoadingSpinner />}
     </ContentWrapper>
   </Container>

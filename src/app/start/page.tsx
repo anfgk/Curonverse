@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import styled from "styled-components";
-import Text from "@/components/Text";
+import Text from "@/components/SubText";
 import Title from "@/components/Title";
 import Description from "@/components/common/description";
 import Button from "@/components/common/button";
@@ -26,10 +27,11 @@ const ContentWrapper = styled.div`
 
 // Start 페이지 컴포넌트 정의
 export default function Start() {
+  const router = useRouter();
+
   // 탐험 시작 버튼 클릭 시 실행되는 함수
   const handleStartClick = () => {
-    // 탐험 시작 버튼 클릭 시 페이지 이동
-    window.location.href = "/onboarding";
+    router.push("/onboarding");
   };
 
   return (

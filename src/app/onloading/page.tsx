@@ -7,13 +7,11 @@ import Title from "@/components/Title";
 import LoadingLayout from "@/components/layout/LoadingLayout";
 import { profileService } from "@/services/profileService";
 import { surveyService } from "@/services/survey";
+import SubText from "@/components/SubText";
 
 export default function Onloading() {
   const router = useRouter();
-  const [userName, setUserName] = useState(() => {
-    const profile = profileService.getProfile();
-    return profile?.name || "";
-  });
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -25,7 +23,7 @@ export default function Onloading() {
 
   return (
     <LoadingLayout rocketImageSrc="/images/rocket.svg">
-      <Text text="수고하셨습니다." variant="subtitle" />
+      <SubText text="수고하셨습니다." variant="subtitle" />
       <Title
         mainText={`${userName}님의 감정 행성으로`}
         highlightText="이동"

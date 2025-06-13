@@ -1,4 +1,4 @@
-import Text from "@/components/Text";
+import Text from "@/components/SubText";
 import Title from "@/components/Title";
 import NextButton from "@/components/NextButton";
 import ProfileInput from "@/components/ProfileInput";
