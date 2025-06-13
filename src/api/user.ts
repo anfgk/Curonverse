@@ -23,7 +23,7 @@ export async function getUserData(userId: string) {
   }
 }
 
-export async function postUserPorfile(req: NextRequest) {
+export async function postUserProfile(req: NextRequest) {
     try {
         const userData = await req.json();
         console.log("Received user data:", userData);

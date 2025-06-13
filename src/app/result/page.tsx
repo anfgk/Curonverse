@@ -5,7 +5,7 @@ import styled from "styled-components";
 import ResultMbti from "./ResultMbti";
 import ResultRhythm from "./ResultRhythm";
 import PageTransitionContainer from "@/components/PageTransitionContainer";
-import { profileService } from "@/services/profile";
+import { profileService } from "@/services/profileService";
 import { useMBTIData } from "@/hooks/useMBTIData";
 import { usePageTransition } from "@/hooks/usePageTransition";
 
