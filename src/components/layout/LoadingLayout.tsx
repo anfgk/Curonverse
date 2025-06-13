@@ -7,6 +7,7 @@ import {
 } from "./LoadingLayout.styles";
 import StarBackground from "@/components/StarBackground";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import Text from "@/components/Text";
 
 interface LoadingLayoutProps {
   children?: React.ReactNode;
@@ -14,19 +15,35 @@ interface LoadingLayoutProps {
   showSpinner?: boolean;
   rocketImageSrc?: string;
   showTextContainer?: boolean;
+  subText?: React.ReactNode;
+  title?: React.ReactNode;
+  text?: React.ReactNode;
 }
 
 const LoadingLayout = ({
   children,
   showRocket = true,
   showSpinner = true,
-  rocketImageSrc = "/images/rocket.png",
+  rocketImageSrc = "/images/rocket.svg",
   showTextContainer = true,
+  subText,
+  title,
+  text,
 }: LoadingLayoutProps) => (
   <Container>
     <StarBackground />
     <ContentWrapper>
-      {showTextContainer ? <TextContainer>{children}</TextContainer> : children}
+      {showTextContainer && children ? (
+        <>
+          {React.Children.map(children, (child) =>
+            React.isValidElement(child) && child.type !== Text ? child : null
+          )}
+        </>
+      ) : (
+        children
+      )}
+      {subText}
+      {title}
       {showRocket && (
         <RocketImage
           src={rocketImageSrc}
@@ -36,6 +53,11 @@ const LoadingLayout = ({
           priority
         />
       )}
+      <TextContainer>
+        {React.Children.map(children, (child) =>
+          React.isValidElement(child) && child.type === Text ? child : null
+        )}
+      </TextContainer>
       {showSpinner && <LoadingSpinner />}
     </ContentWrapper>
   </Container>

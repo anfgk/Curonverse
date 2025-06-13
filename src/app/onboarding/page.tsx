@@ -26,7 +26,6 @@ export default function Onboarding() {
         highlightText="준비"
         subText="하고 있어요."
       />
-
       <Text text="마음을 가다듬고," variant="loading" center />
       <Text
         text="내가 지닌 다양한 감정들을 떠올려보세요."
