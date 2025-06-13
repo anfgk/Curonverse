@@ -7,14 +7,8 @@ import { stepQuestions } from "@/constants/stepQuestions";
 import { useRouter } from "next/navigation";
 
 export default function StepFlowPage() {
-  const {
-    step,
-    answers,
-    goNext,
-    goPrev,
-    saveAnswer,
-    isLastStep,
-  } = useQuestionFlow();
+  const { step, answers, goNext, goPrev, saveAnswer, isLastStep } =
+    useQuestionFlow();
 
   const router = useRouter();
   const questions = stepQuestions[String(step)];
@@ -33,7 +27,7 @@ export default function StepFlowPage() {
   };
 
   return (
-    <QuestionLayout>
+    <QuestionLayout step={step} answeredCount={Object.keys(answers).length}>
       <QuestionPage
         step={step}
         questions={questions}
