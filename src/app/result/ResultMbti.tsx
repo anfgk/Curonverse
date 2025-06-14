@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   TopSection as BaseTopSection,
@@ -21,7 +21,6 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import ResultHeader from "@/components/ResultHeader";
 
 interface ResultMbtiProps {
-  userName: string;
   currentMBTI: string;
   keywords: string[];
   mbtiFullDescriptions: Record<string, { title: string }>;
@@ -45,13 +44,20 @@ const FirstPageBottomSection = styled(StyledBottomSection)`
 
 // ResultMbti 컴포넌트 정의
 const ResultMbti: React.FC<ResultMbtiProps> = ({
-  userName,
   currentMBTI,
   keywords,
   mbtiFullDescriptions,
   nextPage,
 }) => {
-  console.log("Current MBTI in ResultMbti:", currentMBTI);
+  const [userName, setUserName] = useState("사용자");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedName = localStorage.getItem("userName");
+      if (storedName) setUserName(storedName);
+    }
+  }, []);
+
   const mbtiColor = mbtiColors[currentMBTI];
   const curationItems =
     mbtiCurationData[currentMBTI] || mbtiCurationData["EPSA"];

@@ -28,7 +28,6 @@ export const StyledBottomSection = styled.div`
 `;
 
 export const Header = styled.div`
-  padding: 0px 20px 10px;
   text-align: left;
 `;
 
@@ -43,7 +42,7 @@ export const MainTitle = styled.h1`
   font-size: 24px;
   font-weight: bold;
   line-height: 1.4;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 `;
 
 export const Description = styled.div<{ color?: string }>`
