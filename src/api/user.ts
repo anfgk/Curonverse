@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { API_BASE_URL } from "@/constants/api";
+
+const API_BASE_URL = process.env.API_BASE_URL;
 
 export async function getUserData(userId: string) {
   try {
@@ -25,7 +26,9 @@ export async function getUserData(userId: string) {
 export async function postUserProfile(req: NextRequest) {
   try {
     const userData = await req.json();
-    console.log("Received user data:", userData);
+    console.log("API_BASE_URL:", API_BASE_URL);
+    console.log("Request Body:", userData);
+    console.log("Posting to:", `${API_BASE_URL}/user/profile`);
 
     const response = await fetch(`${API_BASE_URL}/user/profile`, {
       method: "POST",
@@ -36,6 +39,8 @@ export async function postUserProfile(req: NextRequest) {
     });
 
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error("External API Error:", errorText);
       throw new Error("Failed to post user profile");
     }
 

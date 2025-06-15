@@ -6,7 +6,7 @@ import styled from "styled-components";
 const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 36px;
+  margin-top: 25px;
   margin-left: 20px;
   font-size: 16px;
 `;

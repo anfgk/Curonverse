@@ -156,16 +156,16 @@ const Input = ({
     return (
       <GenderContainer>
         <GenderButton
-          isSelected={value === "남성"}
+          isSelected={value === "MALE"}
           isPlaceholder={!value}
-          onClick={() => handleGenderClick("남성")}
+          onClick={() => handleGenderClick("MALE")}
         >
           남성
         </GenderButton>
         <GenderButton
-          isSelected={value === "여성"}
+          isSelected={value === "FEMAL"}
           isPlaceholder={!value}
-          onClick={() => handleGenderClick("여성")}
+          onClick={() => handleGenderClick("FEMAL")}
         >
           여성
         </GenderButton>

@@ -4,17 +4,19 @@ import { profileService } from "@/services/profileService";
 
 export function useProfileForm() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
-  const [date, setDate] = useState("");
+  const [birthDateTime, setDate] = useState("");
   const [focusedField, setFocusedField] = useState<string | null>(null);
 
-  const isFormValid = name !== "" && gender !== "" && date !== "";
+  const isFormValid = email !== "" && name !== "" && gender !== "" && birthDateTime !== "";
 
   const handleChange = (field: string) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      if (field === "name") setName(value);
+      if (field === "email") setEmail(value);
+      else if (field === "name") setName(value);
       else if (field === "gender") setGender(value);
       else if (field === "date") setDate(value);
     };
@@ -25,22 +27,23 @@ export function useProfileForm() {
   const handleNextClick = async () => {
     if (!isFormValid) return;
     try {
-      const profile = { name, gender, date };
+      const profile = { email, name, gender, birthDateTime };
       console.log("Submitting profile:", profile);
       const response = await profileService.createUser(profile);
       console.log("Profile saved successfully:", response);
       sessionStorage.setItem("user", JSON.stringify(response));
       router.replace("/step");
     } catch (error) {
-        console.error("Error saving profile:", error);
+      console.error("Error saving profile:", error);
       alert("사용자 정보 저장에 실패했습니다.");
     }
   };
 
   return {
+    email,
     name,
     gender,
-    date,
+    birthDateTime,
     focusedField,
     isFormValid,
     handleChange,

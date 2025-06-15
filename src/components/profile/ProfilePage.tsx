@@ -9,8 +9,7 @@ const Container = styled.div<{ dimmed: boolean }>`
   width: 375px;
   height: 812px;
   background: #393939;
-  position: fixed;
-  overflow: hidden;
+  position: relative;
   transition: all 0.3s ease;
 
   ${(props) =>
@@ -32,15 +31,15 @@ const Container = styled.div<{ dimmed: boolean }>`
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  position: relative;
   z-index: 1;
 `;
 
 export default function ProfilePage() {
   const {
+    email,
     name,
     gender,
-    date,
+    birthDateTime,
     focusedField,
     isFormValid,
     handleChange,
@@ -53,9 +52,10 @@ export default function ProfilePage() {
     <Container dimmed={focusedField !== null}>
       <ContentWrapper>
         <ProfileForm
+          email={email}
           name={name}
           gender={gender}
-          date={date}
+          birthDateTime={birthDateTime}
           focusedField={focusedField}
           isFormValid={isFormValid}
           handleChange={handleChange}
