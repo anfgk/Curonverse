@@ -163,9 +163,9 @@ const Input = ({
           남성
         </GenderButton>
         <GenderButton
-          isSelected={value === "FEMAL"}
+          isSelected={value === "FEMALE"}
           isPlaceholder={!value}
-          onClick={() => handleGenderClick("FEMAL")}
+          onClick={() => handleGenderClick("FEMALE")}
         >
           여성
         </GenderButton>

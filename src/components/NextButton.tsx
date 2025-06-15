@@ -5,7 +5,7 @@ import { FaArrowRight } from "react-icons/fa6";
 
 const ButtonContainer = styled.div`
   position: absolute;
-  top: 94%;
+  top: 110%;
   right: 4%;
   color: #ffffff;
   font-size: 16px;

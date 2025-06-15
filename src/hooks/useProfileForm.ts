@@ -1,22 +1,20 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { profileService } from "@/services/profileService";
+import { userService } from "@/services/userService";
 
 export function useProfileForm() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
-  const [birthDateTime, setDate] = useState("");
+  const [birthDate, setDate] = useState("");
   const [focusedField, setFocusedField] = useState<string | null>(null);
 
-  const isFormValid = email !== "" && name !== "" && gender !== "" && birthDateTime !== "";
+  const isFormValid =  name !== "" && gender !== "" && birthDate !== "";
 
   const handleChange = (field: string) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      if (field === "email") setEmail(value);
-      else if (field === "name") setName(value);
+      if (field === "name") setName(value);
       else if (field === "gender") setGender(value);
       else if (field === "date") setDate(value);
     };
@@ -27,9 +25,9 @@ export function useProfileForm() {
   const handleNextClick = async () => {
     if (!isFormValid) return;
     try {
-      const profile = { email, name, gender, birthDateTime };
+      const profile = { name, gender, birthDate };
       console.log("Submitting profile:", profile);
-      const response = await profileService.createUser(profile);
+      const response = await userService.createUser(profile);
       console.log("Profile saved successfully:", response);
       sessionStorage.setItem("user", JSON.stringify(response));
       router.replace("/step");
@@ -40,10 +38,9 @@ export function useProfileForm() {
   };
 
   return {
-    email,
     name,
     gender,
-    birthDateTime,
+    birthDate,
     focusedField,
     isFormValid,
     handleChange,

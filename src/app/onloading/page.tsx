@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Text from "@/components/Text";
 import Title from "@/components/Title";
 import LoadingLayout from "@/components/layout/LoadingLayout";
-import { profileService } from "@/services/profileService";
 import { surveyService } from "@/services/survey";
 import SubText from "@/components/SubText";
 

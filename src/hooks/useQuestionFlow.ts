@@ -16,7 +16,7 @@ export function useQuestionFlow() {
     setStep((prev) => Math.max(prev - 1, 1));
   };
 
-  const saveAnswer = (stepId: number, questionId: string, score: number) => {
+  const saveAnswer = (stepId: number, questionId: number, score: number) => {
     setAnswers((prev) => ({
       ...prev,
       [stepId]: {

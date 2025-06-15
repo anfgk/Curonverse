@@ -4,7 +4,6 @@ import ProfileInput from "@/components/ProfileInput";
 import SubText from "../SubText";
 
 export default function ProfileForm({
-  email,
   name,
   gender,
   date,
@@ -22,17 +21,6 @@ export default function ProfileForm({
         mainText="탑승권에 기입 될"
         highlightText="프로필 정보를 입력"
         subText="해주세요."
-      />
-
-      <ProfileInput
-        label="이메일"
-        value={email}
-        onChange={handleChange("email")}
-        onFocus={handleFocus("email")}
-        onBlur={handleBlur}
-        placeholder="이메일을 입력해주세요."
-        isFocused={focusedField === "email"}
-        anyFieldFocused={focusedField !== null}
       />
 
       <ProfileInput

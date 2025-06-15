@@ -5,7 +5,7 @@ import styled from "styled-components";
 import ResultMbti from "./ResultMbti";
 import ResultRhythm from "./ResultRhythm";
 import PageTransitionContainer from "@/components/PageTransitionContainer";
-import { profileService } from "@/services/profileService";
+import { userService } from "@/services/userService";
 import { useMBTIData } from "@/hooks/useMBTIData";
 import { usePageTransition } from "@/hooks/usePageTransition";
 
@@ -29,7 +29,7 @@ const ResultPage: React.FC = () => {
 
   // 프로필 정보 가져오기
   useEffect(() => {
-    const profile = profileService.getProfile();
+    const profile = userService.getProfile();
     // 프로필 정보가 있으면 사용자 이름 설정
     if (profile?.name) {
       // 사용자 이름 설정

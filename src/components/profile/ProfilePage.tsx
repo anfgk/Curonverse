@@ -36,10 +36,9 @@ const ContentWrapper = styled.div`
 
 export default function ProfilePage() {
   const {
-    email,
     name,
     gender,
-    birthDateTime,
+    birthDate,
     focusedField,
     isFormValid,
     handleChange,
@@ -52,10 +51,9 @@ export default function ProfilePage() {
     <Container dimmed={focusedField !== null}>
       <ContentWrapper>
         <ProfileForm
-          email={email}
           name={name}
           gender={gender}
-          birthDateTime={birthDateTime}
+          birthDate={birthDate}
           focusedField={focusedField}
           isFormValid={isFormValid}
           handleChange={handleChange}
