@@ -5,7 +5,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 
 const ButtonContainer = styled.div`
   position: absolute;
-  top: 110%;
+  top: 105%;
   left: 4%;
   width: 80px;
   height: 48px;

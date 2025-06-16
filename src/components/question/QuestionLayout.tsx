@@ -18,6 +18,16 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   position: relative;
   z-index: 1;
+
+  /* 스크롤바 숨기기 */
+  /* overflow-y: auto;
+  height: 100%;
+  scrollbar-width: none; 
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  } */
 `;
 
 interface Props {
@@ -26,7 +36,11 @@ interface Props {
   children: ReactNode;
 }
 
-export default function QuestionLayout({ step, answeredCount, children }: Props) {
+export default function QuestionLayout({
+  step,
+  answeredCount,
+  children,
+}: Props) {
   return (
     <Container>
       <ContentWrapper>

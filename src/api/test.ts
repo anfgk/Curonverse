@@ -26,6 +26,9 @@ export async function postTestSubmit(req: NextRequest) {
     return NextResponse.json(result);
   } catch (error) {
     console.error("Error posting test submit:", error);
-    return NextResponse.json({ error: "Failed to post test submit" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to post test submit" },
+      { status: 500 }
+    );
   }
 }

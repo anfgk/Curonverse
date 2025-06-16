@@ -1,12 +1,24 @@
 "use client";
 
+import React from "react";
 import styled from "styled-components";
 import { FaArrowRight } from "react-icons/fa6";
 
-const ButtonContainer = styled.div`
-  position: absolute;
-  top: 110%;
-  right: 4%;
+interface NextButtonProps {
+  onClick: () => void;
+  disabled?: boolean;
+  variant?: "profile" | "step";
+}
+
+const ButtonContainer = styled.div<{ variant?: "profile" | "step" }>`
+  position: ${(props) =>
+    props.variant === "profile" ? "absolute" : "absolute"};
+  top: ${(props) => (props.variant === "profile" ? "145%" : "105%")};
+  left: ${(props) => (props.variant === "profile" ? "85%" : "75%")};
+  transform: ${(props) =>
+    props.variant === "profile" ? "translateX(-50%)" : "none"};
+  width: 80px;
+  height: 48px;
   color: #ffffff;
   font-size: 16px;
   font-weight: bold;
@@ -33,16 +45,12 @@ const IconWrapper = styled.div`
   justify-content: center;
 `;
 
-interface NextButtonProps {
-  onClick: () => void;
-  disabled?: boolean;
-}
-
-// NextButton 컴포넌트 정의, props로 onClick 함수와 disabled 상태를 받음
-const NextButton = ({ onClick, disabled = false }: NextButtonProps) => {
-  // 버튼 클릭 시 실행될 내부 함수 정의
+const NextButton = ({
+  onClick,
+  disabled = false,
+  variant,
+}: NextButtonProps) => {
   const handleClick = () => {
-    // disabled가 false일 때만 onClick 함수 실행 (버튼이 활성화된 경우)
     if (!disabled) {
       onClick();
     }
@@ -52,6 +60,7 @@ const NextButton = ({ onClick, disabled = false }: NextButtonProps) => {
     <ButtonContainer
       onClick={handleClick}
       className={disabled ? "disabled" : ""}
+      variant={variant}
     >
       다음
       <IconWrapper>

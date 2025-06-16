@@ -6,7 +6,9 @@ import { testService } from "@/services/testService";
 export function useQuestionForm(userId: number) {
   const router = useRouter();
 
-  const questionForm = async (answers: Record<number, Record<number, number>>) => {
+  const questionForm = async (
+    answers: Record<number, Record<number, number>>
+  ) => {
     if (!userId) {
       alert("사용자 정보가 없습니다.");
       router.replace("/profile");

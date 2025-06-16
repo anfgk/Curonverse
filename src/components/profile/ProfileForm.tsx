@@ -2,6 +2,11 @@ import Title from "@/components/Title";
 import NextButton from "@/components/NextButton";
 import ProfileInput from "@/components/ProfileInput";
 import SubText from "../SubText";
+import styled from "styled-components";
+
+const FormContainer = styled.div`
+  position: relative;
+`;
 
 export default function ProfileForm({
   name,
@@ -15,7 +20,7 @@ export default function ProfileForm({
   handleNextClick,
 }: any) {
   return (
-    <>
+    <FormContainer>
       <SubText text="프로필 설정" variant="subtitle" />
       <Title
         mainText="탑승권에 기입 될"
@@ -55,7 +60,11 @@ export default function ProfileForm({
         isFocused={focusedField === "date"}
         anyFieldFocused={focusedField !== null}
       />
-      <NextButton onClick={handleNextClick} disabled={!isFormValid} />
-    </>
+      <NextButton
+        onClick={handleNextClick}
+        disabled={!isFormValid}
+        variant="profile"
+      />
+    </FormContainer>
   );
 }

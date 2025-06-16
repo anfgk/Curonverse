@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { rhythmRoutineData as _rhythmRoutineData } from "@/data/rhythmRoutineData";
 import RoutineCard from "@/components/RoutineCard";
-import MusicCard from "@/components/MusicCard";
 import styled from "styled-components";
 import ResultHeader from "@/components/ResultHeader";
 import { CurationTitle } from "@/styles/ResultPageStyles";
+import { CurationIcon } from "@/styles/ResultPageStyles";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 // 타입 명시: string 인덱스 허용
 const rhythmRoutineData: Record<
@@ -16,14 +17,15 @@ const rhythmRoutineData: Record<
 const PageWrapper = styled.div`
   background: #393939;
   min-height: 100vh;
-  padding: 44px 20px 0;
+  padding: 20px 20px 0;
 `;
 
-const TitleText = styled.div`
-  color: #fff;
-  font-weight: bold;
-  font-size: 24px;
-  margin-bottom: 8px;
+const CardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
 `;
 
 const SubText = styled.div`
@@ -36,11 +38,15 @@ const SubText = styled.div`
 const GuideText = styled.div`
   color: #fff;
   font-size: 16px;
-  margin: 12px 0 16px 8px;
-  margin-bottom: 16px;
   display: flex;
   align-items: center;
   gap: 8px;
+  white-space: pre-line;
+`;
+
+const GuideWrapper = styled.div`
+  display: flex;
+  margin: 12px 0 16px 8px;
 `;
 
 export default function RhythmRoutinePage() {
@@ -75,11 +81,22 @@ export default function RhythmRoutinePage() {
       />
       <SubText>{data.header.subText}</SubText>
       <CurationTitle>리듬 루틴 관리</CurationTitle>
-      <GuideText>{data.guide}</GuideText>
-      {data.routines.map((routine, idx) => (
-        <RoutineCard key={idx} title={routine.title} desc={routine.desc} />
-      ))}
-      <MusicCard title={data.music.title} artist={data.music.artist} />
+      <GuideWrapper>
+        <CurationIcon>
+          <FaArrowRightLong />
+        </CurationIcon>
+        <GuideText>{data.guide}</GuideText>
+      </GuideWrapper>
+      <CardContainer>
+        {data.routines.map((routine, idx) => (
+          <RoutineCard
+            key={idx}
+            title={routine.title}
+            desc={routine.desc}
+            bgColor={idx === 0 ? "#54C0D8" : idx === 1 ? "#299BB4" : "#1B7184"}
+          />
+        ))}
+      </CardContainer>
     </PageWrapper>
   );
 }

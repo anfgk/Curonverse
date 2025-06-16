@@ -19,6 +19,7 @@ const GradientSection = styled.div<GradientSectionProps>`
   background: #18152a;
   min-height: 300px;
   position: relative;
+  padding: 0 20px 20px;
   overflow: hidden;
 `;
 

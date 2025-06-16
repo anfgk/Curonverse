@@ -126,7 +126,7 @@ export const KeywordLabel = styled.div`
   font-size: 14px;
   font-weight: bold;
   color: #fff;
-  margin-top: 20px;
+  margin-top: 12px;
   position: relative;
 
   &::after {
@@ -234,8 +234,7 @@ export const CurationIcon = styled.span`
   border-radius: 50%;
   color: #000;
   margin-right: 10px;
-  padding-top: 2.5px;
-  padding-left: 2.5px;
+  padding: 2.5px;
   font-size: 14px;
 `;
 

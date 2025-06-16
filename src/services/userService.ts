@@ -1,11 +1,13 @@
 const API_URL = `${process.env.NEXT_PUBLIC_SITE_URL}/api/user`;
 
 export const userService = {
-  async getProfile() {
+  async getProfile() {},
 
-  },
-
-  async createUser(profile: { name: string; gender: string; birthDate: string }) {
+  async createUser(profile: {
+    name: string;
+    gender: string;
+    birthDate: string;
+  }) {
     console.log("Posting profile to:", API_URL);
     const response = await fetch(API_URL, {
       method: "POST",

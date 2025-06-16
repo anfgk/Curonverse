@@ -33,7 +33,7 @@ interface TopSectionProps {
 
 const TopSection = styled(BaseTopSection)<TopSectionProps>`
   background: ${(props) => props.mbtiColor};
-  padding-bottom: 20px;
+  padding: 20px 20px 20px;
   transition: background 0.3s ease;
   min-height: 488px;
 `;
@@ -86,13 +86,13 @@ const ResultMbti: React.FC<ResultMbtiProps> = ({
               </KeywordCircle>
             ))}
           </KeywordContainer>
-          <KeywordLabel>나에게 필요한 감정 카드</KeywordLabel>
+          <KeywordLabel>나의감정 카드</KeywordLabel>
         </KeywordSection>
       </TopSection>
 
       <FirstPageBottomSection>
         <AnalysisSection>
-          <CurationTitle>맞춤형 힐링 큐레이션</CurationTitle>
+          <CurationTitle>나의 감정카드 설명</CurationTitle>
 
           {curationItems.map((item, index) => (
             <CurationItem key={index}>
