@@ -1,0 +1,177 @@
+"use client";
+
+import React, { useRef } from "react";
+import { useRouter } from "next/navigation";
+import styled from "styled-components";
+import Title from "@/components/Title";
+import StarBackground from "@/components/StarBackground";
+import SubText from "@/components/SubText";
+import {
+  StyledBottomSection,
+  AnalysisSection,
+  CurationTitle,
+  CurationIcon,
+  CurationText,
+  PageIndicator,
+  PageIcon,
+  PageText,
+} from "@/styles/ResultPageStyles";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { RiSendPlaneFill } from "react-icons/ri";
+import { FiDownload } from "react-icons/fi";
+import html2canvas from "html2canvas";
+
+const Container = styled.div`
+  width: 375px;
+  height: 812px;
+  background: #0f1227;
+  position: fixed;
+  overflow: hidden;
+  margin: 0 auto;
+`;
+
+const ContentWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+`;
+
+const EndDescription = styled.div`
+  display: flex;
+  margin: 12px 0 0 20px;
+  font-size: 12px;
+  & > div:last-child {
+    font-weight: bold;
+  }
+`;
+
+const Image = styled.img`
+  width: 281px;
+  height: 217px;
+  display: block;
+  margin: 60px 40px 0;
+`;
+
+const BottomSection = styled(StyledBottomSection)`
+  background-color: transparent;
+  padding-top: 0px;
+`;
+
+const StyledCurationItem = styled.div`
+  display: flex;
+  padding: 10px 0;
+  border-bottom: none;
+`;
+
+const Footer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 76px;
+  padding-top: 10px;
+`;
+
+const Send = styled.div`
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+`;
+
+const Down = styled.div`
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+`;
+
+const Icon = styled.div`
+  background: #fff;
+  color: #111;
+  border-radius: 50%;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+// Start 페이지 컴포넌트 정의
+export default function Start() {
+  const router = useRouter();
+  const captureRef = useRef<HTMLDivElement>(null);
+
+  const handleDownload = async () => {
+    if (captureRef.current) {
+      try {
+        const canvas = await html2canvas(captureRef.current, {
+          backgroundColor: "#0f1227",
+          scale: 2,
+        });
+        const image = canvas.toDataURL("image/jpeg", 1.0);
+        const link = document.createElement("a");
+        link.href = image;
+        link.download = "curonverse-result.jpg";
+        link.click();
+      } catch (error) {
+        console.error("이미지 저장 중 오류가 발생했습니다:", error);
+      }
+    }
+  };
+
+  const curationItems = [
+    ["매일의 감정리듬카드로,", "감정을 진단해요."],
+    ["움직이는 나의 감정우주와", "감성캘린더를 키워가요."],
+    ["매일의 감정운세를 통해", "하루를 예측해요."],
+  ];
+
+  return (
+    <Container>
+      <StarBackground />
+      <ContentWrapper ref={captureRef}>
+        <SubText text="마무리" variant="subtitle" />
+        <Title
+          mainText="앞으로 추가될 Curonverse의"
+          highlightText="다양한 콘텐츠를"
+          subText=" 기대해주세요."
+        />
+        <EndDescription>
+          <div>꽃에 물을 주듯,</div>
+          <div>매일 하루 한잔 감성을 돌봐요.</div>
+        </EndDescription>
+        <Image src="/images/end.svg" alt="end" />
+        <BottomSection>
+          <AnalysisSection>
+            {curationItems.map((item, index) => (
+              <StyledCurationItem key={index}>
+                <CurationIcon>
+                  <FaArrowRightLong />
+                </CurationIcon>
+                <CurationText>
+                  {item[0]}
+                  <br />
+                  {item[1]}
+                </CurationText>
+              </StyledCurationItem>
+            ))}
+            <Footer>
+              <Send>
+                <Icon>
+                  <RiSendPlaneFill size={16} />
+                </Icon>
+                <div>공유하기</div>
+              </Send>
+              <Down onClick={handleDownload}>
+                <Icon>
+                  <FiDownload size={16} />
+                </Icon>
+                <div>저장하기</div>
+              </Down>
+            </Footer>
+          </AnalysisSection>
+        </BottomSection>
+      </ContentWrapper>
+    </Container>
+  );
+}
