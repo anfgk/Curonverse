@@ -9,8 +9,8 @@ export const usePageTransition = () => {
 
   // 다음 페이지로 이동하는 함수
   const nextPage = () => {
-    // 현재 페이지가 2보다 작으면 페이지 번호를 1 증가
-    if (currentPage < 2) setCurrentPage(currentPage + 1);
+    // 현재 페이지가 3보다 작으면 페이지 번호를 1 증가
+    if (currentPage < 3) setCurrentPage(currentPage + 1);
   };
 
   // 이전 페이지로 이동하는 함수
@@ -26,5 +26,6 @@ export const usePageTransition = () => {
     setMounted,
     nextPage,
     prevPage,
+    setCurrentPage,
   };
 };

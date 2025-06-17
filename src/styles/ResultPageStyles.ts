@@ -18,7 +18,7 @@ export const TopSection = styled.div`
 
 export const StyledBottomSection = styled.div`
   min-height: 350px;
-  padding: 15px 20px;
+  padding: 0 20px;
   width: 100%;
   display: flex;
   position: absolute;
@@ -217,8 +217,7 @@ export const CurationTitle = styled.h3`
   font-weight: 500;
   color: white;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-left: 4px;
-  padding-bottom: 12px;
+  padding: 12px 0 12px 4px;
 `;
 
 export const CurationItem = styled.div`

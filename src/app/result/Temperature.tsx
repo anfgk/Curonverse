@@ -1,30 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import {
   TopSection as BaseTopSection,
-  KeywordSection,
-  KeywordContainer,
-  KeywordCircle,
-  KeywordLabel,
   AnalysisSection,
   PageIndicator,
   PageIcon,
   PageText,
-  CurationTitle,
   CurationItem,
   CurationIcon,
   CurationText,
   StyledBottomSection,
 } from "@/styles/ResultPageStyles";
-import { mbtiColors, mbtiCurationData } from "@/data/mbtiData";
 import { FaArrowRightLong } from "react-icons/fa6";
 import ResultHeader from "@/components/ResultHeader";
+import {
+  temperatureData,
+  RhythmName,
+  RHYTHM_COLORS,
+} from "@/data/temperatureData";
+import TemperatureCard from "@/components/temperature/TemperatureCard";
 
 interface TemperatureProps {
+  userName: string;
   currentMBTI: string;
-  keywords: string[];
-  mbtiFullDescriptions: Record<string, { title: string }>;
-  nextPage: () => void;
+  mbtiRhythms: Record<string, RhythmName>;
+  openSections: number[];
+  toggleSection: (index: number) => void;
 }
 
 interface TopSectionProps {
@@ -32,7 +33,7 @@ interface TopSectionProps {
 }
 
 const TopSection = styled(BaseTopSection)<TopSectionProps>`
-  background: ${(props) => props.mbtiColor};
+  background: #ff7c2f;
   padding: 20px 20px 20px;
   transition: background 0.3s ease;
   min-height: 488px;
@@ -42,73 +43,67 @@ const FirstPageBottomSection = styled(StyledBottomSection)`
   background-color: #393939;
 `;
 
-// ResultMbti 컴포넌트 정의
+const AnalysisTitle = styled.div`
+  font-size: 16px;
+  color: white;
+  padding: 12px 0;
+  font-weight: bold;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+`;
+
 const Temperature: React.FC<TemperatureProps> = ({
   currentMBTI,
-  keywords,
-  mbtiFullDescriptions,
-  nextPage,
+  mbtiRhythms,
+  toggleSection,
 }) => {
-  const [userName, setUserName] = useState("사용자");
+  const currentRhythm = mbtiRhythms[currentMBTI];
+  const data = temperatureData[currentRhythm];
+  const rhythmColor = RHYTHM_COLORS[currentRhythm];
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedName = localStorage.getItem("userName");
-      if (storedName) setUserName(storedName);
-    }
-  }, []);
-
-  const mbtiColor = mbtiColors[currentMBTI];
-  const curationItems =
-    mbtiCurationData[currentMBTI] || mbtiCurationData["EPSA"];
+  const handlePageClick = () => {
+    toggleSection(1);
+  };
 
   return (
     <>
-      <TopSection mbtiColor={mbtiColor}>
+      <TopSection mbtiColor={rhythmColor.main}>
         <ResultHeader
-          pageNumber="01"
-          title={
-            <>
-              현재 {userName}님은,
-              <br />'{currentMBTI}' 감정 성향을
-              <br />
-              가지고 있어요.
-            </>
-          }
-          description={mbtiFullDescriptions[currentMBTI]?.title}
+          pageNumber="03"
+          title={data.title}
+          description={data.description}
         />
-
-        <KeywordSection>
-          <KeywordContainer>
-            {keywords.map((keyword: string, index: number) => (
-              <KeywordCircle key={keyword} index={index} mbtiType={currentMBTI}>
-                '{keyword}'
-              </KeywordCircle>
-            ))}
-          </KeywordContainer>
-          <KeywordLabel>나의감정 카드</KeywordLabel>
-        </KeywordSection>
+        <TemperatureCard
+          temperature={data.temperature}
+          rhythmName={currentRhythm}
+        />
       </TopSection>
 
       <FirstPageBottomSection>
         <AnalysisSection>
-          <CurationTitle>나의 감정카드 설명</CurationTitle>
-
-          {curationItems.map((item: string[], index: number) => (
-            <CurationItem key={index}>
-              <CurationIcon>
-                <FaArrowRightLong />
-              </CurationIcon>
-              <CurationText>
-                {item[0]}
-                <br />
-                {item[1]}
-              </CurationText>
-            </CurationItem>
-          ))}
+          <AnalysisTitle>감정 온도 상세 분석</AnalysisTitle>
+          <CurationItem>
+            <CurationIcon>
+              <FaArrowRightLong />
+            </CurationIcon>
+            <CurationText>
+              전체 감정탐험자 대비 상위 {data.analysis.expression}%로
+              <br />
+              감정 표현을 어려워해요.
+            </CurationText>
+          </CurationItem>
+          <CurationItem>
+            <CurationIcon>
+              <FaArrowRightLong />
+            </CurationIcon>
+            <CurationText>
+              전체 감정탐험자 대비 상위 {data.analysis.recognition}%로
+              <br />
+              감정 인지를 어려워해요.
+            </CurationText>
+          </CurationItem>
           <PageIndicator>
-            <PageIcon onClick={nextPage} style={{ cursor: "pointer" }} />
-            <PageText>02</PageText>
+            <PageIcon onClick={handlePageClick} style={{ cursor: "pointer" }} />
+            <PageText>04</PageText>
           </PageIndicator>
         </AnalysisSection>
       </FirstPageBottomSection>

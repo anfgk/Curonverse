@@ -33,7 +33,7 @@ interface TopSectionProps {
 
 const TopSection = styled(BaseTopSection)<TopSectionProps>`
   background: ${(props) => props.mbtiColor};
-  padding: 20px 20px 20px;
+  padding: 24px 20px 20px;
   transition: background 0.3s ease;
   min-height: 488px;
 `;

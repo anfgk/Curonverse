@@ -10,6 +10,7 @@ import { mbtiColors } from "@/data/mbtiData";
 import { FaArrowRightLong } from "react-icons/fa6";
 import ResultHeader from "@/components/ResultHeader";
 import EmotionalMap from "@/components/EmotionalMap";
+import { PageIndicator, PageIcon, PageText } from "@/styles/ResultPageStyles";
 
 interface GradientSectionProps {
   mbtiColor: string;
@@ -19,7 +20,7 @@ const GradientSection = styled.div<GradientSectionProps>`
   background: #18152a;
   min-height: 300px;
   position: relative;
-  padding: 0 20px 20px;
+  padding: 24px 20px 20px;
   overflow: hidden;
 `;
 
@@ -60,6 +61,7 @@ interface ResultRhythmProps {
   mbtiRhythms: Record<string, string>;
   mbtiRhythmDescriptions: Record<string, string>;
   openSections: number[];
+  nextPage: () => void;
   toggleSection: (index: number) => void;
 }
 
@@ -69,9 +71,16 @@ const ResultRhythm: React.FC<ResultRhythmProps> = ({
   currentMBTI,
   mbtiRhythms,
   mbtiRhythmDescriptions,
+  nextPage,
+  toggleSection,
 }) => {
   const mbtiColor = mbtiColors[currentMBTI];
   const currentRhythm = mbtiRhythms[currentMBTI];
+
+  const handleNextPage = () => {
+    nextPage();
+    toggleSection(2); // Temperature 페이지로 이동
+  };
 
   return (
     <>
@@ -107,6 +116,10 @@ const ResultRhythm: React.FC<ResultRhythmProps> = ({
             </AnalysisTitle3>
           </AnalysisItem>
         </AnalysisSection>
+        <PageIndicator>
+          <PageIcon onClick={handleNextPage} style={{ cursor: "pointer" }} />
+          <PageText>03</PageText>
+        </PageIndicator>
       </SecondPageBottomSection>
     </>
   );
