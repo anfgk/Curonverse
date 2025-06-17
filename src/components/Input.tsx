@@ -3,6 +3,7 @@
 import styled from "styled-components";
 import { FiX } from "react-icons/fi";
 
+// ========================== 스타일 ==========================
 const InputWrapper = styled.div`
   position: relative;
   width: 334px;
@@ -19,6 +20,7 @@ const InfoInput = styled.input`
   font-size: 16px;
   padding: 0 40px 0 12px;
   font-weight: bold;
+
   &::placeholder {
     color: #b0b0b0;
   }
@@ -28,7 +30,9 @@ const InfoInput = styled.input`
   }
 
   &[type="date"] {
+    color: transparent;
     position: relative;
+    z-index: 2;
 
     &::-webkit-calendar-picker-indicator {
       position: absolute;
@@ -38,18 +42,17 @@ const InfoInput = styled.input`
       bottom: 0;
       width: auto;
       height: auto;
-      color: transparent;
       background: transparent;
+      color: transparent;
       cursor: pointer;
-    }
-
-    &::-webkit-datetime-edit {
-      display: none;
+      z-index: 3;
     }
   }
 `;
 
-const DateText = styled.span<{ isPlaceholder?: boolean }>`
+const DateText = styled.span.withConfig({
+  shouldForwardProp: (prop) => prop !== "isPlaceholder",
+})<{ isPlaceholder?: boolean }>`
   position: absolute;
   left: 12px;
   top: 50%;
@@ -57,6 +60,7 @@ const DateText = styled.span<{ isPlaceholder?: boolean }>`
   color: ${(props) => (props.isPlaceholder ? "#b0b0b0" : "#ffffff")};
   pointer-events: none;
   font-weight: bold;
+  z-index: 4;
 `;
 
 const ClearButton = styled.button`
@@ -84,10 +88,9 @@ const GenderContainer = styled.div`
   margin: 12px 20px;
 `;
 
-const GenderButton = styled.button<{
-  isSelected: boolean;
-  isPlaceholder: boolean;
-}>`
+const GenderButton = styled.button.withConfig({
+  shouldForwardProp: (prop) => !["isSelected", "isPlaceholder"].includes(prop),
+})<{ isSelected: boolean; isPlaceholder: boolean }>`
   flex: 1;
   height: 56px;
   border-radius: 10px;
@@ -104,6 +107,8 @@ const GenderButton = styled.button<{
   }
 `;
 
+// ========================== 컴포넌트 ==========================
+
 interface InputProps {
   placeholder?: string;
   value: string;
@@ -113,7 +118,6 @@ interface InputProps {
   onBlur?: () => void;
 }
 
-// Input 컴포넌트 정의. 여러 props를 구조 분해 할당하며 기본값도 지정
 const Input = ({
   placeholder = "이름을 입력해주세요.",
   value,
@@ -122,35 +126,22 @@ const Input = ({
   onFocus,
   onBlur,
 }: InputProps) => {
-  // 입력값을 초기화(비우기)하는 함수 정의
   const handleClear = () => {
-    // onChange 이벤트 핸들러를 호출하여 value를 빈 문자열로 설정
-    // 타입 단언(as)을 사용하여 React.ChangeEvent<HTMLInputElement> 형태로 전달
     onChange({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
   };
 
-  // 날짜 문자열을 받아서 "YYYY년 MM월 DD일" 형식으로 변환해 주는 함수
   const formatDate = (dateString: string) => {
-    // 인자로 받은 dateString이 비어 있거나 null/undefined이면 빈 문자열 반환
     if (!dateString) return "";
-    // dateString을 기반으로 JavaScript의 Date 객체 생성
     const date = new Date(dateString);
-    // 날짜를 "YYYY년 M월 D일" 형식의 문자열로 변환하여 반환
-    return `${date.getFullYear()}년 ${
-      // 연도 출력 (예: 2025년)
-      date.getMonth() + 1 // 월은 0부터 시작하므로 +1 필요 (예: 0 → 1월)
-    }월 ${date.getDate()}일`; // 일 출력 (예: 12일)
+    console.log("Formatted date:", date);
+    return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
   };
 
-  // 만약 type이 "gender"일 경우 실행될 조건문
   if (type === "gender") {
-    // 성별 버튼 클릭 시 실행되는 함수 정의
     const handleGenderClick = (selectedGender: string) => {
-      // onChange 함수 호출하여 선택된 성별 값을 전달
-      // React의 <input> 컴포넌트에서 사용하는 ChangeEvent 형식으로 변환하여 전달
       onChange({
-        target: { value: selectedGender }, // 사용자가 선택한 성별 값을 설정
-      } as React.ChangeEvent<HTMLInputElement>); // 타입 단언 (ChangeEvent로 처리)
+        target: { value: selectedGender },
+      } as React.ChangeEvent<HTMLInputElement>);
     };
 
     return (
@@ -183,11 +174,13 @@ const Input = ({
         onBlur={onBlur}
         placeholder={type === "text" ? placeholder : undefined}
       />
+
       {type === "date" && (
         <DateText isPlaceholder={!value}>
           {value ? formatDate(value) : "생년월일을 입력해주세요."}
         </DateText>
       )}
+
       {value && type !== "gender" && (
         <ClearButton onClick={handleClear} type="button">
           <FiX size={14} />
