@@ -14,8 +14,7 @@ export default function Onloading() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const mbtiResult = surveyService.calculateMBTI();
-      router.push(`/result?mbti=${mbtiResult}`);
+      router.push(`/result`);
     }, 1000);
     return () => clearTimeout(timer);
   }, [router]);

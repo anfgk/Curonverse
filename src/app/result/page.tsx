@@ -1,68 +1,35 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import ResultMbti from "./ResultMbti";
-import ResultRhythm from "./ResultRhythm";
+import { useState } from "react";
 import PageTransitionContainer from "@/components/PageTransitionContainer";
-import { userService } from "@/services/userService";
-import { useMBTIData } from "@/hooks/useMBTIData";
-import { usePageTransition } from "@/hooks/usePageTransition";
+import ResultMbti from "@/components/result/ResultMbti";
+import ResultRhythm from "@/components/result/ResultRhythm";
+import { useTestResult } from "@/hooks/useTestResult";
+import { useStoredUser } from "@/hooks/useStoredUser";
 
-// MBTISelector 컴포넌트 정의
-const MBTISelector = styled.div``;
+export default function ResultPage() {
+  const user = useStoredUser();
+  const testResult = useTestResult();
+  const [currentPage, setCurrentPage] = useState(1);
 
-// ResultPage 컴포넌트 정의
-const ResultPage: React.FC = () => {
-  const [userName, setUserName] = useState<string>("");
-  const {
-    currentMBTI,
-    keywords,
-    openSections,
-    toggleSection,
-    mbtiFullDescriptions,
-    mbtiRhythms,
-    mbtiRhythmDescriptions,
-  } = useMBTIData();
-  // 페이지 전환 관련 상태 관리 훅 사용
-  const { currentPage, mounted, setMounted, nextPage } = usePageTransition();
-
-  // 프로필 정보 가져오기
-  useEffect(() => {
-    const profile = userService.getProfile();
-    // 프로필 정보가 있으면 사용자 이름 설정
-    if (profile?.name) {
-      // 사용자 이름 설정
-      setUserName(profile.name);
-    }
-    // 페이지 마운트 상태 설정
-    setMounted(true);
-    // setMounted 함수가 변경될 때마다 실행
-  }, [setMounted]);
+  if (!testResult) return null; // 또는 로딩 처리
 
   return (
-    <PageTransitionContainer mounted={mounted}>
-      <MBTISelector />
+    <PageTransitionContainer mounted>
       {currentPage === 1 ? (
         <ResultMbti
-          userName={userName}
-          currentMBTI={currentMBTI}
-          keywords={keywords}
-          mbtiFullDescriptions={mbtiFullDescriptions}
-          nextPage={nextPage}
+          emotionType={testResult.emotionType}
+          userName={user?.name || "사용자"}
+          nextPage={() => setCurrentPage(2)}
         />
       ) : (
         <ResultRhythm
-          userName={userName}
-          currentMBTI={currentMBTI}
-          mbtiRhythms={mbtiRhythms}
-          mbtiRhythmDescriptions={mbtiRhythmDescriptions}
-          openSections={openSections}
-          toggleSection={toggleSection}
+          rhythm={testResult.rhythm}
+          temperature={testResult.temperature}
+          emotionTypeColor={testResult.emotionType.hexCode}
+          userName={user?.name || "사용자"}
         />
       )}
     </PageTransitionContainer>
   );
-};
-
-export default ResultPage;
+}

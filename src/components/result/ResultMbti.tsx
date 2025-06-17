@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+"use client";
+
+import React from "react";
 import styled from "styled-components";
 import {
   TopSection as BaseTopSection,
@@ -16,73 +18,49 @@ import {
   CurationText,
   StyledBottomSection,
 } from "@/styles/ResultPageStyles";
-import { mbtiColors, mbtiCurationData } from "@/data/mbtiData";
 import { FaArrowRightLong } from "react-icons/fa6";
 import ResultHeader from "@/components/ResultHeader";
+import { EmotionType } from "@/data/types";
 
-interface ResultMbtiProps {
-  currentMBTI: string;
-  keywords: string[];
-  mbtiFullDescriptions: Record<string, { title: string }>;
+interface Props {
+  emotionType: EmotionType;
+  userName: string;
   nextPage: () => void;
 }
 
-interface TopSectionProps {
-  mbtiColor: string;
-}
-
-const TopSection = styled(BaseTopSection)<TopSectionProps>`
+const TopSection = styled(BaseTopSection)<{ mbtiColor: string }>`
   background: ${(props) => props.mbtiColor};
-  padding: 20px 20px 20px;
-  transition: background 0.3s ease;
+  padding: 20px;
   min-height: 488px;
+  transition: background 0.3s ease;
 `;
 
 const FirstPageBottomSection = styled(StyledBottomSection)`
   background-color: #393939;
 `;
 
-// ResultMbti 컴포넌트 정의
-const ResultMbti: React.FC<ResultMbtiProps> = ({
-  currentMBTI,
-  keywords,
-  mbtiFullDescriptions,
-  nextPage,
-}) => {
-  const [userName, setUserName] = useState("사용자");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedName = localStorage.getItem("userName");
-      if (storedName) setUserName(storedName);
-    }
-  }, []);
-
-  const mbtiColor = mbtiColors[currentMBTI];
-  const curationItems =
-    mbtiCurationData[currentMBTI] || mbtiCurationData["EPSA"];
+const ResultMbti: React.FC<Props> = ({ emotionType, userName, nextPage }) => {
+  const { code, description, keywords, hexCode } = emotionType;
 
   return (
     <>
-      <TopSection mbtiColor={mbtiColor}>
+      <TopSection mbtiColor={hexCode}>
         <ResultHeader
           pageNumber="01"
           title={
             <>
               현재 {userName}님은,
-              <br />'{currentMBTI}' 감정 성향을
-              <br />
+              <br />'{code}' 감정 성향을 <br />
               가지고 있어요.
             </>
           }
-          description={mbtiFullDescriptions[currentMBTI]?.title}
+          description={description}
         />
-
         <KeywordSection>
           <KeywordContainer>
-            {keywords.map((keyword, index) => (
-              <KeywordCircle key={keyword} index={index} mbtiType={currentMBTI}>
-                '{keyword}'
+            {keywords.map((kw, index) => (
+              <KeywordCircle key={kw.id} index={index} mbtiType={code}>
+                '{kw.keyword}'
               </KeywordCircle>
             ))}
           </KeywordContainer>
@@ -93,16 +71,15 @@ const ResultMbti: React.FC<ResultMbtiProps> = ({
       <FirstPageBottomSection>
         <AnalysisSection>
           <CurationTitle>나의 감정카드 설명</CurationTitle>
-
-          {curationItems.map((item, index) => (
-            <CurationItem key={index}>
+          {keywords.map((kw) => (
+            <CurationItem key={kw.id}>
               <CurationIcon>
                 <FaArrowRightLong />
               </CurationIcon>
               <CurationText>
-                {item[0]}
+                {kw.keyword}
                 <br />
-                {item[1]}
+                {kw.description}
               </CurationText>
             </CurationItem>
           ))}
