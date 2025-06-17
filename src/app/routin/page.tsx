@@ -11,7 +11,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 // 타입 명시: string 인덱스 허용
 const rhythmRoutineData: Record<
   string,
-  (typeof _rhythmRoutineData)["Spark Flame"]
+  (typeof _rhythmRoutineData)["SparkFlame"]
 > = _rhythmRoutineData;
 
 const PageWrapper = styled.div`

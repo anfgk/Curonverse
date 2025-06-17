@@ -39,13 +39,19 @@ const Value = styled.div<{ color: string }>`
   margin: 16px 0;
 `;
 
-const Slider = styled.div<{ percentage: number; gradient: string }>`
+const SliderWrapper = styled.div`
+  position: relative;
   width: 301px;
   height: 37px;
+`;
+
+const Slider = styled.div<{ percentage: number; gradient: string }>`
+  width: 100%;
+  height: 100%;
   background: #e6e6e6;
   border-radius: 18px;
   position: relative;
-  margin: 16px 0;
+  overflow: hidden;
 
   &::after {
     content: "";
@@ -55,8 +61,30 @@ const Slider = styled.div<{ percentage: number; gradient: string }>`
     width: ${(props) => props.percentage}%;
     height: 100%;
     background: ${(props) => props.gradient};
-    border-radius: 18px;
+    border-radius: 18px 0 0 18px;
     transition: all 0.3s ease;
+    z-index: 1;
+  }
+`;
+
+const Arrow = styled.div<{ percentage: number }>`
+  position: absolute;
+  top: -10px;
+  left: calc(${(props) => props.percentage}% - 11px);
+  width: 21px;
+  height: 21px;
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 14px solid #4b4b4b;
   }
 `;
 
@@ -97,7 +125,10 @@ const TemperatureCard: React.FC<TemperatureCardProps> = ({
           </Description>
         </Title>
         <Value color={rhythmColor.main}>{temperature}°C</Value>
-        <Slider percentage={percentage} gradient={rhythmColor.gradient} />
+        <SliderWrapper>
+          <Slider percentage={percentage} gradient={rhythmColor.gradient} />
+          <Arrow percentage={percentage} />
+        </SliderWrapper>
         <Range>
           <span>{minTemp}°C</span>
           <span>{maxTemp}°C</span>
