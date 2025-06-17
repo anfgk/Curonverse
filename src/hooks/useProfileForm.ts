@@ -29,7 +29,7 @@ export function useProfileForm() {
       console.log("Submitting profile:", profile);
       const response = await userService.createUser(profile);
       console.log("Profile saved successfully:", response);
-      sessionStorage.setItem("user", JSON.stringify(response));
+      sessionStorage.setItem("user", JSON.stringify(response.data));
       router.replace("/step");
     } catch (error) {
       console.error("Error saving profile:", error);

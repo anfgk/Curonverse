@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import styled from "styled-components";
 import {
@@ -6,11 +8,11 @@ import {
   AnalysisItem,
   AnalysisTitle,
 } from "@/styles/ResultPageStyles";
-import { mbtiColors } from "@/data/mbtiData";
 import { FaArrowRightLong } from "react-icons/fa6";
 import ResultHeader from "@/components/ResultHeader";
 import EmotionalMap from "@/components/EmotionalMap";
 import { PageIndicator, PageIcon, PageText } from "@/styles/ResultPageStyles";
+import { TestResult } from "@/data/types";
 
 interface GradientSectionProps {
   mbtiColor: string;
@@ -21,14 +23,13 @@ const GradientSection = styled.div<GradientSectionProps>`
   min-height: 300px;
   position: relative;
   padding: 24px 20px 20px;
-  overflow: hidden;
+  overflow: scroll;
 `;
 
 const AnalysisTitle2 = styled.h3`
   font-size: 16px;
   font-weight: 500;
   padding-bottom: 10px;
-  padding-left: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
@@ -36,12 +37,6 @@ const AnalysisTitle3 = styled(AnalysisTitle)`
   font-size: 14px;
   display: flex;
   margin-top: 10px;
-`;
-
-const SecondPageBottomSection = styled(StyledBottomSection)`
-  background-color: #18152a;
-  padding: 20px;
-  bottom: -100px;
 `;
 
 const CurationIcon = styled.span`
@@ -55,51 +50,48 @@ const CurationIcon = styled.span`
   font-size: 14px;
 `;
 
+const SecondPageBottomSection = styled(StyledBottomSection)`
+  background-color: #18152a;
+  padding: 20px;
+  bottom: -100px;
+`;
+
 interface ResultRhythmProps {
+  testResult: TestResult;
   userName: string;
-  currentMBTI: string;
-  mbtiRhythms: Record<string, string>;
-  mbtiRhythmDescriptions: Record<string, string>;
-  openSections: number[];
   nextPage: () => void;
   toggleSection: (index: number) => void;
 }
 
-// ResultRhythm 컴포넌트 정의
 const ResultRhythm: React.FC<ResultRhythmProps> = ({
+  testResult,
   userName,
-  currentMBTI,
-  mbtiRhythms,
-  mbtiRhythmDescriptions,
   nextPage,
   toggleSection,
 }) => {
-  const mbtiColor = mbtiColors[currentMBTI];
-  const currentRhythm = mbtiRhythms[currentMBTI];
 
   const handleNextPage = () => {
     nextPage();
-    toggleSection(2); // Temperature 페이지로 이동
+    toggleSection(3);
   };
 
   return (
     <>
-      <GradientSection mbtiColor={mbtiColor}>
+      <GradientSection mbtiColor={testResult.emotionType.color}>
         <ResultHeader
           pageNumber="02"
           title={
             <>
               이러한 {userName}님의 감정은,
-              <br />'{mbtiRhythms[currentMBTI]}' 리듬
+              <br />'{testResult.rhythm}' 리듬 위에
               <br />
-              위에 머무르고 있어요.
+              머무르고 있어요.
             </>
           }
-          description={mbtiRhythmDescriptions[mbtiRhythms[currentMBTI]]}
+          description={testResult.healingQuote}
           color="white"
         />
-
-        <EmotionalMap currentRhythm={currentRhythm} />
+        <EmotionalMap currentRhythm={testResult.rhythm} />
       </GradientSection>
 
       <SecondPageBottomSection>
@@ -110,9 +102,7 @@ const ResultRhythm: React.FC<ResultRhythmProps> = ({
               <CurationIcon>
                 <FaArrowRightLong />
               </CurationIcon>
-              강한 감정 반응을 보이며 즉각적으로 표현하는 리듬. 분노, 열정, 좌절
-              같은 고에너지 감정이 빠르게 타오름. 감정은 빨리 움직이고, 외부로
-              쉽게 퍼져나간다.
+              {testResult.analysis}
             </AnalysisTitle3>
           </AnalysisItem>
         </AnalysisSection>
