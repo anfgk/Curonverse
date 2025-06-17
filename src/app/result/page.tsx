@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ResultMbti from "./ResultMbti";
 import ResultRhythm from "./ResultRhythm";
+import Temperature from "./Temperature";
 import PageTransitionContainer from "@/components/PageTransitionContainer";
 import { userService } from "@/services/userService";
 import { useMBTIData } from "@/hooks/useMBTIData";
@@ -29,23 +30,25 @@ const ResultPage: React.FC = () => {
 
   // 프로필 정보 가져오기
   useEffect(() => {
-    const profile = userService.getProfile();
-    // 프로필 정보가 있으면 사용자 이름 설정
-    if (profile?.name) {
-      // 사용자 이름 설정
-      setUserName(profile.name);
-    }
-    // 페이지 마운트 상태 설정
-    setMounted(true);
-    // setMounted 함수가 변경될 때마다 실행
+    const fetchProfile = async () => {
+      const profile = await userService.getProfile();
+      // 프로필 정보가 있으면 사용자 이름 설정
+      if (profile?.name) {
+        // 사용자 이름 설정
+        setUserName(profile.name);
+      }
+      // 페이지 마운트 상태 설정
+      setMounted(true);
+    };
+
+    fetchProfile();
   }, [setMounted]);
 
   return (
     <PageTransitionContainer mounted={mounted}>
       <MBTISelector />
       {currentPage === 1 ? (
-        <ResultMbti
-          userName={userName}
+        <Temperature
           currentMBTI={currentMBTI}
           keywords={keywords}
           mbtiFullDescriptions={mbtiFullDescriptions}
