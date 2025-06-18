@@ -1,4 +1,4 @@
-import { postUserProfile } from "@/api/user";
+import { postUserProfile } from "@/lib/api/user";
 import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {

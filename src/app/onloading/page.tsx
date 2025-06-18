@@ -5,17 +5,16 @@ import { useRouter } from "next/navigation";
 import Text from "@/components/Text";
 import Title from "@/components/Title";
 import LoadingLayout from "@/components/layout/LoadingLayout";
-import { surveyService } from "@/services/survey";
+import { useStoredUser } from "@/hooks/useStoredUser";
 import SubText from "@/components/SubText";
 
 export default function Onloading() {
   const router = useRouter();
-  const [userName, setUserName] = useState("");
+  const user = useStoredUser();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const mbtiResult = surveyService.calculateMBTI();
-      router.push(`/result?mbti=${mbtiResult}`);
+      router.push(`/result`);
     }, 1000);
     return () => clearTimeout(timer);
   }, [router]);
@@ -24,7 +23,7 @@ export default function Onloading() {
     <LoadingLayout rocketImageSrc="/images/rocket.svg">
       <SubText text="수고하셨습니다." variant="subtitle" />
       <Title
-        mainText={`${userName}님의 감정 행성으로`}
+        mainText={`${user?.name}님의 감정 행성으로`}
         highlightText="이동"
         subText="하고 있어요."
       />

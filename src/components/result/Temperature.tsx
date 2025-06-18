@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import styled from "styled-components";
 import {
@@ -13,27 +15,20 @@ import {
 } from "@/styles/ResultPageStyles";
 import { FaArrowRightLong } from "react-icons/fa6";
 import ResultHeader from "@/components/ResultHeader";
-import {
-  temperatureData,
-  RhythmName,
-  RHYTHM_COLORS,
-} from "@/data/temperatureData";
 import TemperatureCard from "@/components/temperature/TemperatureCard";
+import { useTemperatureMeta } from "@/hooks/useTemperatureMeta";
+import { TestResult, EmotionType, RhythmName } from "@/data/types";
 
 interface TemperatureProps {
-  userName: string;
-  currentMBTI: string;
-  mbtiRhythms: Record<string, RhythmName>;
+  testResult: TestResult;
+  emotionType: EmotionType;
   openSections: number[];
+  nextPage: () => void;
   toggleSection: (index: number) => void;
 }
 
-interface TopSectionProps {
-  mbtiColor: string;
-}
-
-const TopSection = styled(BaseTopSection)<TopSectionProps>`
-  background: #ff7c2f;
+const TopSection = styled(BaseTopSection)<{ mbtiColor: string }>`
+  background: ${(props) => props.mbtiColor};
   padding: 20px 20px 20px;
   transition: background 0.3s ease;
   min-height: 488px;
@@ -52,29 +47,31 @@ const AnalysisTitle = styled.div`
 `;
 
 const Temperature: React.FC<TemperatureProps> = ({
-  currentMBTI,
-  mbtiRhythms,
+  testResult,
+  emotionType,
+  nextPage,
   toggleSection,
 }) => {
-  const currentRhythm = mbtiRhythms[currentMBTI];
-  const data = temperatureData[currentRhythm];
-  const rhythmColor = RHYTHM_COLORS[currentRhythm];
+  const rhythmName = testResult.rhythm as RhythmName;
+  const { percentTotal, percentGender } = testResult;
+  const { hexCode } = emotionType;
+  const temperatureMeta = useTemperatureMeta(rhythmName);
 
   const handlePageClick = () => {
-    toggleSection(1);
+    nextPage();
+    toggleSection(4);
   };
 
   return (
     <>
-      <TopSection mbtiColor={rhythmColor.main}>
+      <TopSection mbtiColor={hexCode}>
         <ResultHeader
           pageNumber="03"
-          title={data.title}
-          description={data.description}
+          title={temperatureMeta.temperatureInfo.title}
+          description={temperatureMeta.temperatureInfo.description}
         />
         <TemperatureCard
-          temperature={data.temperature}
-          rhythmName={currentRhythm}
+          rhythmName={rhythmName}
         />
       </TopSection>
 
@@ -86,7 +83,7 @@ const Temperature: React.FC<TemperatureProps> = ({
               <FaArrowRightLong />
             </CurationIcon>
             <CurationText>
-              전체 감정탐험자 대비 상위 {data.analysis.expression}%로
+              전체 감정탐험자 대비 상위 {percentTotal}%로
               <br />
               감정 표현을 어려워해요.
             </CurationText>
@@ -96,7 +93,7 @@ const Temperature: React.FC<TemperatureProps> = ({
               <FaArrowRightLong />
             </CurationIcon>
             <CurationText>
-              전체 감정탐험자 대비 상위 {data.analysis.recognition}%로
+              전체 감정탐험자 대비 상위 {percentGender}%로
               <br />
               감정 인지를 어려워해요.
             </CurationText>

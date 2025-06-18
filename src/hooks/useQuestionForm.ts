@@ -9,6 +9,7 @@ export function useQuestionForm(userId: number) {
   const questionForm = async (
     answers: Record<number, Record<number, number>>
   ) => {
+    console.log(userId, "userId");
     if (!userId) {
       alert("사용자 정보가 없습니다.");
       router.replace("/profile");
@@ -27,11 +28,12 @@ export function useQuestionForm(userId: number) {
     );
 
     try {
-      await testService.submitTest({
+      const response = await testService.submitTest({
         userId,
         type: "emotion",
         answers: flattened,
       });
+      sessionStorage.setItem("test", JSON.stringify(response.data));
       router.push("/onloading");
     } catch (error) {
       console.error("제출 중 오류 발생:", error);

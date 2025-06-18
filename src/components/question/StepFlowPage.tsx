@@ -8,9 +8,12 @@ import QuestionPage from "@/components/question/QuestionPage";
 import { stepQuestions } from "@/constants/stepQuestions";
 
 export default function StepFlowPage() {
-  const { userId } = useStoredUser();
+  const user = useStoredUser();
   const { step, answers, goNext, goPrev, saveAnswer, isLastStep } = useQuestionFlow();
-  const { questionForm } = useQuestionForm(userId);
+
+  if (!user) return null;
+
+  const { questionForm } = useQuestionForm(user?.id);
 
   const questions = stepQuestions[step] ?? [];
 

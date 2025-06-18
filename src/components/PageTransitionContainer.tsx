@@ -13,7 +13,7 @@ const PageContainer = styled(Container)<PageContainerProps>`
   height: 812px;
   margin: 0 auto;
   position: relative;
-  overflow: hidden;
+  overflow: scroll;
 `;
 
 interface PageTransitionContainerProps {

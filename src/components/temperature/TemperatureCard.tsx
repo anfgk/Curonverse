@@ -2,15 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import {
   getTemperaturePercentage,
-  getRhythmColor,
-  RhythmName,
+  RHYTHM_COLORS,
+  temperatureData
 } from "@/data/temperatureData";
+import { RhythmName } from "@/data/types";
+
 
 interface TemperatureCardProps {
-  temperature: number;
   rhythmName: RhythmName;
-  minTemp?: number;
-  maxTemp?: number;
 }
 
 const Card = styled.div`
@@ -105,13 +104,11 @@ const Label = styled.div`
 `;
 
 const TemperatureCard: React.FC<TemperatureCardProps> = ({
-  temperature,
-  rhythmName,
-  minTemp = 35,
-  maxTemp = 39,
+  rhythmName
 }) => {
+  const { temperature, description } = temperatureData[rhythmName];
+  const { main, gradient } = RHYTHM_COLORS[rhythmName];
   const percentage = getTemperaturePercentage(temperature);
-  const rhythmColor = getRhythmColor(rhythmName);
 
   return (
     <>
@@ -124,14 +121,14 @@ const TemperatureCard: React.FC<TemperatureCardProps> = ({
             높을수록 감정을 버거워해요.
           </Description>
         </Title>
-        <Value color={rhythmColor.main}>{temperature}°C</Value>
+        <Value color={main}>{temperature}°C</Value>
         <SliderWrapper>
-          <Slider percentage={percentage} gradient={rhythmColor.gradient} />
+          <Slider percentage={percentage} gradient={gradient} />
           <Arrow percentage={percentage} />
         </SliderWrapper>
         <Range>
-          <span>{minTemp}°C</span>
-          <span>{maxTemp}°C</span>
+          <span>35°C</span>
+          <span>39°C</span>
         </Range>
       </Card>
       <Label>현재 나의 감정 온도</Label>

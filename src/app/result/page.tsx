@@ -1,96 +1,54 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import ResultMbti from "./ResultMbti";
-import ResultRhythm from "./ResultRhythm";
-import Temperature from "./Temperature";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import PageTransitionContainer from "@/components/PageTransitionContainer";
-import { userService } from "@/services/userService";
-import { useMBTIData } from "@/hooks/useMBTIData";
-import { usePageTransition } from "@/hooks/usePageTransition";
-import { useSearchParams } from "next/navigation";
+import ResultMbti from "@/components/result/ResultMbti";
+import ResultRhythm from "@/components/result/ResultRhythm";
+import Temperature from "@/components/result/Temperature";
+import Routine from "@/components/result/Routine";
+import { useTestResult } from "@/hooks/useTestResult";
+import { useStoredUser } from "@/hooks/useStoredUser";
 
-// MBTISelector 컴포넌트 정의
-const MBTISelector = styled.div``;
+export default function ResultPage() {
+  const user = useStoredUser();
+  const testResult = useTestResult();
+  const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
 
-// ResultPage 컴포넌트 정의
-const ResultPage: React.FC = () => {
-  const [userName, setUserName] = useState<string>("");
-  const searchParams = useSearchParams();
-  const pageParam = searchParams.get("page");
-
-  const {
-    currentMBTI,
-    keywords,
-    openSections,
-    toggleSection,
-    mbtiFullDescriptions,
-    mbtiRhythms,
-    mbtiRhythmDescriptions,
-  } = useMBTIData();
-
-  // 페이지 전환 관련 상태 관리 훅 사용
-  const { currentPage, mounted, setMounted, nextPage, setCurrentPage } =
-    usePageTransition();
-
-  // URL 파라미터로 페이지 설정
-  useEffect(() => {
-    if (pageParam) {
-      const pageNumber = parseInt(pageParam);
-      if (pageNumber >= 1 && pageNumber <= 3) {
-        setCurrentPage(pageNumber);
-      }
-    }
-  }, [pageParam, setCurrentPage]);
-
-  // 프로필 정보 가져오기
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const profile = await userService.getProfile();
-      // 프로필 정보가 있으면 사용자 이름 설정
-      if (profile?.name) {
-        // 사용자 이름 설정
-        setUserName(profile.name);
-      }
-      // 페이지 마운트 상태 설정
-      setMounted(true);
-    };
-
-    fetchProfile();
-  }, [setMounted]);
+  if (!testResult) return null; // 또는 로딩 처리
 
   return (
-    <PageTransitionContainer mounted={mounted}>
-      <MBTISelector />
+    <PageTransitionContainer mounted>
       {currentPage === 1 ? (
         <ResultMbti
-          currentMBTI={currentMBTI}
-          keywords={keywords}
-          mbtiFullDescriptions={mbtiFullDescriptions}
-          nextPage={nextPage}
+          emotionType={testResult.emotionType}
+          userName={user?.name || "사용자"}
+          nextPage={() => setCurrentPage(2)}
         />
       ) : currentPage === 2 ? (
         <ResultRhythm
-          userName={userName}
-          currentMBTI={currentMBTI}
-          mbtiRhythms={mbtiRhythms}
-          mbtiRhythmDescriptions={mbtiRhythmDescriptions}
-          openSections={openSections}
-          toggleSection={toggleSection}
-          nextPage={nextPage}
+          testResult={testResult}
+          userName={user?.name || "사용자"}
+          nextPage={() => setCurrentPage(3)}
+          toggleSection={(index) => setCurrentPage(index)}
         />
-      ) : (
+      ) : currentPage === 3 ? (
         <Temperature
-          userName={userName}
-          currentMBTI={currentMBTI}
-          mbtiRhythms={mbtiRhythms}
-          openSections={openSections}
-          toggleSection={toggleSection}
+          testResult={testResult}
+          emotionType={testResult.emotionType}
+          nextPage={() => setCurrentPage(4)}
+          toggleSection={(index) => setCurrentPage(index)}
+          openSections={[]} 
         />
-      )}
+      ) : currentPage === 4 ?(
+        <Routine
+          testResult={testResult}
+          userName={user?.name || "사용자"}
+          nextPage={() => router.push("/end")}
+          toggleSection={(index) => setCurrentPage(index)}
+        ></Routine>
+        ) : null}
     </PageTransitionContainer>
   );
-};
-
-export default ResultPage;
+}
