@@ -1,4 +1,4 @@
-const API_URL = `${process.env.NEXT_PUBLIC_SITE_URL}/api/test`;
+const API_URL = `/api/test`;
 
 interface AnswerPayload {
   userId: number;
