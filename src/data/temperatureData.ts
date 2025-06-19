@@ -75,7 +75,10 @@ export const temperatureData: Record<RhythmName, TemperatureData> = {
 };
 
 // 리듬별 색상 설정 (그라데이션 색상은 여기서 수정하시면 됩니다)
-export const RHYTHM_COLORS: Record<RhythmName, { main: string; gradient: string }> = {
+export const RHYTHM_COLORS: Record<
+  RhythmName,
+  { main: string; gradient: string }
+> = {
   "Spark Flame": {
     main: "#F25C2A",
     gradient: "linear-gradient(90deg, #fab59d 0%, #F25C2A 100%)",
