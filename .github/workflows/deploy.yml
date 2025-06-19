@@ -59,6 +59,15 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
+      - name: Copy .env.production to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY_B64 }}
+          script: |
+            echo '${{ secrets.ENV_PRODUCTION }}' > ${{ secrets.EC2_PATH }}/.env.production
+
       - name: SSH deploy on EC2
         uses: appleboy/ssh-action@master
         with:
@@ -73,15 +82,6 @@ jobs:
             pm2 delete next-app || true
             PORT=3004 pm2 start "npm run start" --name next-app
             pm2 save
-
-      - name: Copy .env.production to EC2
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY_B64 }}
-          script: |
-            echo '${{ secrets.ENV_PRODUCTION }}' > ${{ secrets.EC2_PATH }}/.env.production
 
       - name: Set end timestamp (epoch)
         id: end_epoch
