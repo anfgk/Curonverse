@@ -11,7 +11,7 @@ const FormContainer = styled.div`
 export default function ProfileForm({
   name,
   gender,
-  date,
+  birthDate,
   focusedField,
   isFormValid,
   handleChange,
@@ -50,7 +50,7 @@ export default function ProfileForm({
       />
       <ProfileInput
         label="생년월일"
-        value={date}
+        value={birthDate}
         type="date"
         onChange={handleChange("date")}
         onFocus={handleFocus("date")}
