@@ -11,6 +11,11 @@ const Container = styled.div`
   height: 1106px;
   background: #393939;
   position: relative;
+
+  /* 모바일에서 콘텐츠가 잘리지 않도록 오버플로우만 처리 */
+  @media (max-width: 375px) {
+    width: 100vw;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -18,6 +23,16 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   position: relative;
   z-index: 1;
+  height: 100%;
+  padding: 20px;
+  gap: 20px;
+
+  /* 모바일에서 콘텐츠가 잘리지 않도록 */
+  @media (max-width: 375px) {
+    padding: 15px;
+    gap: 15px;
+    height: 90%;
+  }
 `;
 
 interface Props {

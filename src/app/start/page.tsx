@@ -17,6 +17,12 @@ const Container = styled.div`
   position: fixed;
   overflow: scroll;
   margin: 0 auto;
+
+  /* 모바일에서 콘텐츠가 잘리지 않도록 오버플로우만 처리 */
+  @media (max-width: 375px) {
+    width: 100vw;
+    height: 100vh;
+  }
 `;
 
 const ContentWrapper = styled.div`

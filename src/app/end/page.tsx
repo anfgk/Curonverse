@@ -9,12 +9,8 @@ import SubText from "@/components/SubText";
 import {
   StyledBottomSection,
   AnalysisSection,
-  CurationTitle,
   CurationIcon,
   CurationText,
-  PageIndicator,
-  PageIcon,
-  PageText,
 } from "@/styles/ResultPageStyles";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { RiSendPlaneFill } from "react-icons/ri";
@@ -28,6 +24,13 @@ const Container = styled.div`
   position: fixed;
   overflow: scroll;
   margin: 0 auto;
+
+  /* 모바일에서 콘텐츠가 잘리지 않도록 오버플로우만 처리 */
+  @media (max-width: 375px) {
+    width: 100vw;
+    position: relative;
+    height: 100%;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -55,6 +58,10 @@ const Image = styled.img`
 const BottomSection = styled(StyledBottomSection)`
   background-color: transparent;
   padding-top: 0px;
+  @media (max-width: 375px) {
+    position: relative;
+    min-height: auto;
+  }
 `;
 
 const StyledCurationItem = styled.div`
@@ -138,7 +145,7 @@ export default function Start() {
         />
         <EndDescription>
           <div>꽃에 물을 주듯,</div>
-          <div>매일 하루 한잔 감성을 돌봐요.</div>
+          <div> 매일 하루 한잔 감성을 돌봐요.</div>
         </EndDescription>
         <Image src="/images/end.svg" alt="end" />
         <BottomSection>

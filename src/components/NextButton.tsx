@@ -28,6 +28,12 @@ const ButtonContainer = styled.div<{ variant?: "profile" | "step" }>`
   gap: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
+  @media (max-width: 375px) {
+    top: ${(props) => (props.variant === "profile" ? "120%" : "105%")};
+  }
+
+  @media (max-height: 812px) {
+  }
 
   &.disabled {
     cursor: not-allowed;

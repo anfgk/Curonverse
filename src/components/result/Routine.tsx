@@ -18,6 +18,10 @@ const PageWrapper = styled.div`
   background: #393939;
   min-height: 100vh;
   padding: 20px 20px 0;
+  @media (max-width: 375px) {
+    min-height: auto;
+    padding-bottom: 20px;
+  }
 `;
 
 const CardContainer = styled.div`
@@ -60,12 +64,12 @@ const Routine: React.FC<RoutineProps> = ({
   testResult,
   userName,
   nextPage,
-  toggleSection }) => {
-
-    const handlePageClick = () => {
-      nextPage();
-      toggleSection(5);
-    };
+  toggleSection,
+}) => {
+  const handlePageClick = () => {
+    nextPage();
+    toggleSection(5);
+  };
 
   return (
     <>
@@ -90,12 +94,19 @@ const Routine: React.FC<RoutineProps> = ({
         </GuideWrapper>
         <CardContainer>
           {testResult.healingRoutines.map((routine, idx) => (
-            <RoutineCard key={idx} title={routine.title} desc={routine.description} bgColor={idx === 0 ? "#54C0D8" : idx === 1 ? "#299BB4" : "#1B7184"} />
+            <RoutineCard
+              key={idx}
+              title={routine.title}
+              desc={routine.description}
+              bgColor={
+                idx === 0 ? "#54C0D8" : idx === 1 ? "#299BB4" : "#1B7184"
+              }
+            />
           ))}
         </CardContainer>
         <PageIndicator>
           <PageIcon onClick={handlePageClick} style={{ cursor: "pointer" }} />
-            <PageText>end</PageText>
+          <PageText>end</PageText>
         </PageIndicator>
       </PageWrapper>
     </>

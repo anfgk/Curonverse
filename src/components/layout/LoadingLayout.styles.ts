@@ -14,6 +14,15 @@ export const Container = styled.div`
   position: fixed;
   overflow: scroll;
   margin: 0 auto;
+
+  /* 모바일에서 콘텐츠가 잘리지 않도록 오버플로우만 처리 */
+  @media (max-width: 375px) {
+    width: 100vw;
+  }
+
+  @media (max-height: 812px) {
+    height: 100vh;
+  }
 `;
 
 export const ContentWrapper = styled.div`
@@ -32,6 +41,19 @@ export const RocketImage = styled(Image)`
   display: block;
   margin-left: auto;
   margin-right: auto;
+
+  /* 모바일에서 로켓 이미지 크기 조정 */
+  @media (max-width: 375px) {
+    margin-top: 60px;
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  @media (max-height: 812px) {
+    margin-top: 60px;
+    width: 70px !important;
+    height: 70px !important;
+  }
 `;
 
 export const TextContainer = styled.div`

@@ -12,6 +12,15 @@ const Container = styled.div<{ dimmed: boolean }>`
   position: relative;
   transition: all 0.3s ease;
 
+  /* 모바일에서 콘텐츠가 잘리지 않도록 오버플로우만 처리 */
+  @media (max-width: 375px) {
+    width: 100vw;
+  }
+
+  @media (max-height: 812px) {
+    height: 100vh;
+  }
+
   ${(props) =>
     props.dimmed &&
     `
@@ -32,6 +41,7 @@ const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 1;
+  height: 100%;
 `;
 
 export default function ProfilePage() {

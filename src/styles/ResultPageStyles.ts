@@ -8,6 +8,15 @@ export const Container = styled.div`
   color: white;
   display: flex;
   flex-direction: column;
+
+  /* 모바일에서 콘텐츠가 잘리지 않도록 오버플로우만 처리 */
+  @media (max-width: 375px) {
+    width: 100vw;
+  }
+
+  @media (max-height: 812px) {
+    height: 100vh;
+  }
 `;
 
 export const TopSection = styled.div`
