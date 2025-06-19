@@ -74,7 +74,7 @@ jobs:
             pm2 save
 
       - name: Copy .env.production to EC2
-        uses: appleboy/scp-action@master
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
