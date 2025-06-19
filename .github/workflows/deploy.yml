@@ -1,39 +1,218 @@
-name: Deploy to EC2
+name: 🚀 Deploy to 운영환경 프론트 서버
 
 on:
   push:
-    branches: [main]
+    branches: ["main"]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Set start timestamp (epoch)
+        id: start_epoch
+        run: echo "epoch=$(date +%s)" >> $GITHUB_OUTPUT
 
-      - name: Setup SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_SSH_KEY_B64 }}" | base64 -d > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+      - name: Set current timestamp
+        id: timestamp
+        run: echo "datetime=$(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
 
-      - name: Deploy to EC2
-        run: |
-          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-          if [ ! -d "${{ secrets.EC2_PATH }}" ]; then
-          git clone git@github.com:curonverse/frontend.git ${{ secrets.EC2_PATH }}
-          fi
-          cd ${{ secrets.EC2_PATH }}
-          git pull origin main
-          npm install
-          npm run build
-          pm2 restart next-app || pm2 start npm --name "next-app" -- start
-          pm2 save
-          EOF
+      - name: Slack Notification - 프론트 배포 시작
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          payload: |
+            {
+              "text": "🚀 운영환경 *프론트엔드* 배포 시작",
+              "attachments": [
+                {
+                  "color": "#36C5F0",
+                  "blocks": [
+                    {
+                      "type": "header",
+                      "text": {
+                        "type": "plain_text",
+                        "text": ":hourglass_flowing_sand: 프론트엔드 배포 시작",
+                        "emoji": true
+                      }
+                    },
+                    {
+                      "type": "section",
+                      "fields": [
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Branch:* ${{ github.ref_name }}"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Author:* ${{ github.actor }}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: Copy .env.production to EC2
-        run: |
-          echo "${{ secrets.ENV_PRODUCTION }}" | ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "cat > ${{ secrets.EC2_PATH }}/.env.production"
+      - name: SSH deploy on EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/frontend
+            git pull origin main
+            npm install
+            npm run build
+            pm2 restart next-app || pm2 start npm --name "next-app" -- start
+            pm2 save
 
+      - name: Set end timestamp (epoch)
+        id: end_epoch
+        run: echo "epoch=$(date +%s)" >> $GITHUB_OUTPUT
+
+      - name: Set end timestamp
+        id: end_timestamp
+        run: echo "datetime=$(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
+
+      - name: Calculate duration
+        id: duration
+        run: echo "duration=$(( ${{ steps.end_epoch.outputs.epoch }} - ${{ steps.start_epoch.outputs.epoch }} ))" >> $GITHUB_OUTPUT
+
+      - name: Slack Notification - 배포 성공
+        if: success()
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          payload: |
+            {
+              "text": "✅ 운영환경 *프론트엔드* 배포 성공",
+              "attachments": [
+                {
+                  "color": "#2EB67D",
+                  "blocks": [
+                    {
+                      "type": "section",
+                      "fields": [
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Branch:* ${{ github.ref_name }}"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Author:* ${{ github.actor }}"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "context",
+                      "elements": [
+                        {
+                          "type": "mrkdwn",
+                          "text": "*배포 시작 시간:* `${{ steps.timestamp.outputs.datetime }} (KST)`\n*배포 종료 시간:* `${{ steps.end_timestamp.outputs.datetime }} (KST)`\n*소요 시간:* `${{ steps.duration.outputs.duration }}초`"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Slack Notification - 배포 실패
+        if: failure()
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          payload: |
+            {
+              "text": "❌ 운영환경 *프론트엔드* 배포 실패",
+              "attachments": [
+                {
+                  "color": "#FF0000",
+                  "blocks": [
+                    {
+                      "type": "section",
+                      "fields": [
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Branch:* ${{ github.ref_name }}"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Author:* ${{ github.actor }}"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "context",
+                      "elements": [
+                        {
+                          "type": "mrkdwn",
+                          "text": "*배포 시작 시간:* `${{ steps.timestamp.outputs.datetime }} (KST)`\n*배포 종료 시간:* `${{ steps.end_timestamp.outputs.datetime }} (KST)`\n*소요 시간:* `${{ steps.duration.outputs.duration }}초`"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Slack Notification - 배포 취소
+        if: cancelled()
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          payload: |
+            {
+              "text": "⚠️ 운영환경 *프론트엔드* 배포 취소",
+              "attachments": [
+                {
+                  "color": "#808080",
+                  "blocks": [
+                    {
+                      "type": "section",
+                      "fields": [
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Branch:* ${{ github.ref_name }}"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Author:* ${{ github.actor }}"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "context",
+                      "elements": [
+                        {
+                          "type": "mrkdwn",
+                          "text": "*배포 시작 시간:* `${{ steps.timestamp.outputs.datetime }} (KST)`\n*배포 종료 시간:* `${{ steps.end_timestamp.outputs.datetime }} (KST)`\n*소요 시간:* `${{ steps.duration.outputs.duration }}초`"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
