@@ -71,7 +71,7 @@ jobs:
             npm install
             npm run build
             pm2 delete next-app || true
-            pm2 start "npm run start" --name next-app
+            PORT=3004 pm2 start "npm run start" --name next-app
             pm2 save
 
       - name: Copy .env.production to EC2
