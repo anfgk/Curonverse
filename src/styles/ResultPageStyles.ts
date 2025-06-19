@@ -163,7 +163,7 @@ export const AnalysisTitle = styled.h4`
 
 export const AnalysisContent = styled.div<{ isOpen: boolean }>`
   max-height: ${(props) => (props.isOpen ? "500px" : "0")};
-  overflow: hidden;
+  overflow: scroll;
   transition: max-height 0.3s ease-in-out;
 `;
 

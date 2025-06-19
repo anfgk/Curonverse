@@ -12,7 +12,7 @@ export const Container = styled.div`
   height: 812px;
   background: #0f1227;
   position: fixed;
-  overflow: hidden;
+  overflow: scroll;
   margin: 0 auto;
 `;
 

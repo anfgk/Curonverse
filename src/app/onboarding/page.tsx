@@ -13,7 +13,7 @@ export default function Onboarding() {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.push("/profile");
-    }, 100);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, [router]);

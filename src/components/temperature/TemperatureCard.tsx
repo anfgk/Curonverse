@@ -3,10 +3,9 @@ import styled from "styled-components";
 import {
   getTemperaturePercentage,
   RHYTHM_COLORS,
-  temperatureData
+  temperatureData,
 } from "@/data/temperatureData";
 import { RhythmName } from "@/data/types";
-
 
 interface TemperatureCardProps {
   rhythmName: RhythmName;
@@ -50,7 +49,7 @@ const Slider = styled.div<{ percentage: number; gradient: string }>`
   background: #e6e6e6;
   border-radius: 18px;
   position: relative;
-  overflow: hidden;
+  overflow: scroll;
 
   &::after {
     content: "";
@@ -103,9 +102,7 @@ const Label = styled.div`
   font-weight: bold;
 `;
 
-const TemperatureCard: React.FC<TemperatureCardProps> = ({
-  rhythmName
-}) => {
+const TemperatureCard: React.FC<TemperatureCardProps> = ({ rhythmName }) => {
   const { temperature, description } = temperatureData[rhythmName];
   const { main, gradient } = RHYTHM_COLORS[rhythmName];
   const percentage = getTemperaturePercentage(temperature);
