@@ -1,4 +1,4 @@
-import { RhythmName } from "./temperatureData";
+import { RhythmName } from "./types";
 
 export const mbtiKeywords: Record<string, string[]> = {
   EPSA: ["고요", "안정", "관찰"],
@@ -221,22 +221,22 @@ export const mbtiFullDescriptions: Record<string, { title: string }> = {
 };
 
 export const mbtiRhythms: Record<string, RhythmName> = {
-  EPSA: "SparkFlame",
-  EPSU: "SparkFlame",
-  EPIA: "WarmFlow",
-  EPIU: "WarmFlow",
-  EHSA: "WarmFlow",
-  EHSU: "SparkFlame",
-  EHIA: "HealingLoop",
-  EHIU: "SilentEcho",
-  RPSA: "QuietSync",
-  RPSU: "SilentEcho",
-  RPIA: "HealingLoop",
-  RPIU: "SilentEcho",
-  RHSA: "QuietSync",
-  RHSU: "HiddenPearl",
-  RHIA: "QuietSync",
-  RHIU: "HiddenPearl",
+  EPSA: "Spark Flame",
+  EPSU: "Spark Flame",
+  EPIA: "Warm Flow",
+  EPIU: "Warm Flow",
+  EHSA: "Warm Flow",
+  EHSU: "Spark Flame",
+  EHIA: "Healing Loop",
+  EHIU: "Silent Echo",
+  RPSA: "Quiet Sync",
+  RPSU: "Silent Echo",
+  RPIA: "Healing Loop",
+  RPIU: "Silent Echo",
+  RHSA: "Quiet Sync",
+  RHSU: "Hidden Pearl",
+  RHIA: "Quiet Sync",
+  RHIU: "Hidden Pearl",
 };
 
 export const mbtiRhythmDescriptions: Record<string, string> = {
