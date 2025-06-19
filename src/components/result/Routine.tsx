@@ -16,12 +16,10 @@ import RoutineCard from "@/components/RoutineCard";
 
 const PageWrapper = styled.div`
   background: #393939;
-  min-height: 100vh;
-  padding: 20px 20px 0;
-  @media (max-width: 375px) {
-    min-height: auto;
-    padding-bottom: 20px;
-  }
+  min-height: 812px;
+  position: relative;
+  padding: 24px 20px 20px;
+  overflow: scroll;
 `;
 
 const CardContainer = styled.div`
