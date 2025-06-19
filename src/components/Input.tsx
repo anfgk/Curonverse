@@ -29,6 +29,7 @@ const InfoInput = styled.input`
 
   &[type="date"] {
     position: relative;
+    color: transparent;
 
     &::-webkit-calendar-picker-indicator {
       position: absolute;
@@ -41,10 +42,24 @@ const InfoInput = styled.input`
       color: transparent;
       background: transparent;
       cursor: pointer;
+      z-index: 2;
     }
 
-    &::-webkit-datetime-edit {
+    &::-webkit-datetime-edit,
+    &::-webkit-datetime-edit-fields-wrapper,
+    &::-webkit-datetime-edit-text,
+    &::-webkit-datetime-edit-month-field,
+    &::-webkit-datetime-edit-day-field,
+    &::-webkit-datetime-edit-year-field {
       display: none;
+      color: transparent;
+      background: transparent;
+    }
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-clear-button {
+      display: none;
+      -webkit-appearance: none;
     }
   }
 `;
@@ -57,6 +72,8 @@ const DateText = styled.span<{ isPlaceholder?: boolean }>`
   color: ${(props) => (props.isPlaceholder ? "#b0b0b0" : "#ffffff")};
   pointer-events: none;
   font-weight: bold;
+  z-index: 1;
+  font-size: 16px;
 `;
 
 const ClearButton = styled.button`

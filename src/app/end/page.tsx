@@ -145,7 +145,7 @@ export default function Start() {
         />
         <EndDescription>
           <div>꽃에 물을 주듯,</div>
-          <div> 매일 하루 한잔 감성을 돌봐요.</div>
+          <div> 매일 하루 한잔 감정을 돌봐요.</div>
         </EndDescription>
         <Image src="/images/end.svg" alt="end" />
         <BottomSection>
