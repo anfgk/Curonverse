@@ -8,10 +8,7 @@ import { ReactNode } from "react";
 
 const Container = styled.div`
   width: 375px;
-  height: 1106px;
   background: #393939;
-  position: relative;
-
   /* 모바일에서 콘텐츠가 잘리지 않도록 오버플로우만 처리 */
   @media (max-width: 375px) {
     width: 100vw;
@@ -21,17 +18,14 @@ const Container = styled.div`
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  position: relative;
   z-index: 1;
   height: 100%;
-  padding: 20px;
+  padding: 20px 20px 50px;
   gap: 20px;
 
-  /* 모바일에서 콘텐츠가 잘리지 않도록 */
   @media (max-width: 375px) {
     padding: 15px;
     gap: 15px;
-    height: 90%;
   }
 `;
 

@@ -37,8 +37,7 @@ const CheckBoxGroup = styled.div`
 
 const ButtonWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  padding: 0 20px;
+  position: relative;
 `;
 
 interface Question {

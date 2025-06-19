@@ -14,7 +14,6 @@ const Container = styled.div`
   width: 375px;
   height: 812px;
   background: #0f1227;
-
   overflow: scroll;
   margin: 0 auto;
 

@@ -17,10 +17,6 @@ const Container = styled.div<{ dimmed: boolean }>`
     width: 100vw;
   }
 
-  @media (max-height: 812px) {
-    height: 100vh;
-  }
-
   ${(props) =>
     props.dimmed &&
     `
