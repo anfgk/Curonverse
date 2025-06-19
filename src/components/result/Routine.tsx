@@ -2,7 +2,6 @@
 
 import React from "react";
 import ResultHeader from "../ResultHeader";
-import { rhythmRoutineData as _rhythmRoutineData } from "@/data/rhythmRoutineData";
 import { TestResult } from "@/data/types";
 import { styled } from "styled-components";
 import {
@@ -14,13 +13,6 @@ import {
 } from "@/styles/ResultPageStyles";
 import { FaArrowRightLong } from "react-icons/fa6";
 import RoutineCard from "@/components/RoutineCard";
-
-
-
-const rhythmRoutineData: Record<
-  string,
-  (typeof _rhythmRoutineData)["SparkFlame"]
-> = _rhythmRoutineData;
 
 const PageWrapper = styled.div`
   background: #393939;
