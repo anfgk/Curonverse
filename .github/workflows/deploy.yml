@@ -73,6 +73,15 @@ jobs:
             pm2 restart next-app || pm2 start npm --name "next-app" -- start
             pm2 save
 
+      - name: Copy .env.production to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY_B64 }}
+          script: |
+            echo '${{ secrets.ENV_PRODUCTION }}' > ${{ secrets.EC2_PATH }}/.env.production
+
       - name: Set end timestamp (epoch)
         id: end_epoch
         run: echo "epoch=$(date +%s)" >> $GITHUB_OUTPUT
