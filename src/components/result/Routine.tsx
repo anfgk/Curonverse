@@ -48,11 +48,7 @@ const GuideWrapper = styled.div`
   margin: 12px 0 16px 8px;
 `;
 
-interface RoutineProps {
-  onComplete: () => void;
-}
-
-const Routine = ({ onComplete } : RoutineProps) => {
+const Routine = () => {
   const { testResult, userName } = useResultContext();
 
   return (
@@ -88,7 +84,6 @@ const Routine = ({ onComplete } : RoutineProps) => {
             />
           ))}
         </CardContainer>
-        <button onClick={onComplete}>마무리</button>
       </PageWrapper>
     </section>
   );

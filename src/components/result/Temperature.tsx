@@ -88,7 +88,6 @@ const Temperature = () => {
               감정 인지를 어려워해요.
             </CurationText>
           </CurationItem>
-          {/* <button onClick={() => scrollToSection(3)}>다음</button> */}
         </AnalysisSection>
       </FirstPageBottomSection>
     </section>

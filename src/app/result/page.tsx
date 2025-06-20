@@ -8,6 +8,7 @@ import ResultMbti from "@/components/result/ResultMbti";
 import ResultRhythm from "@/components/result/ResultRhythm";
 import Temperature from "@/components/result/Temperature";
 import Routine from "@/components/result/Routine";
+import ResultEnd from "@/components/result/ResultEnd";
 import { useTestResult } from "@/hooks/useTestResult";
 import { useStoredUser } from "@/hooks/useStoredUser";
 
@@ -20,10 +21,11 @@ export default function ResultPage() {
   const rhythmRef = useRef<HTMLDivElement>(null);
   const tempRef = useRef<HTMLDivElement>(null);
   const routineRef = useRef<HTMLDivElement>(null);
+  const endRef = useRef<HTMLDivElement>(null);
 
   if (!testResult) return null; // 또는 로딩 처리
 
-  const sectionRefs = [mbtiRef, rhythmRef, tempRef, routineRef];
+  const sectionRefs = [mbtiRef, rhythmRef, tempRef, routineRef, endRef];
 
   const scrollToSection = (index: number) => {
     sectionRefs[index]?.current?.scrollIntoView({ behavior: "smooth" });
@@ -48,7 +50,10 @@ export default function ResultPage() {
           <Temperature />
         </div>
         <div ref={routineRef}>
-          <Routine onComplete={() => router.push("/end")} />
+          <Routine />
+        </div>
+        <div ref={endRef}>
+          <ResultEnd />
         </div>
       </PageTransitionContainer>
     </ResultContext.Provider>
