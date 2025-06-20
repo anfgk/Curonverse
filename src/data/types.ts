@@ -40,17 +40,24 @@ export interface HealingRoutine {
 export interface TestResult {
   testResultId: number;
   testSessionId: number;
+  /* 감정 MBTI */
   emotionType: EmotionType;
+  /* 감정리듬 */
   rhythm: string;
+  rhythmAnalysis: string;
+  rhythmDescription: string;
+  /* 감정온도 */
   temperature: number;
-  healingRoutines: HealingRoutine[];
-  healingQuote: string;
-  analysis: string;
-  recommendedRoutine: string;
-  percentTotal: number;
-  percentGender: number;
   expressionPercentile: number;
   processingPercentile: number;
   connectionPercentile: number;
   awarenessPercentile: number;
+  /* 힐링루틴 */
+  healingQuote: string;
+  recommendedRoutine: string;
+  healingKeywords: string[];
+  healingRoutines: HealingRoutine[];
+  
+  percentTotal: number;
+  percentGender: number;
 }
