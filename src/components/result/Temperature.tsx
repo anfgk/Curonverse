@@ -5,15 +5,13 @@ import styled from "styled-components";
 import {
   TopSection as BaseTopSection,
   AnalysisSection,
-  PageIndicator,
-  PageIcon,
-  PageText,
   CurationItem,
   CurationIcon,
   CurationText,
   StyledBottomSection,
 } from "@/styles/ResultPageStyles";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { useResultContext } from "@/contexts/ResultContext";
 import ResultHeader from "@/components/ResultHeader";
 import TemperatureCard from "@/components/temperature/TemperatureCard";
 import { useTemperatureMeta } from "@/hooks/useTemperatureMeta";
@@ -46,25 +44,17 @@ const AnalysisTitle = styled.div`
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
-const Temperature: React.FC<TemperatureProps> = ({
-  testResult,
-  emotionType,
-  nextPage,
-  toggleSection,
-}) => {
+const Temperature = () => {
+  const { testResult, userName, scrollToSection } = useResultContext();
+
+  const emotionType = testResult.emotionType;
   const rhythmName = testResult.rhythm as RhythmName;
   const { percentTotal, percentGender } = testResult;
-  const { hexCode } = emotionType;
   const temperatureMeta = useTemperatureMeta(rhythmName);
 
-  const handlePageClick = () => {
-    nextPage();
-    toggleSection(4);
-  };
-
   return (
-    <>
-      <TopSection mbtiColor={hexCode}>
+    <section>
+      <TopSection mbtiColor={emotionType.hexCode}>
         <ResultHeader
           pageNumber="03"
           title={temperatureMeta.temperatureInfo.title}
@@ -98,13 +88,10 @@ const Temperature: React.FC<TemperatureProps> = ({
               감정 인지를 어려워해요.
             </CurationText>
           </CurationItem>
-          <PageIndicator>
-            <PageIcon onClick={handlePageClick} style={{ cursor: "pointer" }} />
-            <PageText>04</PageText>
-          </PageIndicator>
+          {/* <button onClick={() => scrollToSection(3)}>다음</button> */}
         </AnalysisSection>
       </FirstPageBottomSection>
-    </>
+    </section>
   );
 };
 

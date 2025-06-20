@@ -2,15 +2,12 @@
 
 import React from "react";
 import ResultHeader from "../ResultHeader";
-import { TestResult } from "@/data/types";
 import { styled } from "styled-components";
 import {
   CurationTitle,
   CurationIcon,
-  PageIndicator,
-  PageIcon,
-  PageText,
 } from "@/styles/ResultPageStyles";
+import { useResultContext } from "@/contexts/ResultContext";
 import { FaArrowRightLong } from "react-icons/fa6";
 import RoutineCard from "@/components/RoutineCard";
 
@@ -52,25 +49,14 @@ const GuideWrapper = styled.div`
 `;
 
 interface RoutineProps {
-  testResult: TestResult;
-  userName: string;
-  nextPage: () => void;
-  toggleSection: (index: number) => void;
+  onComplete: () => void;
 }
 
-const Routine: React.FC<RoutineProps> = ({
-  testResult,
-  userName,
-  nextPage,
-  toggleSection,
-}) => {
-  const handlePageClick = () => {
-    nextPage();
-    toggleSection(5);
-  };
+const Routine = ({ onComplete } : RoutineProps) => {
+  const { testResult, userName } = useResultContext();
 
   return (
-    <>
+    <section>
       <PageWrapper>
         <ResultHeader
           pageNumber="05"
@@ -102,12 +88,9 @@ const Routine: React.FC<RoutineProps> = ({
             />
           ))}
         </CardContainer>
-        <PageIndicator>
-          <PageIcon onClick={handlePageClick} style={{ cursor: "pointer" }} />
-          <PageText>end</PageText>
-        </PageIndicator>
+        <button onClick={onComplete}>마무리</button>
       </PageWrapper>
-    </>
+    </section>
   );
 };
 
