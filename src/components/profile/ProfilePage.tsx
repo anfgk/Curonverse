@@ -2,7 +2,6 @@
 
 import styled from "styled-components";
 import ProfileForm from "./ProfileForm";
-import ProfileAgreement from "./ProfileAgreement";
 import { useProfileForm } from "@/hooks/useProfileForm";
 
 const Container = styled.div<{ dimmed: boolean }>`
@@ -15,6 +14,7 @@ const Container = styled.div<{ dimmed: boolean }>`
   /* 모바일에서 콘텐츠가 잘리지 않도록 오버플로우만 처리 */
   @media (max-width: 375px) {
     width: 100vw;
+    height: 100vh;
   }
 
   ${(props) =>
@@ -50,6 +50,7 @@ export default function ProfilePage() {
     handleChange,
     handleFocus,
     handleBlur,
+    handleBeforeClick,
     handleNextClick,
   } = useProfileForm();
 
@@ -65,9 +66,9 @@ export default function ProfilePage() {
           handleChange={handleChange}
           handleFocus={handleFocus}
           handleBlur={handleBlur}
+          handleBeforeClick={handleBeforeClick}
           handleNextClick={handleNextClick}
         />
-        <ProfileAgreement />
       </ContentWrapper>
     </Container>
   );

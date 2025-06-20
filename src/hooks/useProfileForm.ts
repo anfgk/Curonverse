@@ -21,6 +21,9 @@ export function useProfileForm() {
 
   const handleFocus = (field: string) => () => setFocusedField(field);
   const handleBlur = () => setFocusedField(null);
+  const handleBeforeClick = () => {
+    router.push("/start");
+  }
 
   const handleNextClick = async () => {
     if (!isFormValid) return;
@@ -46,6 +49,7 @@ export function useProfileForm() {
     handleChange,
     handleFocus,
     handleBlur,
+    handleBeforeClick,
     handleNextClick,
   };
 }

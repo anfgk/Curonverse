@@ -5,8 +5,9 @@ import styled from "styled-components";
 import QuesBadge from "@/components/question/QuesBadge";
 import Question from "@/components/question/Question";
 import CheckBox from "@/components/common/CheckBox";
-import NextButton from "@/components/NextButton";
-import BeforeButton from "@/components/question/BeforeButton";
+import ButtonWrapper from "@/components/buttons/ButtonWrapper";
+import NextButton from "@/components/buttons/NextButton";
+import BeforeButton from "@/components/buttons/BeforeButton";
 
 const QuestionContainer = styled.div<{
   isFocused: boolean;
@@ -33,11 +34,6 @@ const CheckBoxGroup = styled.div`
   justify-content: center;
   align-items: center;
   margin: 20px 24px 0;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  position: relative;
 `;
 
 interface Question {
@@ -189,7 +185,13 @@ export default function QuestionPage({
       })}
       <ButtonWrapper>
         <BeforeButton onClick={onPrev} />
-        <NextButton onClick={onNext} disabled={!allAnswered} variant="step" />
+        <NextButton
+          onClick={onNext}
+          disabled={!allAnswered}
+          variant="step"
+        >
+          {step === 4 ? "제출하기" : "다음"}
+        </NextButton>
       </ButtonWrapper>
     </>
   );
