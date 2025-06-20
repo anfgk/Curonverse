@@ -74,7 +74,6 @@ const ResultMbti = () => {
               </CurationText>
             </CurationItem>
           ))}
-          {/* <button onClick={() => scrollToSection(1)}>다음</button> */}
         </AnalysisSection>
       </FirstPageBottomSection>
     </section>

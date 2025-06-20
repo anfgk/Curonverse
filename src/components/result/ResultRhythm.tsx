@@ -90,7 +90,6 @@ const ResultRhythm = () => {
             </AnalysisTitle3>
           </AnalysisItem>
         </AnalysisSection>
-        {/* <button onClick={() => scrollToSection(2)}>다음</button> */}
       </SecondPageBottomSection>
     </section>
   );

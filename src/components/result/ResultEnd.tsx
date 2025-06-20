@@ -21,8 +21,6 @@ const Container = styled.div`
   width: 375px;
   height: 812px;
   background: #0f1227;
-  position: fixed;
-  overflow: scroll;
   margin: 0 auto;
 
   /* 모바일에서 콘텐츠가 잘리지 않도록 오버플로우만 처리 */
@@ -104,9 +102,7 @@ const Icon = styled.div`
   justify-content: center;
 `;
 
-// Start 페이지 컴포넌트 정의
-export default function Start() {
-  const router = useRouter();
+export default function ResultEnd() {
   const captureRef = useRef<HTMLDivElement>(null);
 
   const handleDownload = async () => {
