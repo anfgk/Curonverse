@@ -15,15 +15,7 @@ import { useResultContext } from "@/contexts/ResultContext";
 import ResultHeader from "@/components/ResultHeader";
 import TemperatureCard from "@/components/temperature/TemperatureCard";
 import { useTemperatureMeta } from "@/hooks/useTemperatureMeta";
-import { TestResult, EmotionType, RhythmName } from "@/data/types";
-
-interface TemperatureProps {
-  testResult: TestResult;
-  emotionType: EmotionType;
-  openSections: number[];
-  nextPage: () => void;
-  toggleSection: (index: number) => void;
-}
+import { RhythmName } from "@/data/types";
 
 const TopSection = styled(BaseTopSection)<{ mbtiColor: string }>`
   background: ${(props) => props.mbtiColor};
@@ -45,7 +37,7 @@ const AnalysisTitle = styled.div`
 `;
 
 const Temperature = () => {
-  const { testResult, userName, scrollToSection } = useResultContext();
+  const { testResult } = useResultContext();
 
   const emotionType = testResult.emotionType;
   const rhythmName = testResult.rhythm as RhythmName;

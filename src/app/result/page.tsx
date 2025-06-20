@@ -11,6 +11,7 @@ import Routine from "@/components/result/Routine";
 import ResultEnd from "@/components/result/ResultEnd";
 import { useTestResult } from "@/hooks/useTestResult";
 import { useStoredUser } from "@/hooks/useStoredUser";
+import ResultPoem from "@/components/result/ResultPoem";
 
 export default function ResultPage() {
   const user = useStoredUser();
@@ -20,12 +21,13 @@ export default function ResultPage() {
   const mbtiRef = useRef<HTMLDivElement>(null);
   const rhythmRef = useRef<HTMLDivElement>(null);
   const tempRef = useRef<HTMLDivElement>(null);
+  const poemRef = useRef<HTMLDivElement>(null);
   const routineRef = useRef<HTMLDivElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
 
   if (!testResult) return null; // 또는 로딩 처리
 
-  const sectionRefs = [mbtiRef, rhythmRef, tempRef, routineRef, endRef];
+  const sectionRefs = [mbtiRef, rhythmRef, tempRef, poemRef, routineRef, endRef];
 
   const scrollToSection = (index: number) => {
     sectionRefs[index]?.current?.scrollIntoView({ behavior: "smooth" });
@@ -48,6 +50,9 @@ export default function ResultPage() {
         </div>
         <div ref={tempRef}>
           <Temperature />
+        </div>
+        <div ref={poemRef}>
+          <ResultPoem />
         </div>
         <div ref={routineRef}>
           <Routine />
