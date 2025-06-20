@@ -9,10 +9,10 @@ import {
   AnalysisTitle,
 } from "@/styles/ResultPageStyles";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { useResultContext } from "@/contexts/ResultContext";
 import ResultHeader from "@/components/ResultHeader";
 import EmotionalMap from "@/components/EmotionalMap";
 import { PageIndicator, PageIcon, PageText } from "@/styles/ResultPageStyles";
-import { TestResult } from "@/data/types";
 
 interface GradientSectionProps {
   mbtiColor: string;
@@ -56,27 +56,11 @@ const SecondPageBottomSection = styled(StyledBottomSection)`
   bottom: -100px;
 `;
 
-interface ResultRhythmProps {
-  testResult: TestResult;
-  userName: string;
-  nextPage: () => void;
-  toggleSection: (index: number) => void;
-}
-
-const ResultRhythm: React.FC<ResultRhythmProps> = ({
-  testResult,
-  userName,
-  nextPage,
-  toggleSection,
-}) => {
-
-  const handleNextPage = () => {
-    nextPage();
-    toggleSection(3);
-  };
+const ResultRhythm = () => {
+  const { testResult, userName, scrollToSection } = useResultContext();
 
   return (
-    <>
+    <section>
       <GradientSection mbtiColor={testResult.emotionType.color}>
         <ResultHeader
           pageNumber="02"
@@ -106,12 +90,9 @@ const ResultRhythm: React.FC<ResultRhythmProps> = ({
             </AnalysisTitle3>
           </AnalysisItem>
         </AnalysisSection>
-        <PageIndicator>
-          <PageIcon onClick={handleNextPage} style={{ cursor: "pointer" }} />
-          <PageText>03</PageText>
-        </PageIndicator>
+        {/* <button onClick={() => scrollToSection(2)}>다음</button> */}
       </SecondPageBottomSection>
-    </>
+    </section>
   );
 };
 
