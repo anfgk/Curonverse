@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useRef } from "react";
-import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import Title from "@/components/Title";
 import StarBackground from "@/components/StarBackground";
@@ -16,6 +15,8 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { FiDownload } from "react-icons/fi";
 import html2canvas from "html2canvas";
+import ResultImageExport from "./ResultImageExport";
+import { useResultContext } from "@/contexts/ResultContext";
 
 const Container = styled.div`
   width: 375px;
@@ -102,20 +103,29 @@ const Icon = styled.div`
   justify-content: center;
 `;
 
+const HiddenCaptureWrapper = styled.div`
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  z-index: -9999;
+  width: 375px;
+`;
+
 export default function ResultEnd() {
+  const { testResult, userName } = useResultContext();
   const captureRef = useRef<HTMLDivElement>(null);
 
   const handleDownload = async () => {
     if (captureRef.current) {
       try {
         const canvas = await html2canvas(captureRef.current, {
-          backgroundColor: "#0f1227",
+          backgroundColor: testResult.emotionType.hexCode,
           scale: 2,
         });
         const image = canvas.toDataURL("image/jpeg", 1.0);
         const link = document.createElement("a");
         link.href = image;
-        link.download = "curonverse-result.jpg";
+        link.download = "result-export.jpg";
         link.click();
       } catch (error) {
         console.error("이미지 저장 중 오류가 발생했습니다:", error);
@@ -132,7 +142,7 @@ export default function ResultEnd() {
   return (
     <Container>
       <StarBackground />
-      <ContentWrapper ref={captureRef}>
+      <ContentWrapper>
         <SubText text="마무리" variant="subtitle" />
         <Title
           mainText="앞으로 추가될 Curonverse의"
@@ -175,6 +185,17 @@ export default function ResultEnd() {
           </AnalysisSection>
         </BottomSection>
       </ContentWrapper>
+      <>
+        <HiddenCaptureWrapper ref={captureRef}>
+          <ResultImageExport
+            userName={userName}
+            emotionCode={testResult.emotionType.code}
+            temperature={testResult.temperature}
+            rhythmDescription={testResult.rhythmDescription}
+            temperatureDescription={testResult.rhythmAnalysis}
+          />
+        </HiddenCaptureWrapper>
+      </>
     </Container>
   );
 }

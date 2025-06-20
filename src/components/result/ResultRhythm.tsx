@@ -72,7 +72,7 @@ const ResultRhythm = () => {
               머무르고 있어요.
             </>
           }
-          description={testResult.healingQuote}
+          description={testResult.rhythmDescription}
           color="white"
         />
         <EmotionalMap currentRhythm={testResult.rhythm} />
@@ -86,7 +86,7 @@ const ResultRhythm = () => {
               <CurationIcon>
                 <FaArrowRightLong />
               </CurationIcon>
-              {testResult.analysis}
+              {testResult.rhythmAnalysis}
             </AnalysisTitle3>
           </AnalysisItem>
         </AnalysisSection>

@@ -2,8 +2,10 @@
 
 import React, { useState } from "react";
 import styled from "styled-components";
+import { 
+  ScrollWrapper
+} from "@/styles/ResultPageStyles";
 import { useResultContext } from "@/contexts/ResultContext";
-import { usePoemMeta } from "@/hooks/usePoemMeta";
 import { RhythmName } from "@/data/types";
 import ResultHeader from "@/components/ResultHeader";
 import { poemData } from "@/data/poemData";
@@ -14,19 +16,6 @@ const Section = styled.section`
 
 const TopSection = styled.div<{ mbtiColor: string }>`
   padding-bottom: 40px;
-`;
-
-const ScrollWrapper = styled.div`
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  gap: 16px;
-  padding: 0 16px;
-  margin-top: 24px;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const PoemCard = styled.div<{ color: string; selected: boolean }>`
@@ -91,9 +80,17 @@ const StyledBottomSection = styled.div`
 `;
 
 const ResultPoem = () => {
-  const { testResult, userName } = useResultContext();
+  const { testResult, userName, scrollToSection } = useResultContext();
   const [selectedRhythm, setSelectedRhythm] = useState<RhythmName | null>(null);
-  const poemEntries = Object.entries(poemData) as [RhythmName, typeof poemData[RhythmName]][];
+
+  const handleSelect = (rhythmName: RhythmName) => {
+    setSelectedRhythm(rhythmName);
+
+    setTimeout(() => {
+      scrollToSection?.(4);
+    }, 300);
+
+  };  const poemEntries = Object.entries(poemData) as [RhythmName, typeof poemData[RhythmName]][];
 
   return (
     <Section>
@@ -117,7 +114,10 @@ const ResultPoem = () => {
             </PoemCard>
           ))}
         </ScrollWrapper>
-        <CompleteButton disabled={!selectedRhythm}>
+        <CompleteButton
+          disabled={!selectedRhythm}
+          onClick={() => handleSelect(selectedRhythm!)}
+        >
           선택 완료
         </CompleteButton>
       </TopSection>
