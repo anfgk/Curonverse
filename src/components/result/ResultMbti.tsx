@@ -50,7 +50,11 @@ const ResultMbti = () => {
         <KeywordSection>
           <KeywordContainer>
             {emotionType.keywords.map((kw, index) => (
-              <KeywordCircle key={kw.id} index={index} mbtiType={emotionType.code}>
+              <KeywordCircle
+                key={kw.id}
+                index={index}
+                mbtiType={emotionType.code}
+              >
                 '{kw.keyword}'
               </KeywordCircle>
             ))}

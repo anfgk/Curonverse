@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import ResultHeader from "../ResultHeader";
 import { styled } from "styled-components";
-import { 
+import {
   KeywordSection,
   KeywordContainer,
   KeywordLabel,
@@ -12,7 +12,7 @@ import {
   VideoWrapper,
   VideoThumbnail,
   EmptyVideo,
-  StartButton
+  StartButton,
 } from "@/styles/ResultPageStyles";
 import { useResultContext } from "@/contexts/ResultContext";
 const PageWrapper = styled.div`
@@ -72,7 +72,6 @@ const Routine = () => {
   const { testResult } = useResultContext();
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
 
-
   const getYoutubeThumbnail = (url: string) => {
     const videoId = url.split("v=")[1]?.split("&")[0];
     return videoId ? `https://img.youtube.com/vi/${videoId}/0.jpg` : null;
@@ -80,7 +79,9 @@ const Routine = () => {
 
   const getYoutubeEmbedUrl = (url: string) => {
     const videoId = url.split("v=")[1]?.split("&")[0];
-    return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : null;
+    return videoId
+      ? `https://www.youtube.com/embed/${videoId}?autoplay=1`
+      : null;
   };
 
   const togglePlayback = (index: number) => {
@@ -113,7 +114,11 @@ const Routine = () => {
         <KeywordSection>
           <KeywordContainer>
             {testResult.healingKeywords.map((kw, index) => (
-              <KeywordCircle key={kw} index={index} mbtiType={testResult.emotionType.code}>
+              <KeywordCircle
+                key={kw}
+                index={index}
+                mbtiType={testResult.emotionType.code}
+              >
                 '{kw}'
               </KeywordCircle>
             ))}
@@ -124,8 +129,12 @@ const Routine = () => {
           <SectionTitle>Contents</SectionTitle>
           <ScrollWrapper>
             {testResult.healingRoutines.map((routine, idx) => {
-              const thumbnail = routine.link ? getYoutubeThumbnail(routine.link) : null;
-              const embedUrl = routine.link ? getYoutubeEmbedUrl(routine.link) : null;
+              const thumbnail = routine.link
+                ? getYoutubeThumbnail(routine.link)
+                : null;
+              const embedUrl = routine.link
+                ? getYoutubeEmbedUrl(routine.link)
+                : null;
 
               return (
                 <RoutineCard key={idx}>
@@ -151,7 +160,9 @@ const Routine = () => {
 
                   <RoutineTextBox>
                     <RoutineTitle>{routine.title}</RoutineTitle>
-                    <RoutineDescription>{routine.description}</RoutineDescription>
+                    <RoutineDescription>
+                      {routine.description}
+                    </RoutineDescription>
                     <StartButton
                       disabled={!routine.link}
                       onClick={() => {

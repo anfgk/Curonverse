@@ -21,8 +21,9 @@ import { useResultContext } from "@/contexts/ResultContext";
 const Container = styled.div`
   width: 375px;
   height: 812px;
-  background: #0f1227;
+  background: transparent;
   margin: 0 auto;
+  position: relative;
 
   /* 모바일에서 콘텐츠가 잘리지 않도록 오버플로우만 처리 */
   @media (max-width: 375px) {

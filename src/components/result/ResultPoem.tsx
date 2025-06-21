@@ -2,9 +2,7 @@
 
 import React, { useState } from "react";
 import styled from "styled-components";
-import { 
-  ScrollWrapper
-} from "@/styles/ResultPageStyles";
+import { ScrollWrapper } from "@/styles/ResultPageStyles";
 import { useResultContext } from "@/contexts/ResultContext";
 import { RhythmName } from "@/data/types";
 import ResultHeader from "@/components/ResultHeader";
@@ -12,6 +10,7 @@ import { poemData } from "@/data/poemData";
 
 const Section = styled.section`
   width: 100%;
+  padding: 24px 20px 20px;
 `;
 
 const TopSection = styled.div<{ mbtiColor: string }>`
@@ -89,8 +88,11 @@ const ResultPoem = () => {
     setTimeout(() => {
       scrollToSection?.(4);
     }, 300);
-
-  };  const poemEntries = Object.entries(poemData) as [RhythmName, typeof poemData[RhythmName]][];
+  };
+  const poemEntries = Object.entries(poemData) as [
+    RhythmName,
+    (typeof poemData)[RhythmName]
+  ][];
 
   return (
     <Section>
@@ -101,13 +103,13 @@ const ResultPoem = () => {
           description="오늘, 어떤 문장이 나의 감정을 일깨우나요?"
         />
         <ScrollWrapper>
-            {poemEntries.map(([rhythmName, poem], idx) => (
-                <PoemCard
-                key={rhythmName}
-                color={poem.color}
-                selected={selectedRhythm === rhythmName}
-                onClick={() => setSelectedRhythm(rhythmName)}
-                >
+          {poemEntries.map(([rhythmName, poem], idx) => (
+            <PoemCard
+              key={rhythmName}
+              color={poem.color}
+              selected={selectedRhythm === rhythmName}
+              onClick={() => setSelectedRhythm(rhythmName)}
+            >
               <TypeTag>{poem.tag}</TypeTag>
               <PoemText>{poem.content}</PoemText>
               <PoemSource>{poem.source}</PoemSource>
