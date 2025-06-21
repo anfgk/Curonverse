@@ -24,6 +24,7 @@ const Container = styled.div`
   background: transparent;
   margin: 0 auto;
   position: relative;
+  background: #0f1227;
 
   /* 모바일에서 콘텐츠가 잘리지 않도록 오버플로우만 처리 */
   @media (max-width: 375px) {
@@ -39,43 +40,16 @@ const ContentWrapper = styled.div`
   position: relative;
 `;
 
-const EndDescription = styled.div`
+const HeaderContainer = styled.div`
   display: flex;
-  margin: 12px 0 0 20px;
-  font-size: 12px;
-  & > div:last-child {
-    font-weight: bold;
-  }
-`;
-
-const Image = styled.img`
-  width: 281px;
-  height: 217px;
-  display: block;
-  margin: 60px 40px 0;
-`;
-
-const BottomSection = styled(StyledBottomSection)`
-  background-color: transparent;
-  padding-top: 0px;
-  @media (max-width: 375px) {
-    position: relative;
-    min-height: auto;
-  }
-`;
-
-const StyledCurationItem = styled.div`
-  display: flex;
-  padding: 10px 0;
-  border-bottom: none;
-`;
-
-const Footer = styled.div`
-  display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 76px;
-  padding-top: 10px;
+`;
+
+const EtcButton = styled.div`
+  display: flex;
+  gap: 24px;
+  margin: 44px 20px 0;
 `;
 
 const Send = styled.div`
@@ -102,6 +76,39 @@ const Icon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 20px;
+  height: 20px;
+`;
+
+const EndDescription = styled.div`
+  display: flex;
+  margin: 12px 0 0 20px;
+  font-size: 12px;
+  & > div:last-child {
+    font-weight: bold;
+  }
+`;
+
+const Image = styled.img`
+  width: 281px;
+  height: 217px;
+  display: block;
+  margin: 60px 40px 75px;
+`;
+
+const BottomSection = styled(StyledBottomSection)`
+  background-color: transparent;
+  padding-top: 0px;
+  @media (max-width: 375px) {
+    position: relative;
+    min-height: auto;
+  }
+`;
+
+const StyledCurationItem = styled.div`
+  display: flex;
+  padding: 10px 0;
+  border-bottom: none;
 `;
 
 const HiddenCaptureWrapper = styled.div`
@@ -144,7 +151,21 @@ export default function ResultEnd() {
     <Container>
       <StarBackground />
       <ContentWrapper>
-        <SubText text="마무리" variant="subtitle" />
+        <HeaderContainer>
+          <SubText text="마무리" variant="subtitle" />
+          <EtcButton>
+            <Send>
+              <Icon>
+                <RiSendPlaneFill size={16} />
+              </Icon>
+            </Send>
+            <Down onClick={handleDownload}>
+              <Icon>
+                <FiDownload size={16} />
+              </Icon>
+            </Down>
+          </EtcButton>
+        </HeaderContainer>
         <Title
           mainText="앞으로 추가될 Curonverse의"
           highlightText="다양한 콘텐츠를"
@@ -169,20 +190,6 @@ export default function ResultEnd() {
                 </CurationText>
               </StyledCurationItem>
             ))}
-            <Footer>
-              <Send>
-                <Icon>
-                  <RiSendPlaneFill size={16} />
-                </Icon>
-                <div>공유하기</div>
-              </Send>
-              <Down onClick={handleDownload}>
-                <Icon>
-                  <FiDownload size={16} />
-                </Icon>
-                <div>저장하기</div>
-              </Down>
-            </Footer>
           </AnalysisSection>
         </BottomSection>
       </ContentWrapper>
