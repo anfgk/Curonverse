@@ -9,9 +9,6 @@ import {
   KeywordCircle,
   KeywordLabel,
   AnalysisSection,
-  PageIndicator,
-  PageIcon,
-  PageText,
   CurationTitle,
   CurationItem,
   CurationIcon,
@@ -19,14 +16,8 @@ import {
   StyledBottomSection,
 } from "@/styles/ResultPageStyles";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { useResultContext } from "@/contexts/ResultContext";
 import ResultHeader from "@/components/ResultHeader";
-import { EmotionType } from "@/data/types";
-
-interface Props {
-  emotionType: EmotionType;
-  userName: string;
-  nextPage: () => void;
-}
 
 const TopSection = styled(BaseTopSection)<{ mbtiColor: string }>`
   background: ${(props) => props.mbtiColor};
@@ -38,31 +29,28 @@ const FirstPageBottomSection = styled(StyledBottomSection)`
   background-color: #393939;
 `;
 
-const ResultMbti: React.FC<Props> = ({
-  emotionType,
-  userName,
-  nextPage
-}) => {
-  const { code, description, keywords, hexCode } = emotionType;
+const ResultMbti = () => {
+  const { testResult, userName, scrollToSection } = useResultContext();
+  const emotionType = testResult.emotionType;
 
   return (
-    <>
-      <TopSection mbtiColor={hexCode}>
+    <section>
+      <TopSection mbtiColor={emotionType.hexCode}>
         <ResultHeader
           pageNumber="01"
           title={
             <>
               현재 {userName}님은,
-              <br />'{code}' 감정 성향을 <br />
+              <br />'{emotionType.code}' 감정 성향을 <br />
               가지고 있어요.
             </>
           }
-          description={description}
+          description={emotionType.description}
         />
         <KeywordSection>
           <KeywordContainer>
-            {keywords.map((kw, index) => (
-              <KeywordCircle key={kw.id} index={index} mbtiType={code}>
+            {emotionType.keywords.map((kw, index) => (
+              <KeywordCircle key={kw.id} index={index} mbtiType={emotionType.code}>
                 '{kw.keyword}'
               </KeywordCircle>
             ))}
@@ -74,7 +62,7 @@ const ResultMbti: React.FC<Props> = ({
       <FirstPageBottomSection>
         <AnalysisSection>
           <CurationTitle>나의 감정카드 설명</CurationTitle>
-          {keywords.map((kw) => (
+          {emotionType.keywords.map((kw) => (
             <CurationItem key={kw.id}>
               <CurationIcon>
                 <FaArrowRightLong />
@@ -86,13 +74,9 @@ const ResultMbti: React.FC<Props> = ({
               </CurationText>
             </CurationItem>
           ))}
-          <PageIndicator>
-            <PageIcon onClick={nextPage} style={{ cursor: "pointer" }} />
-            <PageText>02</PageText>
-          </PageIndicator>
         </AnalysisSection>
       </FirstPageBottomSection>
-    </>
+    </section>
   );
 };
 

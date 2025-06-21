@@ -3,7 +3,7 @@ import { mbtiCircleColors } from "../data/mbtiData";
 
 export const Container = styled.div`
   width: 375px;
-  height: 812px;
+  // height: 812px;
   margin: 0 auto;
   color: white;
   display: flex;
@@ -30,7 +30,7 @@ export const StyledBottomSection = styled.div`
   padding: 0 20px;
   width: 100%;
   display: flex;
-  position: absolute;
+  // position: absolute;
   bottom: -30px;
   flex-direction: column;
   justify-content: space-between;
@@ -96,7 +96,9 @@ export const SubTitle = styled.p`
   scrollbar-color: rgba(255, 255, 255, 0.4) rgba(255, 255, 255, 0.1);
 `;
 
-export const KeywordSection = styled.div``;
+export const KeywordSection = styled.div`
+
+`;
 
 export const KeywordContainer = styled.div`
   display: flex;
@@ -249,4 +251,58 @@ export const CurationIcon = styled.span`
 export const CurationText = styled.p`
   font-size: 16px;
   flex: 1;
+`;
+
+
+export const ScrollWrapper = styled.div`
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 16px;
+  padding: 0 16px;
+  margin-top: 24px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+ export const VideoWrapper = styled.div`
+  width: 100%;
+  height: 160px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+`;
+
+export const VideoThumbnail = styled.div<{ imageUrl?: string }>`
+  width: 100%;
+  height: 160px;
+  border-radius: 12px;
+  background-color: #ddd;
+  background-image: ${({ imageUrl }) => (imageUrl ? `url(${imageUrl})` : "none")};
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 16px;
+`;
+
+export const EmptyVideo = styled.div`
+  width: 100%;
+  height: 160px;
+  border-radius: 12px;
+  background: #ddd;
+  margin-bottom: 16px;
+`;
+
+export const StartButton = styled.button<{ disabled?: boolean }>`
+  margin-top: 16px;
+  width: 100%;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: ${({ disabled }) => (disabled ? "#ccc" : "#000")};
+  color: ${({ disabled }) => (disabled ? "#666" : "#fff")};
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
 `;

@@ -10,16 +10,8 @@ export function useQuestionFlow() {
     Record<number, Record<string, number>>
   >({});
 
-  // step이 변경될 때마다 해당 step의 답변을 초기화
   useEffect(() => {
-    setAnswers((prev) => {
-      const newAnswers = { ...prev };
-      // 현재 step의 답변만 초기화
-      newAnswers[step] = {};
-      return newAnswers;
-    });
-
-    // 각 step의 첫 번째 질문으로 스크롤
+    // step이 바뀔 때 첫 질문 위치로 스크롤
     setTimeout(() => {
       let questionId;
       switch (step) {
