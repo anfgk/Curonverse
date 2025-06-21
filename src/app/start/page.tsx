@@ -16,8 +16,8 @@ const Container = styled.div`
   background: #0f1227;
   overflow: scroll;
   margin: 0 auto;
-
-  /* 모바일에서 콘텐츠가 잘리지 않도록 오버플로우만 처리 */
+  @media (max-width: 360px) {
+  }
 `;
 
 const ContentWrapper = styled.div`
