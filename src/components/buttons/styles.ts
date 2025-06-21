@@ -14,7 +14,6 @@ export const baseButtonStyle = css`
   justify-content: space-between;
   cursor: pointer;
   transition: all 0.2s ease;
-
   &.disabled {
     cursor: not-allowed;
   }
