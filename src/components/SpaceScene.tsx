@@ -95,10 +95,10 @@ const TextImage = styled(Image)`
   width: 200px !important;
   height: 50px !important;
   position: absolute;
-  bottom: 95px;
-  left: 70%;
+  bottom: 140px;
+  left: 50%;
   transform: translateX(-50%);
-  animation: ${floatLeft} 5s ease-in-out infinite;
+
   object-fit: contain;
   z-index: 1;
   will-change: transform;
@@ -185,8 +185,8 @@ const SpaceScene: React.FC = () => {
       <RocketImage
         src="/images/rocket.svg"
         alt="rocket"
-        width={80}
-        height={80}
+        width={90}
+        height={90}
         loading="lazy"
       />
       <TextImage
