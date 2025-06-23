@@ -12,7 +12,7 @@ const Container = styled.div<{ dimmed: boolean }>`
   transition: all 0.3s ease;
 
   /* 모바일에서 콘텐츠가 잘리지 않도록 오버플로우만 처리 */
-  @media (max-width: 375px) {
+  @media (max-width: 360px) {
     width: 100vw;
     height: 100vh;
   }

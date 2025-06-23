@@ -10,7 +10,7 @@ const Container = styled.div`
   width: 375px;
   background: #393939;
   /* 모바일에서 콘텐츠가 잘리지 않도록 오버플로우만 처리 */
-  @media (max-width: 375px) {
+  @media (max-width: 360px) {
     width: 100vw;
   }
 `;
@@ -22,7 +22,7 @@ const ContentWrapper = styled.div`
   height: 100%;
   padding: 20px 20px 130px;
   gap: 20px;
-  @media (max-width: 375px) {
+  @media (max-width: 360px) {
     padding-bottom: 100px;
   }
 `;

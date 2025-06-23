@@ -96,9 +96,7 @@ export const SubTitle = styled.p`
   scrollbar-color: rgba(255, 255, 255, 0.4) rgba(255, 255, 255, 0.1);
 `;
 
-export const KeywordSection = styled.div`
-
-`;
+export const KeywordSection = styled.div``;
 
 export const KeywordContainer = styled.div`
   display: flex;
@@ -253,7 +251,6 @@ export const CurationText = styled.p`
   flex: 1;
 `;
 
-
 export const ScrollWrapper = styled.div`
   display: flex;
   overflow-x: auto;
@@ -267,7 +264,7 @@ export const ScrollWrapper = styled.div`
   }
 `;
 
- export const VideoWrapper = styled.div`
+export const VideoWrapper = styled.div`
   width: 100%;
   height: 160px;
   border-radius: 12px;
@@ -280,7 +277,8 @@ export const VideoThumbnail = styled.div<{ imageUrl?: string }>`
   height: 160px;
   border-radius: 12px;
   background-color: #ddd;
-  background-image: ${({ imageUrl }) => (imageUrl ? `url(${imageUrl})` : "none")};
+  background-image: ${({ imageUrl }) =>
+    imageUrl ? `url(${imageUrl})` : "none"};
   background-size: cover;
   background-position: center;
   margin-bottom: 16px;
