@@ -15,6 +15,9 @@ import {
   StartButton,
 } from "@/styles/ResultPageStyles";
 import { useResultContext } from "@/contexts/ResultContext";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+
 const PageWrapper = styled.div`
   background: #393939;
   min-height: 812px;
@@ -68,8 +71,56 @@ const RoutineDescription = styled.p`
   line-height: 1.4;
 `;
 
+const NextButton = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 470%;
+  transform: translateY(-50%);
+  background: rgb(197, 196, 196, 0.4);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgb(197, 196, 196, 0.8);
+    transform: translateY(-50%) scale(1.1);
+  }
+`;
+
+const PrevButton = styled.button`
+  position: absolute;
+  left: 10px;
+  top: 470%;
+  transform: translateY(-50%);
+  background: rgb(197, 196, 196, 0.4);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgb(197, 196, 196, 0.8);
+    transform: translateY(-50%) scale(1.1);
+  }
+`;
+
 const Routine = () => {
-  const { testResult } = useResultContext();
+  const { testResult, userName, scrollToSection } = useResultContext();
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
 
   const getYoutubeThumbnail = (url: string) => {
@@ -93,92 +144,108 @@ const Routine = () => {
     }
   };
 
+  const handleNext = () => {
+    scrollToSection(5); // ResultEnd 페이지로 이동
+  };
+
+  const handlePrev = () => {
+    scrollToSection(3); // ResultPoem 페이지로 이동
+  };
+
   return (
-    <section>
-      <PageWrapper>
-        <ResultHeader
-          pageNumber="05"
-          title={
-            <>
-              감정이 발생한다면, 잠시 멈춰,
-              <br />
-              `나에게 어떤 신호였을까?` 되묻는 성찰의 시간이 필요해요.
-            </>
-          }
-        />
-        <SubText>
-          때문에, 지금 나에게 필요한 감정 카드는
-          <br />
-          다음과 같아요.
-        </SubText>
-        <KeywordSection>
-          <KeywordContainer>
-            {testResult.healingKeywords.map((kw, index) => (
-              <KeywordCircle
-                key={kw}
-                index={index}
-                mbtiType={testResult.emotionType.code}
-              >
-                '{kw}'
-              </KeywordCircle>
-            ))}
-          </KeywordContainer>
-          <KeywordLabel>나만의 힐링 감정카드</KeywordLabel>
-        </KeywordSection>
-        <div style={{ marginTop: "48px" }}>
-          <SectionTitle>Contents</SectionTitle>
-          <ScrollWrapper>
-            {testResult.healingRoutines.map((routine, idx) => {
-              const thumbnail = routine.link
-                ? getYoutubeThumbnail(routine.link)
-                : null;
-              const embedUrl = routine.link
-                ? getYoutubeEmbedUrl(routine.link)
-                : null;
+    <>
+      <section>
+        <PageWrapper>
+          <ResultHeader
+            pageNumber="05"
+            title={
+              <>
+                감정이 발생한다면, 잠시 멈춰,
+                <br />
+                `나에게 어떤 신호였을까?` 되묻는 성찰의 시간이 필요해요.
+              </>
+            }
+          />
+          <SubText>
+            때문에, 지금 나에게 필요한 감정 카드는
+            <br />
+            다음과 같아요.
+          </SubText>
+          <KeywordSection>
+            <KeywordContainer>
+              {testResult.healingKeywords.map((kw, index) => (
+                <KeywordCircle
+                  key={kw}
+                  index={index}
+                  mbtiType={testResult.emotionType.code}
+                >
+                  '{kw}'
+                </KeywordCircle>
+              ))}
+            </KeywordContainer>
+            <KeywordLabel>나만의 힐링 감정카드</KeywordLabel>
+          </KeywordSection>
+          <div style={{ marginTop: "48px" }}>
+            <SectionTitle>Contents</SectionTitle>
+            <ScrollWrapper>
+              {testResult.healingRoutines.map((routine, idx) => {
+                const thumbnail = routine.link
+                  ? getYoutubeThumbnail(routine.link)
+                  : null;
+                const embedUrl = routine.link
+                  ? getYoutubeEmbedUrl(routine.link)
+                  : null;
 
-              return (
-                <RoutineCard key={idx}>
-                  {routine.link ? (
-                    playingIndex === idx ? (
-                      <VideoWrapper>
-                        <iframe
-                          width="100%"
-                          height="100%"
-                          src={embedUrl ?? ""}
-                          title={routine.title}
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
-                      </VideoWrapper>
+                return (
+                  <RoutineCard key={idx}>
+                    {routine.link ? (
+                      playingIndex === idx ? (
+                        <VideoWrapper>
+                          <iframe
+                            width="100%"
+                            height="100%"
+                            src={embedUrl ?? ""}
+                            title={routine.title}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </VideoWrapper>
+                      ) : (
+                        <VideoThumbnail imageUrl={thumbnail ?? undefined} />
+                      )
                     ) : (
-                      <VideoThumbnail imageUrl={thumbnail ?? undefined} />
-                    )
-                  ) : (
-                    <EmptyVideo />
-                  )}
+                      <EmptyVideo />
+                    )}
 
-                  <RoutineTextBox>
-                    <RoutineTitle>{routine.title}</RoutineTitle>
-                    <RoutineDescription>
-                      {routine.description}
-                    </RoutineDescription>
-                    <StartButton
-                      disabled={!routine.link}
-                      onClick={() => {
-                        if (routine.link) togglePlayback(idx);
-                      }}
-                    >
-                      {playingIndex === idx ? "일시정지" : "시작하기"}
-                    </StartButton>
-                  </RoutineTextBox>
-                </RoutineCard>
-              );
-            })}
-          </ScrollWrapper>
-        </div>
-      </PageWrapper>
-    </section>
+                    <RoutineTextBox>
+                      <RoutineTitle>{routine.title}</RoutineTitle>
+                      <RoutineDescription>
+                        {routine.description}
+                      </RoutineDescription>
+                      <StartButton
+                        disabled={!routine.link}
+                        onClick={() => {
+                          if (routine.link) togglePlayback(idx);
+                        }}
+                      >
+                        {playingIndex === idx ? "일시정지" : "시작하기"}
+                      </StartButton>
+                    </RoutineTextBox>
+                  </RoutineCard>
+                );
+              })}
+            </ScrollWrapper>
+          </div>
+        </PageWrapper>
+      </section>
+      <PrevButton onClick={handlePrev}>
+        <FaChevronLeft />
+      </PrevButton>
+      <NextButton onClick={handleNext}>
+        <FaChevronRight />
+      </NextButton>
+    </>
   );
 };
 

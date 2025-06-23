@@ -16,6 +16,7 @@ import {
   StyledBottomSection,
 } from "@/styles/ResultPageStyles";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { FaChevronRight } from "react-icons/fa";
 import { useResultContext } from "@/contexts/ResultContext";
 import ResultHeader from "@/components/ResultHeader";
 
@@ -29,9 +30,37 @@ const FirstPageBottomSection = styled(StyledBottomSection)`
   background-color: #393939;
 `;
 
+const NextButton = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgb(197, 196, 196, 0.4);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgb(197, 196, 196, 0.8);
+    transform: translateY(-50%) scale(1.1);
+  }
+`;
+
 const ResultMbti = () => {
   const { testResult, userName, scrollToSection } = useResultContext();
   const emotionType = testResult.emotionType;
+
+  const handleNext = () => {
+    scrollToSection(1); // ResultRhythm 페이지로 이동
+  };
 
   return (
     <section>
@@ -80,6 +109,9 @@ const ResultMbti = () => {
           ))}
         </AnalysisSection>
       </FirstPageBottomSection>
+      <NextButton onClick={handleNext}>
+        <FaChevronRight />
+      </NextButton>
     </section>
   );
 };

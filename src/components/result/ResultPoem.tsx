@@ -7,6 +7,8 @@ import { useResultContext } from "@/contexts/ResultContext";
 import { RhythmName } from "@/data/types";
 import ResultHeader from "@/components/ResultHeader";
 import { poemData } from "@/data/poemData";
+import { FaArrowRightLong, FaChevronRight } from "react-icons/fa6";
+import { FaChevronLeft } from "react-icons/fa";
 
 const Section = styled.section`
   width: 100%;
@@ -78,17 +80,70 @@ const StyledBottomSection = styled.div`
   height: 80px;
 `;
 
+const NextButton = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 365%;
+  transform: translateY(-50%);
+  background: rgb(197, 196, 196, 0.4);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgb(197, 196, 196, 0.8);
+    transform: translateY(-50%) scale(1.1);
+  }
+`;
+
+const PrevButton = styled.button`
+  position: absolute;
+  left: 10px;
+  top: 365%;
+  transform: translateY(-50%);
+  background: rgb(197, 196, 196, 0.4);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgb(197, 196, 196, 0.8);
+    transform: translateY(-50%) scale(1.1);
+  }
+`;
+
 const ResultPoem = () => {
   const { testResult, userName, scrollToSection } = useResultContext();
   const [selectedRhythm, setSelectedRhythm] = useState<RhythmName | null>(null);
 
   const handleSelect = (rhythmName: RhythmName) => {
     setSelectedRhythm(rhythmName);
-
-    setTimeout(() => {
-      scrollToSection?.(4);
-    }, 300);
   };
+
+  const handleNext = () => {
+    scrollToSection(4); // Routine 페이지로 이동
+  };
+
+  const handlePrev = () => {
+    scrollToSection(2); // Temperature 페이지로 이동
+  };
+
   const poemEntries = Object.entries(poemData) as [
     RhythmName,
     (typeof poemData)[RhythmName]
@@ -124,6 +179,12 @@ const ResultPoem = () => {
         </CompleteButton>
       </TopSection>
       <StyledBottomSection />
+      <PrevButton onClick={handlePrev}>
+        <FaChevronLeft />
+      </PrevButton>
+      <NextButton onClick={handleNext}>
+        <FaChevronRight />
+      </NextButton>
     </Section>
   );
 };

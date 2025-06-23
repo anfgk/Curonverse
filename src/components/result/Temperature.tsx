@@ -10,7 +10,11 @@ import {
   CurationText,
   StyledBottomSection,
 } from "@/styles/ResultPageStyles";
-import { FaArrowRightLong } from "react-icons/fa6";
+import {
+  FaArrowRightLong,
+  FaChevronRight,
+  FaChevronLeft,
+} from "react-icons/fa6";
 import { useResultContext } from "@/contexts/ResultContext";
 import ResultHeader from "@/components/ResultHeader";
 import TemperatureCard from "@/components/temperature/TemperatureCard";
@@ -36,13 +40,69 @@ const AnalysisTitle = styled.div`
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
+const NextButton = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 255%;
+  transform: translateY(-50%);
+  background: rgb(197, 196, 196, 0.4);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgb(197, 196, 196, 0.8);
+    transform: translateY(-50%) scale(1.1);
+  }
+`;
+
+const PrevButton = styled.button`
+  position: absolute;
+  left: 10px;
+  top: 255%;
+  transform: translateY(-50%);
+  background: rgb(197, 196, 196, 0.4);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgb(197, 196, 196, 0.8);
+    transform: translateY(-50%) scale(1.1);
+  }
+`;
+
 const Temperature = () => {
-  const { testResult } = useResultContext();
+  const { testResult, userName, scrollToSection } = useResultContext();
 
   const emotionType = testResult.emotionType;
   const rhythmName = testResult.rhythm as RhythmName;
   const { percentTotal, percentGender } = testResult;
   const temperatureMeta = useTemperatureMeta(rhythmName);
+
+  const handleNext = () => {
+    scrollToSection(3); // ResultPoem 페이지로 이동
+  };
+
+  const handlePrev = () => {
+    scrollToSection(1); // ResultRhythm 페이지로 이동
+  };
 
   return (
     <section>
@@ -52,11 +112,9 @@ const Temperature = () => {
           title={temperatureMeta.temperatureInfo.title}
           description={temperatureMeta.temperatureInfo.description}
         />
-        <TemperatureCard
-          rhythmName={rhythmName}
-        />
-      </TopSection>
 
+        <TemperatureCard rhythmName={rhythmName} />
+      </TopSection>
       <FirstPageBottomSection>
         <AnalysisSection>
           <AnalysisTitle>감정 온도 상세 분석</AnalysisTitle>
@@ -82,6 +140,12 @@ const Temperature = () => {
           </CurationItem>
         </AnalysisSection>
       </FirstPageBottomSection>
+      <PrevButton onClick={handlePrev}>
+        <FaChevronLeft />
+      </PrevButton>
+      <NextButton onClick={handleNext}>
+        <FaChevronRight />
+      </NextButton>
     </section>
   );
 };
