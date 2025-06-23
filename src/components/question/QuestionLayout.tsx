@@ -20,7 +20,7 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   z-index: 1;
   height: 100%;
-  padding: 20px 20px 130px;
+  padding: 20px 20px;
   gap: 20px;
   @media (max-width: 375px) {
     padding-bottom: 100px;
