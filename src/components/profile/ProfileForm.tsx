@@ -8,6 +8,10 @@ import NextButton from "@/components/buttons/NextButton";
 import BeforeButton from "@/components/buttons/BeforeButton";
 
 const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  jsustify-content: space-between;
+  height: 100vh;
   position: relative;
 `;
 

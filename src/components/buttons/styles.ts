@@ -6,7 +6,6 @@ export const baseButtonStyle = css`
   position: relative;
   width: 370px;
   height: 48px;
-  top: 120px;
   color: #ffffff;
   font-size: 16px;
   font-weight: bold;

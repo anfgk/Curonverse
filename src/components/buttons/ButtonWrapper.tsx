@@ -8,7 +8,8 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   position: relative;
-  margin-top: 40px;
+  margin-top: auto ;
+  padding: 20px 0;
   @media (max-width: 375px) {
     flex-direction: row;
     justify-content: space-between;
