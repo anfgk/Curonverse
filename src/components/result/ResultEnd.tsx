@@ -111,6 +111,15 @@ const StyledCurationItem = styled.div`
   border-bottom: none;
 `;
 
+// ResultImageExport 이미지 안보이게 하기 위한 스타일
+const HiddenImageWrapper = styled.div`
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  z-index: -9999;
+  width: 375px;
+`;
+
 export default function ResultEnd() {
   const { testResult, userName } = useResultContext();
   const captureRef = useRef<HTMLDivElement>(null);
@@ -185,13 +194,15 @@ export default function ResultEnd() {
           </AnalysisSection>
         </BottomSection>
       </ContentWrapper>
-      <ResultImageExport
-        userName={userName}
-        emotionCode={testResult.emotionType.code}
-        temperature={testResult.temperature}
-        rhythmDescription={testResult.rhythmDescription}
-        temperatureDescription={testResult.rhythmAnalysis}
-      />
+      <HiddenImageWrapper ref={captureRef}>
+        <ResultImageExport
+          userName={userName}
+          emotionCode={testResult.emotionType.code}
+          temperature={testResult.temperature}
+          rhythmDescription={testResult.rhythmDescription}
+          temperatureDescription={testResult.rhythmAnalysis}
+        />
+      </HiddenImageWrapper>
     </Container>
   );
 }
