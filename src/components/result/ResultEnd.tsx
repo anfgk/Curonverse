@@ -111,14 +111,6 @@ const StyledCurationItem = styled.div`
   border-bottom: none;
 `;
 
-const HiddenCaptureWrapper = styled.div`
-  position: absolute;
-  top: -9999px;
-  left: -9999px;
-  z-index: -9999;
-  width: 375px;
-`;
-
 export default function ResultEnd() {
   const { testResult, userName } = useResultContext();
   const captureRef = useRef<HTMLDivElement>(null);
@@ -193,17 +185,13 @@ export default function ResultEnd() {
           </AnalysisSection>
         </BottomSection>
       </ContentWrapper>
-      <>
-        <HiddenCaptureWrapper ref={captureRef}>
-          <ResultImageExport
-            userName={userName}
-            emotionCode={testResult.emotionType.code}
-            temperature={testResult.temperature}
-            rhythmDescription={testResult.rhythmDescription}
-            temperatureDescription={testResult.rhythmAnalysis}
-          />
-        </HiddenCaptureWrapper>
-      </>
+      <ResultImageExport
+        userName={userName}
+        emotionCode={testResult.emotionType.code}
+        temperature={testResult.temperature}
+        rhythmDescription={testResult.rhythmDescription}
+        temperatureDescription={testResult.rhythmAnalysis}
+      />
     </Container>
   );
 }
