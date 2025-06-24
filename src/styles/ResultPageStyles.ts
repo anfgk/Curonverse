@@ -256,7 +256,7 @@ export const ScrollWrapper = styled.div`
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   gap: 16px;
-  padding: 0 16px;
+  padding: 20px 16px;
   margin-top: 24px;
 
   &::-webkit-scrollbar {

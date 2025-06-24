@@ -109,7 +109,7 @@ const BottomSection = styled(StyledBottomSection)`
 const PrevButton = styled.button`
   position: absolute;
   left: 10px;
-  top: 500%;
+  top: 50%;
   transform: translateY(-50%);
   background: rgb(197, 196, 196, 0.4);
   border: none;
@@ -123,7 +123,6 @@ const PrevButton = styled.button`
   cursor: pointer;
   z-index: 1000;
   transition: all 0.3s ease;
-  border: 1px solid red;
   &:hover {
     background: rgb(197, 196, 196, 0.8);
     transform: translateY(-50%) scale(1.1);
@@ -150,7 +149,7 @@ export default function ResultEnd() {
   const captureRef = useRef<HTMLDivElement>(null);
 
   const handlePrev = () => {
-    scrollToSection(4); // ResultMbti 페이지로 이동
+    scrollToSection(0); // 첫 페이지(ResultMbti)로 이동
   };
 
   const handleDownload = async () => {
