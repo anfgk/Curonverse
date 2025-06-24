@@ -163,6 +163,7 @@ const SpaceScene: React.FC = () => {
         isLeft={true}
         delay={1}
         loading="lazy"
+        style={{ border: "2px solid red" }}
       />
       <StarImage
         src="/images/star5.svg"
@@ -171,6 +172,17 @@ const SpaceScene: React.FC = () => {
         height={38}
         top="60%"
         right="75%"
+        isLeft={true}
+        delay={1}
+        loading="lazy"
+      />
+      <StarImage
+        src="/images/star6.svg"
+        alt="star5"
+        width={35}
+        height={38}
+        top="25%"
+        right="60%"
         isLeft={true}
         delay={1}
         loading="lazy"
