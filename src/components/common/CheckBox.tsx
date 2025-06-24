@@ -60,6 +60,7 @@ interface CheckBoxProps {
   label: string;
   isSelected: boolean;
   onClick: () => void;
+  onQuestionClick?: () => void;
   size?: number;
   isFocused?: boolean;
   hasAnySelection?: boolean;
@@ -69,6 +70,7 @@ const CheckBox = ({
   label,
   isSelected,
   onClick,
+  onQuestionClick,
   size,
   isFocused = false,
   hasAnySelection = false,
@@ -85,15 +87,26 @@ const CheckBox = ({
     }
   };
 
+  const handleCircleClick = () => {
+    onClick();
+    onQuestionClick?.();
+  };
+
+  const handleLabelClick = () => {
+    onQuestionClick?.();
+  };
+
   return (
     <Container>
-      <Circle isSelected={isSelected} onClick={onClick} size={size}>
+      <Circle isSelected={isSelected} onClick={handleCircleClick} size={size}>
         <FiCheck />
       </Circle>
       <Label
         isFocused={isFocused}
         isSelected={isSelected}
         hasAnySelection={hasAnySelection}
+        onClick={handleLabelClick}
+        style={{ cursor: "pointer" }}
       >
         {formatLabel(label)}
       </Label>

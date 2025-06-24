@@ -70,9 +70,7 @@ export default function ProfileForm({
       />
       <ProfileAgreement />
       <ButtonWrapper>
-        <BeforeButton
-          onClick={handleBeforeClick}
-        />  
+        <BeforeButton onClick={handleBeforeClick} />
         <NextButton
           onClick={handleNextClick}
           disabled={!isFormValid}

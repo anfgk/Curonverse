@@ -128,6 +128,14 @@ export default function QuestionPage({
     }
   };
 
+  const handleCheckboxClick = (questionId: number) => {
+    setFocusedQuestion(questionId);
+    const element = document.getElementById(`question-${questionId}`);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   const allAnswered = questions.every((q) => savedAnswers[q.id] !== undefined);
 
   const answerOptions = [
@@ -174,6 +182,7 @@ export default function QuestionPage({
                   label={option.label}
                   isSelected={savedAnswers[q.id] === option.score}
                   onClick={() => handleAnswer(q.id, option.score)}
+                  onQuestionClick={() => handleCheckboxClick(q.id)}
                   size={option.size}
                   isFocused={isFocused}
                   hasAnySelection={!!savedAnswers[q.id]}
@@ -185,11 +194,7 @@ export default function QuestionPage({
       })}
       <ButtonWrapper>
         <BeforeButton onClick={onPrev} />
-        <NextButton
-          onClick={onNext}
-          disabled={!allAnswered}
-          variant="step"
-        >
+        <NextButton onClick={onNext} disabled={!allAnswered} variant="step">
           {step === 4 ? "제출하기" : "다음"}
         </NextButton>
       </ButtonWrapper>
