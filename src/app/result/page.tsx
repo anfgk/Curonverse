@@ -2,7 +2,6 @@
 
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import styled from "styled-components";
 import { ResultContext } from "@/contexts/ResultContext";
 import PageTransitionContainer from "@/components/PageTransitionContainer";
 import ResultMbti from "@/components/result/ResultMbti";
@@ -10,14 +9,15 @@ import ResultRhythm from "@/components/result/ResultRhythm";
 import Temperature from "@/components/result/Temperature";
 import Routine from "@/components/result/Routine";
 import ResultEnd from "@/components/result/ResultEnd";
-import { useTestResult } from "@/hooks/useTestResult";
 import { useStoredUser } from "@/hooks/useStoredUser";
+import { useTestResult } from "@/hooks/useTestResult";
+import { useHealingRoutine } from "@/hooks/useHealingRoutine";
 import ResultPoem from "@/components/result/ResultPoem";
-import { FaChevronRight } from "react-icons/fa";
 
 export default function ResultPage() {
   const user = useStoredUser();
   const testResult = useTestResult();
+  const healingRoutine = useHealingRoutine();
   const router = useRouter();
   const [currentSection, setCurrentSection] = useState(0);
 
@@ -29,6 +29,7 @@ export default function ResultPage() {
   const endRef = useRef<HTMLDivElement>(null);
 
   if (!testResult) return null;
+  if (!healingRoutine) return null;
 
   const sectionRefs = [
     mbtiRef,
@@ -54,6 +55,7 @@ export default function ResultPage() {
     <ResultContext.Provider
       value={{
         testResult,
+        healingRoutine,
         userName: user?.name || "사용자",
         scrollToSection,
       }}

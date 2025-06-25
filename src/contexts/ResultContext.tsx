@@ -1,8 +1,9 @@
 import { createContext, useContext } from "react";
-import { TestResult } from "@/data/types";
+import { TestResult, HealingRoutine } from "@/data/types";
 
 interface ResultContextProps {
   testResult: TestResult;
+  healingRoutine: HealingRoutine;
   userName: string;
   scrollToSection: (section: number) => void;
 };

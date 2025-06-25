@@ -1,3 +1,11 @@
+export interface ApiResponse<T> {
+  statusCode: number;
+  message: string;
+  data: T;
+  timestamp: string;
+  error?: string; // 에러 메시지 추가
+}
+
 export interface User {
   id: number;
   email: string;
@@ -43,6 +51,7 @@ export interface TestResult {
   /* 감정 MBTI */
   emotionType: EmotionType;
   /* 감정리듬 */
+  rhythmId: number;
   rhythm: string;
   rhythmAnalysis: string;
   rhythmDescription: string;
@@ -60,4 +69,35 @@ export interface TestResult {
   
   percentTotal: number;
   percentGender: number;
+}
+
+interface RecommendedContents {
+  title: string;
+  link: string;
+  type: string;
+}
+export interface HealingRoutine {
+  rhythmId: number;
+  rhythmName: RhythmName;
+  rhythmColor: string;
+  rhythmColorHex: string;
+  healingKeywords: string[];
+  recommendedContents: RecommendedContents[];
+}
+
+export interface HealingRoutineParams {
+  mbtiId: number;
+  rhythmId: number;
+}
+
+export interface Poem {
+  id: number;
+  title: string;
+  contents: string;
+  iconUrl: string;
+  rhythmId: number;
+  rhythmName: RhythmName;
+  rhythmType: string;
+  rhythmColor: string;
+  rhythmColorHex: string;
 }

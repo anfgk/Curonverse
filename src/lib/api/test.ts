@@ -1,6 +1,33 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const API_BASE_URL = process.env.API_BASE_URL;
+export async function getTestQuestions(req: NextRequest) {
+  try {
+    console.log("API_BASE_URL:", API_BASE_URL);
+    console.log("Fetching test questions from:", `${API_BASE_URL}/test/questions`);
+    const response = await fetch(`${API_BASE_URL}/test/questions?${req.nextUrl.searchParams.toString()}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("External API Error:", errorText);
+      throw new Error("Failed to fetch test questions");
+    }
+    const result = await response.json();
+    console.log("Received test questions:", result);
+    return NextResponse.json(result);
+  } catch (error) {
+    console.error("Error fetching test questions:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch test questions" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function postTestSubmit(req: NextRequest) {
   try {
     const { userId, type, answers } = await req.json();
