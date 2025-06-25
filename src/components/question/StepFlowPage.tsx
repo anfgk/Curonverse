@@ -1,19 +1,47 @@
 "use client";
 
+import { useMemo, useEffect, useState } from "react";
 import { useStoredUser } from "@/hooks/useStoredUser";
 import { useQuestionFlow } from "@/hooks/useQuestionFlow";
 import QuestionLayout from "@/components/question/QuestionLayout";
 import QuestionPage from "@/components/question/QuestionPage";
-import { stepQuestions } from "@/constants/stepQuestions";
 import { useQuestionForm } from "@/hooks/useQuestionForm";
+import { testService } from "@/services/testService";
+import { useRouter } from "next/navigation";
 
 export default function StepFlowPage() {
   const user = useStoredUser();
   const { step, answers, goNext, goPrev, saveAnswer, isLastStep } = useQuestionFlow();
+  const { questionForm } = useQuestionForm(user?.id || 0);
+  const [questions, setQuestions] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  if (!user) return null;
+  const router = useRouter();
 
-  const { questionForm } = useQuestionForm(user?.id);
+  useEffect(() => {
+    if (!user) return;
+    const fetchQuestions = async () => {
+      const result = await testService.getTestQuestions();
+      setQuestions(result.data);
+      setLoading(false);
+    };
+
+    fetchQuestions();
+  }, [user]);
+
+  const QUESTIONS_PER_STEP = 3;
+
+  const stepQuestions = useMemo(() => {
+    if (!questions || questions.length === 0) return {};
+    console.log("Step questions:", questions);
+
+    return questions.reduce((acc, question, index) => {
+      const stepIndex = Math.floor(index / QUESTIONS_PER_STEP) + 1;
+      if (!acc[stepIndex]) acc[stepIndex] = [];
+      acc[stepIndex].push(question);
+      return acc;
+    }, {} as Record<number, typeof questions>);
+  }, [questions]);
 
   const handleNext = async () => {
     if (isLastStep) {
@@ -23,15 +51,23 @@ export default function StepFlowPage() {
     }
   };
 
+  const handlePrev = async () => {
+    if (step === 1) {
+      router.push("/start");
+    } else {
+      goPrev();
+    }
+  };
+
   return (
     <QuestionLayout step={step} answeredCount={Object.keys(answers).length}>
       <QuestionPage
         step={step}
-        questions={stepQuestions[step]}
+        questions={stepQuestions[step] || []}
         savedAnswers={answers[step] || {}}
         onSaveAnswer={(qid, score) => saveAnswer(step, qid, score)}
         onNext={handleNext}
-        onPrev={goPrev}
+        onPrev={handlePrev}
       />
     </QuestionLayout>
   );

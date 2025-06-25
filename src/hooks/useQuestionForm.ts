@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { testService } from "@/services/testService";
+import { healingRoutineService } from "@/services/healingroutineService";
 
 export function useQuestionForm(userId: number) {
   const router = useRouter();
@@ -28,12 +29,25 @@ export function useQuestionForm(userId: number) {
     );
 
     try {
-      const response = await testService.submitTest({
+      const testResult = await testService.submitTest({
         userId,
         type: "emotion",
         answers: flattened,
       });
-      sessionStorage.setItem("test", JSON.stringify(response.data));
+
+      const emotionTypeId = testResult.data.emotionType?.id;
+      const { rhythmId } = testResult.data;
+      if (!emotionTypeId || !rhythmId) {
+        throw new Error("필수 데이터 누락: mbti_id 또는 rhythm_id가 없습니다.");
+      }
+
+      const healingRoutine = await healingRoutineService.getHealingRoutine({
+        mbtiId: testResult.data.emotionType.id,
+        rhythmId: testResult.data.rhythmId,
+      });
+
+      sessionStorage.setItem("test", JSON.stringify(testResult.data));
+      sessionStorage.setItem("healingRoutine", JSON.stringify(healingRoutine.data));
       router.push("/onloading");
     } catch (error) {
       console.error("제출 중 오류 발생:", error);

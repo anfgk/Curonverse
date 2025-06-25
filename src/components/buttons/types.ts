@@ -5,4 +5,5 @@ export interface ButtonProps {
   disabled?: boolean;
   variant?: VariantType;
   children?: React.ReactNode;
+  $hide?: boolean;
 }

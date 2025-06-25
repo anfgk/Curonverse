@@ -14,16 +14,14 @@ const QuestionText = styled.div<{ isFocused: boolean }>`
 const QuesTitle = styled.div``;
 
 interface QuestionProps {
-  firstText: string;
-  secondText: string;
+  text: string;
   isFocused: boolean;
 }
 
-const Question = ({ firstText, secondText, isFocused }: QuestionProps) => {
+const Question = ({ text, isFocused }: QuestionProps) => {
   return (
     <QuestionText isFocused={isFocused}>
-      <QuesTitle>{firstText}</QuesTitle>
-      <QuesTitle>{secondText}</QuesTitle>
+      <QuesTitle>{text}</QuesTitle>
     </QuestionText>
   );
 };

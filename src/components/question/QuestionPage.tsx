@@ -38,9 +38,9 @@ const CheckBoxGroup = styled.div`
 
 interface Question {
   id: number;
-  firstText: string;
-  secondText: string;
-  questionNumber: number;
+  text: string;
+  dimension: string;
+  orderIndex: number;
 }
 
 interface Props {
@@ -61,58 +61,29 @@ export default function QuestionPage({
   onPrev,
 }: Props) {
   const [focusedQuestion, setFocusedQuestion] = React.useState<number>(
-    questions[0]?.id ?? 0
+    questions.length > 0 ? questions[0].id : 0
   );
 
+  // 처음 렌더링 시 첫 번째 질문으로 스크롤
   useLayoutEffect(() => {
-    const getQuestionInfo = () => {
-      if (step === 1)
-        return {
-          questionId: "question-1",
-          firstQuestionId: questions[0]?.id ?? 0,
-        };
-      if (step === 2)
-        return {
-          questionId: "question-4",
-          firstQuestionId: questions[0]?.id ?? 0,
-        };
-      if (step === 3)
-        return {
-          questionId: "question-7",
-          firstQuestionId: questions[0]?.id ?? 0,
-        };
-      if (step === 4)
-        return {
-          questionId: "question-10",
-          firstQuestionId: questions[0]?.id ?? 0,
-        };
-      return {
-        questionId: "question-1",
-        firstQuestionId: questions[0]?.id ?? 0,
-      };
-    };
-
-    const { questionId, firstQuestionId } = getQuestionInfo();
-    const firstQuestion = document.getElementById(questionId);
-
-    if (firstQuestion) {
-      setFocusedQuestion(firstQuestionId);
-      firstQuestion.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+    if (questions.length === 0) return;
+    const firstId = questions[0].id;
+    const element = document.getElementById(`question-${firstId}`);
+    if (element) {
+      setFocusedQuestion(firstId);
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [step, questions]);
 
   const handleAnswer = (questionId: number, score: number) => {
     onSaveAnswer(questionId, score);
+
     const currentIndex = questions.findIndex((q) => q.id === questionId);
     const nextQuestion = questions[currentIndex + 1];
+
     if (nextQuestion && !savedAnswers[nextQuestion.id]) {
       setFocusedQuestion(nextQuestion.id);
-      const nextElement = document.getElementById(
-        `question-${nextQuestion.id}`
-      );
+      const nextElement = document.getElementById(`question-${nextQuestion.id}`);
       if (nextElement) {
         nextElement.scrollIntoView({ behavior: "smooth", block: "center" });
       }
@@ -148,31 +119,24 @@ export default function QuestionPage({
 
   return (
     <>
-      {questions.map((q, index) => {
+      {questions.map((q) => {
         const isFocused = focusedQuestion === q.id;
-        let questionId;
-        if (step === 1 && index === 0) questionId = "question-1";
-        else if (step === 2 && index === 0) questionId = "question-4";
-        else if (step === 3 && index === 0) questionId = "question-7";
-        else if (step === 4 && index === 0) questionId = "question-10";
-        else questionId = `question-${q.id}`;
 
         return (
           <QuestionContainer
             key={q.id}
-            id={questionId}
+            id={`question-${q.id}`}
             isFocused={isFocused}
             anyFieldFocused={!!focusedQuestion}
             onClick={(e) => handleQuestionClick(q.id, e)}
           >
             <QuesBadge
-              currentQues={q.questionNumber}
+              currentQues={q.id}
               totalQues={12}
               isFocused={isFocused}
             />
             <Question
-              firstText={q.firstText}
-              secondText={q.secondText}
+              text={q.text}
               isFocused={isFocused}
             />
             <CheckBoxGroup className="checkbox-group">
@@ -193,8 +157,18 @@ export default function QuestionPage({
         );
       })}
       <ButtonWrapper>
-        <BeforeButton onClick={onPrev} />
-        <NextButton onClick={onNext} disabled={!allAnswered} variant="step">
+        <BeforeButton
+          onClick={onPrev}
+          disabled={step === 0}
+          variant="step"
+        >
+          {step === 1 ? "처음으로" : "이전"}
+        </BeforeButton>
+        <NextButton
+          onClick={onNext}
+          disabled={!allAnswered}
+          variant="step"
+        >
           {step === 4 ? "제출하기" : "다음"}
         </NextButton>
       </ButtonWrapper>

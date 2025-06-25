@@ -15,11 +15,10 @@ import {
   StartButton,
 } from "@/styles/ResultPageStyles";
 import { useResultContext } from "@/contexts/ResultContext";
-import { FaArrowRightLong } from "react-icons/fa6";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 
-const PageWrapper = styled.div`
-  background: #393939;
+const PageWrapper = styled.div<{ rhythmColorHex?: string }>`
+  background: ${(props) => props.rhythmColorHex || "#393939"};
   min-height: 812px;
   position: relative;
   padding: 24px 20px 20px;
@@ -120,7 +119,7 @@ const PrevButton = styled.button`
 `;
 
 const Routine = () => {
-  const { testResult, userName, scrollToSection } = useResultContext();
+  const { testResult, healingRoutine, scrollToSection } = useResultContext();
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
 
   const getYoutubeThumbnail = (url: string) => {
@@ -155,7 +154,7 @@ const Routine = () => {
   return (
     <>
       <section>
-        <PageWrapper>
+        <PageWrapper rhythmColorHex={healingRoutine.rhythmColorHex}>
           <ResultHeader
             pageNumber="05"
             title={
@@ -173,7 +172,7 @@ const Routine = () => {
           </SubText>
           <KeywordSection>
             <KeywordContainer>
-              {testResult.healingKeywords.map((kw, index) => (
+              {healingRoutine.healingKeywords.map((kw, index) => (
                 <KeywordCircle
                   key={kw}
                   index={index}
@@ -188,7 +187,7 @@ const Routine = () => {
           <div style={{ marginTop: "48px" }}>
             <SectionTitle>Contents</SectionTitle>
             <ScrollWrapper>
-              {testResult.healingRoutines.map((routine, idx) => {
+              {healingRoutine.recommendedContents.map((routine, idx) => {
                 const thumbnail = routine.link
                   ? getYoutubeThumbnail(routine.link)
                   : null;
@@ -221,7 +220,7 @@ const Routine = () => {
                     <RoutineTextBox>
                       <RoutineTitle>{routine.title}</RoutineTitle>
                       <RoutineDescription>
-                        {routine.description}
+                        {/* {routine.description} */}
                       </RoutineDescription>
                       <StartButton
                         disabled={!routine.link}
