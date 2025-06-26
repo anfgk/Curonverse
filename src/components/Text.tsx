@@ -2,7 +2,9 @@
 
 import styled from "styled-components";
 
-const StyledText = styled.div<{
+const StyledText = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "center" && prop !== "variant",
+})<{
   variant?: "loading" | "subtitle";
   center?: boolean;
 }>`
@@ -13,7 +15,7 @@ const StyledText = styled.div<{
   margin-left: ${(props) => (props.center ? "0" : "20px")};
   display: flex;
   flex-direction: column;
-  text-align: center;
+  text-align: ${(props) => (props.center ? "center" : "left")};
 `;
 
 interface TextProps {

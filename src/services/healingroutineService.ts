@@ -2,7 +2,7 @@ const API_URL = "/api/healing-routine";
 import { ApiResponse, HealingRoutine, HealingRoutineParams } from "@/data/types";
 
 export const healingRoutineService = {
-  async getHealingRoutine(params?: HealingRoutineParams): Promise<ApiResponse<HealingRoutine[]>> {
+  async getHealingRoutine(params?: HealingRoutineParams): Promise<ApiResponse<HealingRoutine>> {
     const queryParams = new URLSearchParams();
 
     if (params?.mbtiId != null) {

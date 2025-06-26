@@ -2,10 +2,16 @@
 
 import styled from "styled-components";
 
-const StyledText = styled.div<{
-  variant?: "loading" | "subtitle";
-  center?: boolean;
-}>`
+const StyledText = styled(
+  ({
+    center,
+    variant,
+    ...rest
+  }: {
+    center?: boolean;
+    variant?: "loading" | "subtitle";
+  } & React.HTMLAttributes<HTMLDivElement>) => <div {...rest} />
+)`
   font-size: 12px;
   font-weight: bold;
   color: #ffffff;

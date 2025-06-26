@@ -9,18 +9,20 @@ import ButtonWrapper from "@/components/buttons/ButtonWrapper";
 import NextButton from "@/components/buttons/NextButton";
 import BeforeButton from "@/components/buttons/BeforeButton";
 
-const QuestionContainer = styled.div<{
-  isFocused: boolean;
-  anyFieldFocused: boolean;
+const QuestionContainer = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "anyFieldFocused",
+})<{
+  $isFocused: boolean;
+  $anyFieldFocused: boolean;
 }>`
   width: 336px;
   height: 200px;
   margin: 44px auto 0;
-  background: ${(props) => (props.isFocused ? "#FAFAFA" : "transparent")};
+  background: ${(props) => (props.$isFocused ? "#FAFAFA" : "transparent")};
   border-radius: 10px;
   transition: all 0.3s ease;
   opacity: ${(props) =>
-    props.anyFieldFocused ? (props.isFocused ? 1 : 0.5) : 1};
+    props.$anyFieldFocused ? (props.$isFocused ? 1 : 0.5) : 1};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -126,8 +128,8 @@ export default function QuestionPage({
           <QuestionContainer
             key={q.id}
             id={`question-${q.id}`}
-            isFocused={isFocused}
-            anyFieldFocused={!!focusedQuestion}
+            $isFocused={isFocused}
+            $anyFieldFocused={!!focusedQuestion}
             onClick={(e) => handleQuestionClick(q.id, e)}
           >
             <QuesBadge
@@ -169,7 +171,7 @@ export default function QuestionPage({
           disabled={!allAnswered}
           variant="step"
         >
-          {step === 4 ? "제출하기" : "다음"}
+          {step === 4 ? "다음" : "다음"}
         </NextButton>
       </ButtonWrapper>
     </>

@@ -48,7 +48,7 @@ export function useQuestionForm(userId: number) {
 
       sessionStorage.setItem("test", JSON.stringify(testResult.data));
       sessionStorage.setItem("healingRoutine", JSON.stringify(healingRoutine.data));
-      router.push("/onloading");
+      router.push("/poem");
     } catch (error) {
       console.error("제출 중 오류 발생:", error);
       alert("제출에 실패했습니다. 다시 시도해주세요.");

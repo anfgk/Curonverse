@@ -28,7 +28,6 @@ const LoadingLayout = ({
   showTextContainer = true,
   subText,
   title,
-  text,
 }: LoadingLayoutProps) => (
   <Container>
     <StarBackground />

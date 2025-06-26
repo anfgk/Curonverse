@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import {
   getTemperaturePercentage,
-  RHYTHM_COLORS,
-  temperatureData,
+  rhythmColorGradient,
 } from "@/data/temperatureData";
-import { RhythmName } from "@/data/types";
+import { RhythmName, TemperatureAnalysis } from "@/data/types";
 
 interface TemperatureCardProps {
-  rhythmName: RhythmName;
+  rhythm: RhythmName;
+  temperatureAnalysis: TemperatureAnalysis;
 }
 
 const Card = styled.div`
@@ -102,10 +102,9 @@ const Label = styled.div`
   font-weight: bold;
 `;
 
-const TemperatureCard: React.FC<TemperatureCardProps> = ({ rhythmName }) => {
-  const { temperature, description } = temperatureData[rhythmName];
-  const { main, gradient } = RHYTHM_COLORS[rhythmName];
-  const percentage = getTemperaturePercentage(temperature);
+const TemperatureCard: React.FC<TemperatureCardProps> = ({ rhythm, temperatureAnalysis }) => {
+  const percentage = getTemperaturePercentage(temperatureAnalysis.temperature);
+  const { main, gradient } = rhythmColorGradient[rhythm as RhythmName];
 
   return (
     <>
@@ -113,12 +112,10 @@ const TemperatureCard: React.FC<TemperatureCardProps> = ({ rhythmName }) => {
         <Title>
           감정 온도계
           <Description>
-            온도가 낮을수록 감정에 무감각하고,
-            <br />
-            높을수록 감정을 버거워해요.
+            {temperatureAnalysis.temperatureDescription}
           </Description>
         </Title>
-        <Value color={main}>{temperature}°C</Value>
+        <Value color={main}>{temperatureAnalysis.temperature}°C</Value>
         <SliderWrapper>
           <Slider percentage={percentage} gradient={gradient} />
           <Arrow percentage={percentage} />

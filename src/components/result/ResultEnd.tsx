@@ -17,7 +17,6 @@ import { FiDownload } from "react-icons/fi";
 import html2canvas from "html2canvas";
 import ResultImageExport from "./ResultImageExport";
 import { useResultContext } from "@/contexts/ResultContext";
-import { FaChevronLeft } from "react-icons/fa";
 
 const Container = styled.div`
   width: 375px;
@@ -106,29 +105,6 @@ const BottomSection = styled(StyledBottomSection)`
   }
 `;
 
-const PrevButton = styled.button`
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgb(197, 196, 196, 0.4);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  cursor: pointer;
-  z-index: 1000;
-  transition: all 0.3s ease;
-  &:hover {
-    background: rgb(197, 196, 196, 0.8);
-    transform: translateY(-50%) scale(1.1);
-  }
-`;
-
 const StyledCurationItem = styled.div`
   display: flex;
   padding: 10px 0;
@@ -147,10 +123,6 @@ const HiddenImageWrapper = styled.div`
 export default function ResultEnd() {
   const { testResult, userName, scrollToSection } = useResultContext();
   const captureRef = useRef<HTMLDivElement>(null);
-
-  const handlePrev = () => {
-    scrollToSection(0); // 첫 페이지(ResultMbti)로 이동
-  };
 
   const handleDownload = async () => {
     if (captureRef.current) {
@@ -221,9 +193,6 @@ export default function ResultEnd() {
             ))}
           </AnalysisSection>
         </BottomSection>
-        <PrevButton onClick={handlePrev}>
-          <FaChevronLeft />
-        </PrevButton>
       </ContentWrapper>
       <HiddenImageWrapper ref={captureRef}>
         <ResultImageExport

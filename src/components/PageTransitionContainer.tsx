@@ -3,11 +3,13 @@ import styled from "styled-components";
 import { Container } from "../styles/ResultPageStyles";
 
 interface PageContainerProps {
-  mounted: boolean;
+  $mounted: boolean;
 }
 
-const PageContainer = styled(Container)<PageContainerProps>`
-  opacity: ${(props) => (props.mounted ? 1 : 0)};
+const PageContainer = styled(Container).withConfig({
+  shouldForwardProp: (prop) => !["mounted"].includes(prop),
+})<PageContainerProps>`
+  opacity: ${(props) => (props.$mounted ? 1 : 0)};
   transition: opacity 0.3s ease-in-out;
   width: 375px;
   height: 812px;
@@ -29,7 +31,7 @@ const PageTransitionContainer: React.FC<PageTransitionContainerProps> = ({
 }) => {
   // PageContainer 컴포넌트를 렌더링하며,
   // mounted 값을 props로 전달하고 children을 내부에 포함시킴
-  return <PageContainer mounted={mounted}>{children}</PageContainer>;
+  return <PageContainer $mounted={mounted}>{children}</PageContainer>;
 };
 
 export default PageTransitionContainer;

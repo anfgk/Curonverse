@@ -38,11 +38,14 @@ export interface EmotionType {
   keywords: EmotionKeyword[];
 }
 
-export interface HealingRoutine {
-  title: string;
+export interface TemperatureAnalysis {
+  temperature: number;
   description: string;
-  link: string;
-  setOrder: number;
+  rhythm: string;
+  state: string;
+  temperatureDescription: string;
+  title: string;
+  analysis: string[];
 }
 
 export interface TestResult {
@@ -54,9 +57,12 @@ export interface TestResult {
   rhythmId: number;
   rhythm: string;
   rhythmAnalysis: string;
+  rhythmColor: string;
+  rhythmColorHex: string;
   rhythmDescription: string;
   /* 감정온도 */
   temperature: number;
+  temperatureAnalysis: TemperatureAnalysis;
   expressionPercentile: number;
   processingPercentile: number;
   connectionPercentile: number;

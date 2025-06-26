@@ -50,17 +50,20 @@ interface CircleProps {
   size: string;
   color: string;
   opacity: number;
-  isCurrentRhythm?: boolean;
+  $isCurrentRhythm?: boolean;
   rhythmName?: string;
 }
 
-const Circle = styled.div<CircleProps>`
+const Circle = styled.div.withConfig({
+  shouldForwardProp: (prop) =>
+    !["top", "left", "right", "size", "color", "opacity", "isCurrentRhythm", "rhythmName"].includes(prop),
+})<CircleProps>`
   position: absolute;
   width: ${(props) => props.size};
   height: ${(props) => props.size};
   border-radius: 50%;
   background: ${(props) => props.color};
-  opacity: ${(props) => (props.isCurrentRhythm ? 1 : 0.6)};
+  opacity: ${(props) => (props.$isCurrentRhythm ? 1 : 0.6)};
   top: ${(props) => props.top};
   left: ${(props) => props.left};
   right: ${(props) => props.right};
@@ -68,7 +71,7 @@ const Circle = styled.div<CircleProps>`
   // box-shadow 스타일을 동적으로 설정
   // props.isCurrentRhythm 값에 따라 그림자 효과를 다르게 적용
   box-shadow: ${(props) =>
-    props.isCurrentRhythm
+    props.$isCurrentRhythm
       ? // 현재 리듬(혹은 선택된 상태)인 경우: 강조된 컬러 그림자 효과 적용
         // 여러 단계로 그림자를 겹쳐서 점점 퍼지는 빛나는 효과를 생성
         `0 0 10px 5px ${props.color}60,
@@ -80,15 +83,15 @@ const Circle = styled.div<CircleProps>`
          0 0 20px 10px rgba(255, 255, 255, 0.1),
          0 0 30px 15px rgba(255, 255, 255, 0.05)`};
   transition: all 0.3s ease;
-  z-index: ${(props) => (props.isCurrentRhythm ? 2 : 1)};
+  z-index: ${(props) => (props.$isCurrentRhythm ? 2 : 1)};
   filter: ${(props) =>
-    props.isCurrentRhythm ? "none" : "grayscale(0.7) brightness(0.8)"};
+    props.$isCurrentRhythm ? "none" : "grayscale(0.7) brightness(0.8)"};
 
   // ::after 가상 요소를 사용하여 요소 뒤에 텍스트를 삽입
   &::after {
     content: ${(props) =>
       // 만약 현재 리듬이라면
-      props.isCurrentRhythm
+      props.$isCurrentRhythm
         ? // 리듬 이름(rhythmName)을 문자열로 표시 (ex: "Rhythm A")
           `"${props.rhythmName}"`
         : // 아니라면 아무 것도 표시하지 않음
@@ -146,7 +149,7 @@ const EmotionalMap: React.FC<EmotionalMapProps> = ({ currentRhythm }) => {
             size="35px"
             color={circle.color}
             opacity={1}
-            isCurrentRhythm={currentRhythm === circle.rhythmName}
+            $isCurrentRhythm={currentRhythm === circle.rhythmName}
             rhythmName={circle.rhythmName}
           />
         ))}

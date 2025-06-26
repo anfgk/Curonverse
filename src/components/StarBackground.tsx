@@ -1,7 +1,9 @@
-import React from "react";
+"use client"; // 클라이언트 컴포넌트로 지정
+
+import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 
-// 별 깜빡임 애니메이션 키프레임 정의
+// 별 깜빡임 애니메이션
 const twinkle = keyframes`
   0% { opacity: 0; }
   50% { opacity: 1; }
@@ -25,18 +27,26 @@ const Star = styled.div<{
   animation-delay: ${(props) => props.delay}s;
 `;
 
-// StarBackground 컴포넌트 정의
+interface StarProps {
+  delay: number;
+  top: number;
+  left: number;
+  size: number;
+}
+
 const StarBackground: React.FC = () => {
-  // 250개의 별 객체를 생성하여 배열에 저장
-  const stars = Array.from({ length: 250 }, (_, i) => ({
-    // 랜덤 지연 시간 (0~3초)
-    delay: Math.random() * 3,
-    // 랜덤 위치 (0~100%)
-    top: Math.random() * 100,
-    left: Math.random() * 100,
-    // 랜덤 크기 (1~3px)
-    size: Math.random() * 2 + 1,
-  }));
+  const [stars, setStars] = useState<StarProps[]>([]);
+
+  useEffect(() => {
+    // 클라이언트에서만 실행됨
+    const generatedStars = Array.from({ length: 250 }, () => ({
+      delay: Math.random() * 3,
+      top: Math.random() * 100,
+      left: Math.random() * 100,
+      size: Math.random() * 2 + 1,
+    }));
+    setStars(generatedStars);
+  }, []);
 
   return (
     <>
