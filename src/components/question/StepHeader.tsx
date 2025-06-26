@@ -13,7 +13,9 @@ const ProgressContainer = styled.div`
   width: 100%;
 `;
 
-const ProgressBar = styled.div<{ isActive: boolean; isCompleted: boolean }>`
+const ProgressBar = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["isActive", "isCompleted"].includes(prop),
+})<{ isActive: boolean; isCompleted: boolean }>`
   height: 4px;
   flex: 1;
   background: ${(props) =>

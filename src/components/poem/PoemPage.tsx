@@ -1,19 +1,21 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import styled from "styled-components";
-import { useResultContext } from "@/contexts/ResultContext";
-import { Poem, RhythmName } from "@/data/types";
 import ResultHeader from "@/components/ResultHeader";
-import { FaChevronRight } from "react-icons/fa6";
-import { FaChevronLeft } from "react-icons/fa";
+import { Poem } from "@/data/types";
 import { poemService } from "@/services/poemService";
+import { useStoredUser } from "@/hooks/useStoredUser";
 
 const Section = styled.section<{ bg: string }>`
-  background: ${({bg}) => bg};
+  background: ${({ bg }) => bg};
   transition: background 0.5s ease;
   width: 100%;
+  height: 100%;
   padding: 24px 20px 20px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const TopSection = styled.div`
@@ -33,16 +35,13 @@ const StyledScrollWrapper = styled.div`
   }
 `;
 
-const ScrollWrapper = (props: React.HTMLAttributes<HTMLDivElement>) => (
-  <StyledScrollWrapper id="scroll-wrapper" {...props} />
-);
+const ScrollWrapper = (props: React.HTMLAttributes<HTMLDivElement>) => <StyledScrollWrapper id="scroll-wrapper" {...props} />;
 
-const PoemCard = styled.div<{ color: string; selected: boolean; }>`
+const PoemCard = styled.div<{ color: string; selected: boolean }>`
   flex: 0 0 280px;
   min-height: 340px;
   border-radius: 20px;
-  background: ${({ color }) =>
-    `linear-gradient(to bottom, ${color} 0%, rgba(255,255,255,0.2) 100%)`};
+  background: ${({ color }) => `linear-gradient(to bottom, ${color} 0%, rgba(255,255,255,0.2) 100%)`};
   scroll-snap-align: center;
   padding: 20px;
   position: relative;
@@ -50,8 +49,7 @@ const PoemCard = styled.div<{ color: string; selected: boolean; }>`
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: ${({ color, selected }) => (selected ? "4px solid white" : "none")};
   transform: ${({ selected }) => (selected ? "scale(1.05)" : "scale(1)")};
-  box-shadow: ${({ selected }) =>
-    selected ? "0 0 20px rgba(255, 255, 255, 0.6)" : "1px 1px 10px rgba(255, 255, 255, 0.8)"};
+  box-shadow: ${({ selected }) => (selected ? "0 0 20px rgba(255, 255, 255, 0.6)" : "1px 1px 10px rgba(255, 255, 255, 0.8)")};
 `;
 
 const TypeTag = styled.div`
@@ -83,7 +81,6 @@ const IconImage = styled.img`
   padding: 4px;
 `;
 
-
 const PoemText = styled.div`
   font-size: 20px;
   font-weight: 600;
@@ -102,78 +99,28 @@ const PoemSource = styled.div`
 
 const CompleteButton = styled.button<{ disabled: boolean }>`
   margin-top: 36px;
-  width: 90%;
+  width: 100%;
   max-width: 320px;
   height: 48px;
-  background: ${({ disabled }) => (disabled ? "#aaa" : "#fff")};
+  background: ${({ disabled }) => (disabled ? "#aaa" : "#f0f0f0")};
   color: ${({ disabled }) => (disabled ? "#666" : "#000")};
   border: none;
   border-radius: 12px;
   font-size: 16px;
   font-weight: bold;
-  align-self: center;
   transition: background 0.3s ease;
+  align-items: center;
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
 `;
 
-const StyledBottomSection = styled.div`
-  height: 80px;
-`;
-
-const NextButton = styled.button`
-  position: absolute;
-  right: 10px;
-  top: 365%;
-  transform: translateY(-50%);
-  background: rgb(197, 196, 196, 0.4);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  cursor: pointer;
-  z-index: 1000;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: rgb(197, 196, 196, 0.8);
-    transform: translateY(-50%) scale(1.1);
-  }
-`;
-
-const PrevButton = styled.button`
-  position: absolute;
-  left: 10px;
-  top: 365%;
-  transform: translateY(-50%);
-  background: rgb(197, 196, 196, 0.4);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  cursor: pointer;
-  z-index: 1000;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: rgb(197, 196, 196, 0.8);
-    transform: translateY(-50%) scale(1.1);
-  }
-`;
 
 const ResultPoem = () => {
-  const { testResult, userName, scrollToSection } = useResultContext();
-  const [selectedRhythm, setSelectedRhythm] = useState<RhythmName | null>(null);
+  const user = useStoredUser();
+  const [selectedRhythm, setSelectedRhythm] = useState<number | null>(null);
   const [poemData, setPoemData] = useState<Poem[]>([]);
   const [loading, setLoading] = useState(true);
   const [bgColor, setBgColor] = useState<string>("#F25C2A");
+  const router = useRouter();
 
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -218,63 +165,49 @@ const ResultPoem = () => {
     return () => observer.disconnect();
   }, [poemData]);
 
-  const handleSelect = (rhythmName: RhythmName) => {
-    setSelectedRhythm(rhythmName);
-  };
-
-  const handleNext = () => {
-    scrollToSection(4); // Routine 페이지로 이동
-  };
-
-  const handlePrev = () => {
-    scrollToSection(2); // Temperature 페이지로 이동
+  const handleSelect = () => {
+    if (selectedRhythm == null) return;
+    const selected = poemData.find((poem) => poem.rhythmId === selectedRhythm);
+    if (selected) {
+      console.log("Selected Poem:", selected);
+      sessionStorage.setItem("selectedPoem", JSON.stringify(selected));
+      router.push("/onloading");
+    }
   };
 
   return (
     <Section bg={bgColor}>
       <TopSection>
         <ResultHeader
-          pageNumber="04"
-          title={`${userName}님이 선택한 시를 통해\n나에게 맞는 감정 루틴을 추천해 드릴게요.`}
+          pageNumber="마지막"
+          title={`${user?.name}님이 선택한 시를 통해\n나에게 맞는 감정 루틴을 추천해 드릴게요.`}
           description="오늘, 어떤 문장이 나의 감정을 일깨우나요?"
         />
         <ScrollWrapper>
           {poemData.map((data, idx) => (
-            <>
-              <PoemCard
-                data-index={idx}
-                key={data.rhythmName}
-                ref={(el) => {
-                  cardRefs.current[idx] = el;
-                }}
-                color={data.rhythmColorHex}
-                selected={selectedRhythm === data.rhythmName}
-                onClick={() => setSelectedRhythm(data.rhythmName)}
-              >
-                <TypeTag>{data.rhythmType}</TypeTag>
-                <PoemIcon>
-                  <IconImage src={data.iconUrl}></IconImage>
-                </PoemIcon>
-                <PoemText>{data.contents}</PoemText>
-                <PoemSource>{data.title}</PoemSource>
-              </PoemCard>
-            </>
+            <PoemCard
+              data-index={idx}
+              key={data.rhythmId}
+              ref={(el) => {
+                cardRefs.current[idx] = el;
+              }}
+              color={data.rhythmColorHex}
+              selected={selectedRhythm === data.rhythmId}
+              onClick={() => setSelectedRhythm(data.rhythmId)}
+            >
+              <TypeTag>{data.rhythmType}</TypeTag>
+              <PoemIcon>
+                <IconImage src={data.iconUrl}></IconImage>
+              </PoemIcon>
+              <PoemText>{data.contents}</PoemText>
+              <PoemSource>{data.title}</PoemSource>
+            </PoemCard>
           ))}
         </ScrollWrapper>
-        <CompleteButton
-          disabled={!selectedRhythm}
-          onClick={() => handleSelect(selectedRhythm!)}
-        >
-          선택 완료
+        <CompleteButton disabled={!selectedRhythm} onClick={handleSelect}>
+          검사 완료
         </CompleteButton>
       </TopSection>
-      <StyledBottomSection />
-      <PrevButton onClick={handlePrev}>
-        <FaChevronLeft />
-      </PrevButton>
-      <NextButton onClick={handleNext}>
-        <FaChevronRight />
-      </NextButton>
     </Section>
   );
 };

@@ -55,21 +55,29 @@ const BacklightLayer = styled.div`
   z-index: 1;
 `;
 
-const StarImage = styled(Image)<{
-  top: string;
-  left?: string;
-  right?: string;
-  isLeft?: boolean;
-  delay?: number;
-}>`
+const StarImage = styled(
+  ({
+    isLeft,
+    delay,
+    top,
+    left,
+    right,
+    ...rest
+  }: {
+    isLeft?: boolean;
+    delay?: number;
+    top: string;
+    left?: string;
+    right?: string;
+  } & React.ComponentProps<typeof Image>) => <Image {...rest} />
+)`
   position: absolute;
   width: 35px !important;
   height: 38px !important;
   top: ${(props) => props.top};
   left: ${(props) => props.left || "auto"};
   right: ${(props) => props.right || "auto"};
-  animation: ${(props) => (props.isLeft ? floatLeft : floatRight)} 4s
-    ease-in-out infinite;
+  animation: ${(props) => (props.isLeft ? floatLeft : floatRight)} 4s ease-in-out infinite;
   animation-delay: ${(props) => props.delay || 0}s;
   object-fit: contain;
   z-index: 1;

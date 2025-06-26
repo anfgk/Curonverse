@@ -106,12 +106,14 @@ export const KeywordContainer = styled.div`
   position: relative;
 `;
 
-export const KeywordCircle = styled.div<{ index: number; mbtiType: string }>`
+export const KeywordCircle = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["index", "mbtiType"].includes(prop),
+})<{ index: number; $mbtiType: string }>`
   width: 120px;
   height: 120px;
   border-radius: 50%;
   background: ${(props) => {
-    const colors = mbtiCircleColors[props.mbtiType] || mbtiCircleColors["EPSA"];
+    const colors = mbtiCircleColors[props.$mbtiType] || mbtiCircleColors["EPSA"];
     return props.index === 0
       ? colors.light
       : props.index === 1
@@ -272,13 +274,15 @@ export const VideoWrapper = styled.div`
   margin-bottom: 16px;
 `;
 
-export const VideoThumbnail = styled.div<{ imageUrl?: string }>`
+export const VideoThumbnail = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["imageUrl"].includes(prop),
+})<{ $imageUrl?: string }>`
   width: 100%;
   height: 160px;
   border-radius: 12px;
   background-color: #ddd;
-  background-image: ${({ imageUrl }) =>
-    imageUrl ? `url(${imageUrl})` : "none"};
+  background-image: ${({ $imageUrl }) =>
+    $imageUrl ? `url(${$imageUrl})` : "none"};
   background-size: cover;
   background-position: center;
   margin-bottom: 16px;

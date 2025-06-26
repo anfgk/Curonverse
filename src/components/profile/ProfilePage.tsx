@@ -4,7 +4,9 @@ import styled from "styled-components";
 import ProfileForm from "./ProfileForm";
 import { useProfileForm } from "@/hooks/useProfileForm";
 
-const Container = styled.div<{ dimmed: boolean }>`
+const Container = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "dimmed",
+})<{ dimmed: boolean }>`
   width: 375px;
   height: 812px;
   background: #393939;

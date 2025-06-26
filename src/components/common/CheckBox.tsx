@@ -10,11 +10,14 @@ const Container = styled.div`
   gap: 8px;
 `;
 
-const Circle = styled.div<{ isSelected: boolean; size?: number }>`
-  width: ${(props) => `${props.size || 36}px`};
-  height: ${(props) => `${props.size || 36}px`};
+const Circle = styled.div<{
+  $isSelected: boolean;
+  $size?: number;
+}>`
+  width: ${(props) => `${props.$size || 36}px`};
+  height: ${(props) => `${props.$size || 36}px`};
   border-radius: 50%;
-  background-color: ${(props) => (props.isSelected ? "#CB59FF" : "#C8C8C8")};
+  background-color: ${(props) => (props.$isSelected ? "#CB59FF" : "#C8C8C8")};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,22 +27,22 @@ const Circle = styled.div<{ isSelected: boolean; size?: number }>`
 
   svg {
     color: white;
-    width: ${(props) => `${props.size ? props.size * 0.55 : 20}px`};
-    height: ${(props) => `${props.size ? props.size * 0.55 : 20}px`};
-    opacity: ${(props) => (props.isSelected ? 1 : 0)};
+    width: ${(props) => `${props.$size ? props.$size * 0.55 : 20}px`};
+    height: ${(props) => `${props.$size ? props.$size * 0.55 : 20}px`};
+    opacity: ${(props) => (props.$isSelected ? 1 : 0)};
     transition: opacity 0.2s ease;
   }
 `;
 
 const Label = styled.span<{
-  isFocused: boolean;
-  isSelected: boolean;
-  hasAnySelection: boolean;
+  $isFocused: boolean;
+  $isSelected: boolean;
+  $hasAnySelection: boolean;
 }>`
   color: ${(props) => {
-    if (!props.isFocused) return "#C8C8C8";
-    if (props.hasAnySelection) {
-      return props.isSelected ? "#000" : "#C8C8C8";
+    if (!props.$isFocused) return "#C8C8C8";
+    if (props.$hasAnySelection) {
+      return props.$isSelected ? "#000" : "#C8C8C8";
     }
     return "#000";
   }};
@@ -66,15 +69,7 @@ interface CheckBoxProps {
   hasAnySelection?: boolean;
 }
 
-const CheckBox = ({
-  label,
-  isSelected,
-  onClick,
-  onQuestionClick,
-  size,
-  isFocused = false,
-  hasAnySelection = false,
-}: CheckBoxProps) => {
+const CheckBox = ({ label, isSelected, onClick, onQuestionClick, size, isFocused = false, hasAnySelection = false }: CheckBoxProps) => {
   // 라벨 텍스트 분리
   const formatLabel = (text: string) => {
     switch (text) {
@@ -98,16 +93,11 @@ const CheckBox = ({
 
   return (
     <Container>
-      <Circle isSelected={isSelected} onClick={handleCircleClick} size={size}>
+      <Circle $isSelected={isSelected} $size={size} onClick={handleCircleClick}>
         <FiCheck />
       </Circle>
-      <Label
-        isFocused={isFocused}
-        isSelected={isSelected}
-        hasAnySelection={hasAnySelection}
-        onClick={handleLabelClick}
-        style={{ cursor: "pointer" }}
-      >
+
+      <Label $isFocused={isFocused} $isSelected={isSelected} $hasAnySelection={hasAnySelection} onClick={handleLabelClick} style={{ cursor: "pointer" }}>
         {formatLabel(label)}
       </Label>
     </Container>

@@ -3,16 +3,18 @@ import styled from "styled-components";
 import Input from "@/components/Input";
 import Info from "@/components/Info";
 
-const InputWrapper = styled.div<{
-  isFocused: boolean;
-  anyFieldFocused: boolean;
+const InputWrapper = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isFocused" && prop !== "anyFieldFocused",
+})<{
+  $isFocused: boolean;
+  $anyFieldFocused: boolean;
 }>`
   position: relative;
-  z-index: ${(props) => (props.isFocused ? 2 : 1)};
+  z-index: ${(props) => (props.$isFocused ? 2 : 1)};
   transition: opacity 0.3s ease;
   opacity: ${(props) => {
-    if (!props.anyFieldFocused) return 1;
-    return props.isFocused ? 1 : 0.5;
+    if (!props.$anyFieldFocused) return 1;
+    return props.$isFocused ? 1 : 0.5;
   }};
 `;
 
@@ -49,7 +51,7 @@ const ProfileInput: React.FC<ProfileInputProps> = ({
   onBlur,
 }) => {
   return (
-    <InputWrapper isFocused={isFocused} anyFieldFocused={anyFieldFocused}>
+    <InputWrapper $isFocused={isFocused} $anyFieldFocused={anyFieldFocused}>
       <Info mainText={label} />
       <Input
         type={type}

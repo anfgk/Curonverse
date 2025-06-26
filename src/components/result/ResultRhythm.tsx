@@ -9,7 +9,6 @@ import {
   AnalysisTitle,
 } from "@/styles/ResultPageStyles";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { useResultContext } from "@/contexts/ResultContext";
 import ResultHeader from "@/components/ResultHeader";
 import EmotionalMap from "@/components/EmotionalMap";
@@ -56,64 +55,8 @@ const SecondPageBottomSection = styled(StyledBottomSection)`
   bottom: -100px;
 `;
 
-const NextButton = styled.button`
-  position: absolute;
-  right: 10px;
-  top: 150%;
-  transform: translateY(-50%);
-  background: rgb(197, 196, 196, 0.4);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  cursor: pointer;
-  z-index: 1000;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: rgb(197, 196, 196, 0.8);
-    transform: translateY(-50%) scale(1.1);
-  }
-`;
-
-const PrevButton = styled.button`
-  position: absolute;
-  left: 10px;
-  top: 150%;
-  transform: translateY(-50%);
-  background: rgb(197, 196, 196, 0.4);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  cursor: pointer;
-  z-index: 1000;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: rgb(197, 196, 196, 0.8);
-    transform: translateY(-50%) scale(1.1);
-  }
-`;
-
 const ResultRhythm = () => {
   const { testResult, userName, scrollToSection } = useResultContext();
-
-  const handleNext = () => {
-    scrollToSection(2); // Temperature 페이지로 이동
-  };
-
-  const handlePrev = () => {
-    scrollToSection(0); // ResultMbti 페이지로 이동
-  };
 
   return (
     <section>
@@ -146,12 +89,6 @@ const ResultRhythm = () => {
           </AnalysisItem>
         </AnalysisSection>
       </SecondPageBottomSection>
-      <PrevButton onClick={handlePrev}>
-        <FaChevronLeft />
-      </PrevButton>
-      <NextButton onClick={handleNext}>
-        <FaChevronRight />
-      </NextButton>
     </section>
   );
 };
