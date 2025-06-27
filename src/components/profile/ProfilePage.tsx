@@ -4,9 +4,7 @@ import styled from "styled-components";
 import ProfileForm from "./ProfileForm";
 import { useProfileForm } from "@/hooks/useProfileForm";
 
-const Container = styled.div.withConfig({
-  shouldForwardProp: (prop) => prop !== "dimmed",
-})<{ dimmed: boolean }>`
+const Container = styled.div<{ dimmed: boolean }>`
   width: 375px;
   height: 812px;
   background: #393939;
@@ -52,7 +50,6 @@ export default function ProfilePage() {
     handleChange,
     handleFocus,
     handleBlur,
-    handleBeforeClick,
     handleNextClick,
   } = useProfileForm();
 
@@ -68,7 +65,6 @@ export default function ProfilePage() {
           handleChange={handleChange}
           handleFocus={handleFocus}
           handleBlur={handleBlur}
-          handleBeforeClick={handleBeforeClick}
           handleNextClick={handleNextClick}
         />
       </ContentWrapper>

@@ -25,7 +25,7 @@ export const baseButtonStyle = css`
 // 이전 버튼 전용 스타일
 export const beforeButtonStyle = css`
   ${baseButtonStyle}
-  width: 100px;
+  width: 40%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,11 +35,12 @@ export const beforeButtonStyle = css`
 // 다음 버튼 전용 스타일
 export const nextButtonStyle = css`
   ${baseButtonStyle}
-  width: 100px;
+  width: 95%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   gap: 10px;
+
 `;
 
 // 아이콘 공통 스타일

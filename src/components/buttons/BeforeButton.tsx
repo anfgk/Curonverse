@@ -34,10 +34,10 @@ const BeforeButton = ({
       variant={variant}
       $hide={$hide}
     >
-      <span>{children}</span>
       <IconWrapper>
         <FaArrowLeftLong />
       </IconWrapper>
+      <span>{children}</span>
     </StyledBeforeButton>
   );
 };

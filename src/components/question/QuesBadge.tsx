@@ -9,18 +9,14 @@ const BadgeContainer = styled.div`
   margin-top: 31px;
 `;
 
-const HighlightText = styled.span.withConfig({
-  shouldForwardProp: (prop) => prop !== "isFocused",
-})<{ $isFocused: boolean }>`
+const HighlightText = styled.span<{ $isFocused: boolean }>`
   color: ${(props) => (props.$isFocused ? "#CB59FF" : "#CB59FF")};
   font-size: 16px;
   font-weight: bold;
   transition: color 0.3s ease;
 `;
 
-const NormalText = styled.span.withConfig({
-  shouldForwardProp: (prop) => prop !== "isFocused",
-})<{ $isFocused: boolean }>`
+const NormalText = styled.span<{ $isFocused: boolean }>`
   color: ${(props) => (props.$isFocused ? "#000" : "#fff")};
   font-size: 16px;
   font-weight: bold;

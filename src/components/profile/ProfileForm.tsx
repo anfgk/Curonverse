@@ -5,7 +5,6 @@ import styled from "styled-components";
 import ProfileAgreement from "./ProfileAgreement";
 import ButtonWrapper from "@/components/buttons/ButtonWrapper";
 import NextButton from "@/components/buttons/NextButton";
-import BeforeButton from "@/components/buttons/BeforeButton";
 
 const FormContainer = styled.div`
   display: flex;
@@ -24,7 +23,6 @@ export default function ProfileForm({
   handleChange,
   handleFocus,
   handleBlur,
-  handleBeforeClick,
   handleNextClick,
 }: any) {
   return (
@@ -70,7 +68,6 @@ export default function ProfileForm({
       />
       <ProfileAgreement />
       <ButtonWrapper>
-        <BeforeButton onClick={handleBeforeClick} />
         <NextButton
           onClick={handleNextClick}
           disabled={!isFormValid}

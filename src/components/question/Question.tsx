@@ -2,9 +2,7 @@
 
 import styled from "styled-components";
 
-const QuestionText = styled.div.withConfig({
-  shouldForwardProp: (prop) => prop !== "isFocused",
-})<{ $isFocused: boolean }>`
+const QuestionText = styled.div<{ $isFocused: boolean }>`
   font-size: 20px;
   font-weight: bold;
   color: ${(props) => (props.$isFocused ? "#000" : "#fff")};

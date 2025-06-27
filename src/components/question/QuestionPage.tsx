@@ -9,15 +9,14 @@ import ButtonWrapper from "@/components/buttons/ButtonWrapper";
 import NextButton from "@/components/buttons/NextButton";
 import BeforeButton from "@/components/buttons/BeforeButton";
 
-const QuestionContainer = styled.div.withConfig({
-  shouldForwardProp: (prop) => prop !== "anyFieldFocused",
-})<{
+const QuestionContainer = styled.div<{
   $isFocused: boolean;
   $anyFieldFocused: boolean;
 }>`
   width: 336px;
   height: 200px;
   margin: 44px auto 0;
+  padding: 5px 24px;
   background: ${(props) => (props.$isFocused ? "#FAFAFA" : "transparent")};
   border-radius: 10px;
   transition: all 0.3s ease;
