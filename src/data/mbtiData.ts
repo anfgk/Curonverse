@@ -20,22 +20,22 @@ export const mbtiKeywords: Record<string, string[]> = {
 };
 
 export const mbtiColors: Record<string, string> = {
-  EPSA: "#FF6B3D", // 불꽃 오렌지
+  EPSA: "#FF7448", // 불꽃 오렌지
   EPSU: "#FF4F4F", // 선홍 레드
-  EPIA: "#FFA07A", // 따뜻한 피치핑크
-  EPIU: "#F08080", // 라이트 코랄
-  EHSA: "#FFD39B", // 살구 베이지
-  EHSU: "#FFB6C1", // 로즈핑크
-  EHIA: "#E6A9EC", // 라벤더 핑크
-  EHIU: "#DDA0DD", // 퍼플 핑크
-  RPSA: "#6C7B8B", // 진회색 블루
-  RPSU: "#4F6D7A", // 딥 블루 그레이
-  RPIA: "#008080", // 진한 청록
-  RPIU: "#6B5B95", // 딥 라일락
-  RHSA: "#A3BFD9", // 안개 블루
-  RHSU: "#D3D3D3", // 라이트 그레이
-  RHIA: "#BCD4E6", // 미스트 블루
-  RHIU: "#EAD7f5", // 펄 화이트 + 연보라
+  EPIA: "#FF9553", // 따뜻한 피치핑크
+  EPIU: "#FF8080", // 라이트 코랄
+  EHSA: "#FFB85E", // 살구 베이지
+  EHSU: "#FF697F", // 로즈핑크
+  EHIA: "#CA74FF", // 라벤더 핑크
+  EHIU: "#E268E2", // 퍼플 핑크
+  RPSA: "#33557A", // 진회색 블루
+  RPSU: "#3C748C", // 딥 블루 그레이
+  RPIA: "#2CC0C0", // 진한 청록
+  RPIU: "#6C42DB", // 딥 라일락
+  RHSA: "#85C3FD", // 안개 블루
+  RHSU: "#3B61A9", // 라이트 그레이
+  RHIA: "#2A8AD2", // 미스트 블루
+  RHIU: "#F3AFFF", // 펄 화이트 + 연보라
 };
 
 export const mbtiDescriptions: Record<string, Record<string, string>> = {
@@ -259,84 +259,84 @@ export const mbtiCircleColors: Record<
   { light: string; medium: string; dark: string }
 > = {
   EPSA: {
-    light: "rgba(255, 95, 46, 0.4)",
-    medium: "rgba(255, 95, 46, 0.6)",
-    dark: "rgba(255, 95, 46, 1)",
+    light: "rgb(255, 161, 132)",
+    medium: "rgb(255, 104, 57)",
+    dark: "rgb(255, 87, 34)",
   },
   EPSU: {
-    light: "rgba(250, 65, 65, 0.4)",
-    medium: "rgba(250, 65, 65, 0.6)",
-    dark: "rgba(250, 65, 65, 1)",
+    light: "rgb(255, 138, 138)",
+    medium: "rgb(255, 95, 95)",
+    dark: "rgb(236, 50, 50)",
   },
   EPIA: {
-    light: "rgba(255, 137, 89, 0.4)",
-    medium: "rgba(255, 137, 89, 0.6)",
-    dark: "rgba(255, 137, 89, 1)",
+    light: "rgb(255, 174, 103)",
+    medium: "rgb(255, 160, 76)",
+    dark: "rgb(255, 137, 63)",
   },
   EPIU: {
-    light: "rgba(240, 120, 120, 0.4)",
-    medium: "rgba(240, 120, 120, 0.6)",
-    dark: "rgba(240, 120, 120, 1)",
+    light: "rgb(255, 175, 175)",
+    medium: "rgb(255, 86, 86)",
+    dark: "rgb(255, 63, 63)",
   },
   EHSA: {
-    light: "rgba(252, 198, 129, 0.4)",
-    medium: "rgba(252, 198, 129, 0.6)",
-    dark: "rgba(252, 198, 129, 1)",
+    light: "rgb(255, 196, 121)",
+    medium: "rgb(255, 170, 61)",
+    dark: "rgb(255, 156, 32)",
   },
   EHSU: {
-    light: "rgba(252, 164, 177, 0.4)",
-    medium: "rgba(252, 164, 177, 0.6)",
-    dark: "rgba(252, 164, 177, 1)",
+    light: "rgb(255, 194, 203)",
+    medium: "rgb(255, 128, 146)",
+    dark: "rgb(255, 91, 115)",
   },
   EHIA: {
-    light: "rgba(222, 142, 230, 0.4)",
-    medium: "rgba(222, 142, 230, 0.6)",
-    dark: "rgba(222, 142, 230, 1)",
+    light: "rgb(229, 183, 255)",
+    medium: "rgb(212, 143, 255)",
+    dark: "rgb(195, 99, 255)",
   },
   EHIU: {
-    light: "rgba(212, 135, 212, 0.4)",
-    medium: "rgba(212, 135, 212, 0.6)",
-    dark: "rgba(212, 135, 212, 1)",
+    light: "rgb(255, 165, 255)",
+    medium: "rgb(255, 128, 255)",
+    dark: "rgb(255, 94, 255)",
   },
   RPSA: {
-    light: "rgba(84, 114, 145, 0.4)",
-    medium: "rgba(84, 114, 145, 0.6)",
-    dark: "rgba(84, 114, 145, 1)",
+    light: "rgb(128, 166, 206)",
+    medium: "rgb(75, 123, 175)",
+    dark: "rgb(47, 101, 157)",
   },
   RPSU: {
-    light: "rgba(61, 93, 107, 0.4)",
-    medium: "rgba(61, 93, 107, 0.6)",
-    dark: "rgba(61, 93, 107, 1)",
+    light: "rgb(122, 169, 189)",
+    medium: "rgb(80, 146, 175)",
+    dark: "rgb(61, 131, 162)",
   },
   RPIA: {
-    light: "rgba(0, 94, 94, 0.4)",
-    medium: "rgba(0, 94, 94, 0.6)",
-    dark: "rgba(0, 94, 94, 1)",
+    light: "rgb(125, 227, 227)",
+    medium: "rgb(77, 209, 209)",
+    dark: "rgb(29, 176, 176)",
   },
   RPIU: {
-    light: "rgba(95, 74, 150, 0.4)",
-    medium: "rgba(95, 74, 150, 0.6)",
-    dark: "rgba(95, 74, 150, 1)",
+    light: "rgb(198, 176, 255)",
+    medium: "rgb(150, 112, 255)",
+    dark: "rgb(126, 77, 255)",
   },
   RHSA: {
-    light: "rgba(130, 175, 217, 0.4)",
-    medium: "rgba(130, 175, 217, 0.6)",
-    dark: "rgba(130, 175, 217, 1)",
+    light: "rgb(174, 216, 255)",
+    medium: "rgb(106, 182, 254)",
+    dark: "rgb(77, 170, 255)",
   },
   RHSU: {
-    light: "rgba(161, 161, 161, 0.4)",
-    medium: "rgba(161, 161, 161, 0.6)",
-    dark: "rgba(161, 161, 161, 1)",
+    light: "rgb(156, 191, 255)",
+    medium: "rgb(86, 141, 244)",
+    dark: "rgb(55, 112, 216)",
   },
   RHIA: {
-    light: "rgba(163, 192, 214, 0.4)",
-    medium: "rgba(163, 192, 214, 0.6)",
-    dark: "rgba(163, 192, 214, 1)",
+    light: "rgb(136, 204, 255)",
+    medium: "rgb(87, 183, 255)",
+    dark: "rgb(45, 162, 249)",
   },
   RHIU: {
-    light: "rgba(232, 208, 247, 0.4)",
-    medium: "rgba(237, 209, 255, 0.6)",
-    dark: "rgba(227, 195, 247, 1)",
+    light: "rgb(240, 157, 255)",
+    medium: "rgb(237, 138, 255)",
+    dark: "rgb(233, 111, 255)",
   },
 };
 

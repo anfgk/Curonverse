@@ -10,12 +10,12 @@ export const RHYTHM_CIRCLES: Array<{
   color: string;
   rhythmName: RhythmName;
 }> = [
-  { top: "30px", left: "50%", color: "#A4D6A7", rhythmName: "Quiet Sync" },
-  { top: "25px", left: "115px", color: "#FBC875", rhythmName: "Warm Flow" },
-  { top: "200px", left: "105px", color: "#ECE8F3", rhythmName: "Hidden Pearl" },
-  { top: "70px", left: "85px", color: "#C3DCE9", rhythmName: "Healing Loop" },
-  { top: "70px", right: "70px", color: "#F25C2A", rhythmName: "Spark Flame" },
-  { top: "150px", right: "110px", color: "#BAADFA", rhythmName: "Silent Echo" },
+  { top: "30px", left: "50%", color: "#6DD1FF", rhythmName: "Quiet Sync" },
+  { top: "25px", left: "115px", color: "#FFD931", rhythmName: "Warm Flow" },
+  { top: "200px", left: "105px", color: "#EDC7FF", rhythmName: "Hidden Pearl" },
+  { top: "70px", left: "85px", color: "#16DA78", rhythmName: "Healing Loop" },
+  { top: "70px", right: "70px", color: "#FF6A14", rhythmName: "Spark Flame" },
+  { top: "150px", right: "110px", color: "#377EF1", rhythmName: "Silent Echo" },
 ];
 
 export const STARS = [
