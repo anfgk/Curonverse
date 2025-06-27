@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {
   getTemperaturePercentage,
-  rhythmColorGradient,
+  getTemperatureColor,
 } from "@/data/temperatureData";
 import { RhythmName, TemperatureAnalysis } from "@/data/types";
 
@@ -104,7 +104,7 @@ const Label = styled.div`
 
 const TemperatureCard: React.FC<TemperatureCardProps> = ({ rhythm, temperatureAnalysis }) => {
   const percentage = getTemperaturePercentage(temperatureAnalysis.temperature);
-  const { main, gradient } = rhythmColorGradient[rhythm as RhythmName];
+  const temperatureColor = getTemperatureColor(temperatureAnalysis.temperature);
 
   return (
     <>
@@ -115,9 +115,9 @@ const TemperatureCard: React.FC<TemperatureCardProps> = ({ rhythm, temperatureAn
             {temperatureAnalysis.temperatureDescription}
           </Description>
         </Title>
-        <Value color={main}>{temperatureAnalysis.temperature}°C</Value>
+        <Value color={temperatureColor.background}>{temperatureAnalysis.temperature}°C</Value>
         <SliderWrapper>
-          <Slider percentage={percentage} gradient={gradient} />
+          <Slider percentage={percentage} gradient={temperatureColor.gradient} />
           <Arrow percentage={percentage} />
         </SliderWrapper>
         <Range>

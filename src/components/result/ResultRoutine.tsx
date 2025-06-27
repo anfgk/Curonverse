@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import ResultHeader from "../ResultHeader";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import {
   KeywordSection,
   KeywordContainer,
@@ -13,9 +13,7 @@ import { useResultContext } from "@/contexts/ResultContext";
 import RoutineCardList from "./RoutineCardList";
 import useSelectedPoem from "@/hooks/useSelectedPoem";
 
-const PageWrapper = styled.div.withConfig({
-  shouldForwardProp: (prop) => !["rhythmColorHex"].includes(prop),
-})<{ $rhythmColorHex?: string }>`
+const PageWrapper = styled.div<{ $rhythmColorHex?: string }>`
   background: ${(props) => props.$rhythmColorHex || "#393939"};
   min-height: 812px;
   position: relative;

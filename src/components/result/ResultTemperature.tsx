@@ -17,6 +17,7 @@ import { useResultContext } from "@/contexts/ResultContext";
 import ResultHeader from "@/components/ResultHeader";
 import TemperatureCard from "@/components/temperature/TemperatureCard";
 import { RhythmName } from "@/data/types";
+import { getTemperatureColor } from "@/data/temperatureData";
 
 const TopSection = styled(BaseTopSection).withConfig({
   shouldForwardProp: (prop) => !["mbtiColor"].includes(prop),
@@ -43,11 +44,12 @@ const Temperature = () => {
   const { testResult } = useResultContext();
 
   const emotionType = testResult.emotionType;
+  const temperatureColor = getTemperatureColor(testResult.temperatureAnalysis.temperature);
 
   return (
     <>
     <section>
-      <TopSection $mbtiColor={emotionType.hexCode}>
+      <TopSection $mbtiColor={temperatureColor.background}>
         <ResultHeader
           pageNumber="03"
           title={`때문에, ${testResult.temperatureAnalysis.title}`}
