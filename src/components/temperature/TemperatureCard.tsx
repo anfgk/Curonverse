@@ -17,13 +17,21 @@ const Card = styled.div`
   padding: 20px;
   color: #4b4b4b;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: bold;  
+`;
+
+const CardHeader = styled.div`
+  display: flex;
+  border: 1px solid red;
+  gap: 70px;
+
 `;
 
 const Title = styled.div`
   font-size: 12px;
   display: flex;
-  gap: 70px;
+  width: 40%;
+
 `;
 
 const Description = styled.div`
@@ -109,12 +117,14 @@ const TemperatureCard: React.FC<TemperatureCardProps> = ({ rhythm, temperatureAn
   return (
     <>
       <Card>
+        <CardHeader>
         <Title>
           감정 온도계
+          </Title>
           <Description>
             {temperatureAnalysis.temperatureDescription}
           </Description>
-        </Title>
+          </CardHeader>
         <Value color={temperatureColor.background}>{temperatureAnalysis.temperature}°C</Value>
         <SliderWrapper>
           <Slider percentage={percentage} gradient={temperatureColor.gradient} />
