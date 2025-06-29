@@ -11,6 +11,7 @@ import ResultEnd from "@/components/result/ResultEnd";
 import { useStoredUser } from "@/hooks/useStoredUser";
 import { useTestResult } from "@/hooks/useTestResult";
 import { useHealingRoutine } from "@/hooks/useHealingRoutine";
+import ScrollGuide from "@/components/common/ScrollGuide";
 
 export default function ResultPage() {
   const user = useStoredUser();
@@ -49,6 +50,7 @@ export default function ResultPage() {
         scrollToSection,
       }}
     >
+      <ScrollGuide />
       <PageTransitionContainer mounted>
         <div ref={mbtiRef}>
           <ResultMbti />
