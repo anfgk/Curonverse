@@ -30,6 +30,7 @@ export function useProfileForm() {
       const response = await userService.createUser(profile);
       console.log("Profile saved successfully:", response);
       sessionStorage.setItem("user", JSON.stringify(response.data));
+      sessionStorage.setItem("userId", response.data.id.toString());
       router.replace("/step");
     } catch (error) {
       console.error("Error saving profile:", error);

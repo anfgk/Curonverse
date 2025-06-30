@@ -14,13 +14,7 @@ export interface User {
   [key: string]: any; // 기타 필드 유연하게 허용
 }
 
-export type RhythmName =
-  | "Spark Flame"
-  | "Warm Flow"
-  | "Healing Loop"
-  | "Quiet Sync"
-  | "Silent Echo"
-  | "Hidden Pearl";
+export type RhythmName = "Spark Flame" | "Warm Flow" | "Healing Loop" | "Quiet Sync" | "Silent Echo" | "Hidden Pearl";
 
 export interface EmotionKeyword {
   id: number;
@@ -72,7 +66,7 @@ export interface TestResult {
   recommendedRoutine: string;
   healingKeywords: string[];
   healingRoutines: HealingRoutine[];
-  
+
   percentTotal: number;
   percentGender: number;
 }
@@ -107,3 +101,16 @@ export interface Poem {
   rhythmColor: string;
   rhythmColorHex: string;
 }
+
+export type PageType = "MBTI_RESULT" | "RHYTHM_RESULT" | "TEMPERATURE_RESULT" | "POEM_SELECT" | "ROUTINE_RECOMMENDATION" | "OPEN_TEASER" | "USER_PROFILE" | "TEST_QUESTIONS";
+
+export const PageTypeIdMap: Record<PageType, number> = {
+  MBTI_RESULT: 1,
+  RHYTHM_RESULT: 2,
+  TEMPERATURE_RESULT: 3,
+  POEM_SELECT: 4,
+  ROUTINE_RECOMMENDATION: 5,
+  OPEN_TEASER: 6,
+  USER_PROFILE: 7,
+  TEST_QUESTIONS: 8,
+};
