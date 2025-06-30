@@ -12,13 +12,24 @@ import { useStoredUser } from "@/hooks/useStoredUser";
 import { useTestResult } from "@/hooks/useTestResult";
 import { useHealingRoutine } from "@/hooks/useHealingRoutine";
 import ScrollGuide from "@/components/common/ScrollGuide";
+import { usePageVisitLogger } from "@/hooks/usePageVisitLogger";
 
 export default function ResultPage() {
+
+  // 페이지 방문 로깅 설정
+  usePageVisitLogger({
+    pageType: "MBTI_RESULT",
+    getUserId: () => {
+      const id = sessionStorage.getItem("userId");
+      return id ? parseInt(id) : null;
+    },
+  });
+
   const user = useStoredUser();
   const testResult = useTestResult();
   const healingRoutine = useHealingRoutine();
   const [currentSection, setCurrentSection] = useState(0);
-  
+
   const mbtiRef = useRef<HTMLDivElement>(null);
   const rhythmRef = useRef<HTMLDivElement>(null);
   const tempRef = useRef<HTMLDivElement>(null);
@@ -28,13 +39,7 @@ export default function ResultPage() {
   if (!testResult) return null;
   if (!healingRoutine) return null;
 
-  const sectionRefs = [
-    mbtiRef,
-    rhythmRef,
-    tempRef,
-    routineRef,
-    endRef,
-  ];
+  const sectionRefs = [mbtiRef, rhythmRef, tempRef, routineRef, endRef];
 
   const scrollToSection = (index: number) => {
     sectionRefs[index]?.current?.scrollIntoView({ behavior: "smooth" });
