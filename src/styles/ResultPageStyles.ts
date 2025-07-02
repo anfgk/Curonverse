@@ -34,10 +34,12 @@ export const StyledBottomSection = styled.div`
   bottom: -30px;
   flex-direction: column;
   justify-content: space-between;
+
 `;
 
 export const Header = styled.div`
   text-align: left;
+
 `;
 
 export const PageNumber = styled.div`
@@ -58,9 +60,11 @@ export const Description = styled.div<{ color?: string }>`
   color: ${(props) => props.color || "inherit"};
   font-size: 14px;
   font-weight: 500;
-  margin-bottom: 15px;
+  margin-bottom: 36px;
   opacity: 0.95;
   white-space: pre-line;
+  margin-top: 10px;
+  line-height: 1.5;
 `;
 
 export const SubTitle = styled.p`
@@ -96,14 +100,18 @@ export const SubTitle = styled.p`
   scrollbar-color: rgba(255, 255, 255, 0.4) rgba(255, 255, 255, 0.1);
 `;
 
-export const KeywordSection = styled.div``;
+export const KeywordSection = styled.div`
+
+`;
 
 export const KeywordContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: -30px;
-  margin-bottom: 16px;
+  margin-bottom: 36px;
   position: relative;
+
+
 `;
 
 export const KeywordCircle = styled.div.withConfig({
@@ -130,6 +138,7 @@ export const KeywordCircle = styled.div.withConfig({
   z-index: ${(props) => (props.index === 0 ? 1 : props.index === 1 ? 2 : 3)};
   margin-left: ${(props) => (props.index > 0 ? "-10px" : "0")};
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
 `;
 
 export const KeywordLabel = styled.div`
@@ -137,9 +146,8 @@ export const KeywordLabel = styled.div`
   font-size: 14px;
   font-weight: bold;
   color: #fff;
-  margin-top: 12px;
+  margin: 12px 0 20px;
   position: relative;
-
   &::after {
     position: absolute;
     right: 95px;
