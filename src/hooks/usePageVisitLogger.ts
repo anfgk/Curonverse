@@ -8,7 +8,10 @@ export type PageType =
   | "MBTI_RESULT" 
   | "POEM" 
   | "POEM_SELECT"
-  | "RESULT";
+  | "RESULT"
+  | "OPEN_TEASER"
+  | "ONBOARDING"
+  | "ONLOADING";
 
 const PageTypeIdMap: Record<PageType, number> = {
   USER_PROFILE: 1,
@@ -16,6 +19,9 @@ const PageTypeIdMap: Record<PageType, number> = {
   POEM: 3,
   POEM_SELECT: 4,
   RESULT: 5,
+  OPEN_TEASER: 6,
+  ONBOARDING: 7,
+  ONLOADING: 8,
 };
 
 interface PageVisitLoggerOptions {
