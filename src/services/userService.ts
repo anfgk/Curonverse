@@ -24,24 +24,21 @@ export const userService = {
 
   async createUser(profile: UserProfile) {
     try {
-      console.log("Posting profile to:", API_URL);
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(profile),
-      });
+      // 백엔드 API 호출 대신 클라이언트 사이드에서 처리
+      const mockUserId = Math.floor(Math.random() * 1000000) + 1;
+      const userData = {
+        id: mockUserId,
+        ...profile,
+        createdAt: new Date().toISOString()
+      };
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("External API Error:", errorText);
-        throw new Error("Failed to post user profile");
-      }
-
-      const data = await response.json();
       if (typeof window !== "undefined") {
-        sessionStorage.setItem("user", JSON.stringify(data));
+        sessionStorage.setItem("user", JSON.stringify(userData));
+        sessionStorage.setItem("userId", userData.id.toString());
       }
-      return data;
+
+      console.log("User created successfully:", userData);
+      return { data: userData };
     } catch (error) {
       console.error("Error creating user:", error);
       throw error;
