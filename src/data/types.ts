@@ -75,6 +75,7 @@ interface RecommendedContents {
   title: string;
   link: string;
   type: string;
+  thumbnail: string;
 }
 export interface HealingRoutine {
   rhythmId: number;

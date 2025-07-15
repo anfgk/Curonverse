@@ -45,6 +45,7 @@ type RoutineItem = {
   title: string;
   link?: string;
   description?: string;
+  thumbnail?: string;
 };
 
 type Props = {
@@ -60,7 +61,7 @@ const RoutineCardList: React.FC<Props> = ({ routines }) => {
 
   const getYoutubeThumbnail = (url: string) => {
     const videoId = url.split("v=")[1]?.split("&")[0];
-    return videoId ? `https://img.youtube.com/vi/${videoId}/0.jpg` : null;
+    return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null;
   };
 
   const getYoutubeEmbedUrl = (url: string) => {
@@ -73,8 +74,10 @@ const RoutineCardList: React.FC<Props> = ({ routines }) => {
   return (
     <ScrollWrapper>
       {routines.map((routine, idx) => {
-        const thumbnail = routine.link ? getYoutubeThumbnail(routine.link) : null;
+        const thumbnail = routine.thumbnail || (routine.link ? getYoutubeThumbnail(routine.link) : null);
         const embedUrl = routine.link ? getYoutubeEmbedUrl(routine.link) : null;
+        
+        console.log('Routine:', routine.title, 'Thumbnail:', thumbnail, 'Link:', routine.link);
 
         return (
           <RoutineCard key={idx}>
@@ -92,7 +95,14 @@ const RoutineCardList: React.FC<Props> = ({ routines }) => {
                   />
                 </VideoWrapper>
               ) : (
-                <VideoThumbnail $imageUrl={thumbnail ?? undefined} />
+                <VideoThumbnail 
+                  $imageUrl={thumbnail ?? undefined}
+                  onError={(e) => {
+                    console.log('Thumbnail load failed for:', routine.title, thumbnail);
+                    e.currentTarget.style.backgroundImage = 'none';
+                    e.currentTarget.style.backgroundColor = '#ddd';
+                  }}
+                />
               )
             ) : (
               <EmptyVideo />

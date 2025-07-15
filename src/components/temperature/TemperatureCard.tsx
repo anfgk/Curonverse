@@ -22,8 +22,7 @@ const Card = styled.div`
 
 const CardHeader = styled.div`
   display: flex;
-  border: 1px solid red;
-  gap: 70px;
+  gap: 30px;
 
 `;
 

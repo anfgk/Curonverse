@@ -3,7 +3,6 @@ import { mbtiCircleColors } from "../data/mbtiData";
 
 export const Container = styled.div`
   width: 375px;
-  // height: 812px;
   margin: 0 auto;
   color: white;
   display: flex;
@@ -30,7 +29,6 @@ export const StyledBottomSection = styled.div`
   padding: 0 20px;
   width: 100%;
   display: flex;
-  // position: absolute;
   bottom: -30px;
   flex-direction: column;
   justify-content: space-between;
@@ -101,7 +99,6 @@ export const SubTitle = styled.p`
 `;
 
 export const KeywordSection = styled.div`
-
 `;
 
 export const KeywordContainer = styled.div`
