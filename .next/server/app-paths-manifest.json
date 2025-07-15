@@ -1,6 +1,12 @@
 {
-  "/profile/page": "app/profile/page.js",
-  "/result/page": "app/result/page.js",
+  "/_not-found": "app/_not-found.js",
+  "/onloading/page": "app/onloading/page.js",
+  "/poem/page": "app/poem/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/onboarding/page": "app/onboarding/page.js",
+  "/page": "app/page.js",
+  "/result/page": "app/result/page.js",
+  "/profile/page": "app/profile/page.js",
+  "/start/page": "app/start/page.js",
   "/step/page": "app/step/page.js"
 }
