@@ -16,7 +16,6 @@ import {
 import { useResultContext } from "@/contexts/ResultContext";
 import ResultHeader from "@/components/ResultHeader";
 import TemperatureCard from "@/components/temperature/TemperatureCard";
-import { RhythmName } from "@/data/types";
 import { getTemperatureColor } from "@/data/temperatureData";
 
 const TopSection = styled(BaseTopSection).withConfig({
@@ -52,11 +51,11 @@ const Temperature = () => {
       <TopSection $mbtiColor={temperatureColor.background}>
         <ResultHeader
           pageNumber="03"
-          title={`때문에, ${testResult.temperatureAnalysis.title}`}
-          description={testResult.temperatureAnalysis.description}
+          title={`나의 감정 온도는 ${testResult.temperatureAnalysis.temperature}°C`}
+          description={testResult.temperatureAnalysis.rhythmColor}
         />
 
-        <TemperatureCard temperatureAnalysis={testResult.temperatureAnalysis} rhythm={testResult.rhythm as RhythmName} />
+        <TemperatureCard temperatureAnalysis={testResult.temperatureAnalysis as any} rhythm={testResult.rhythm as any} />
       </TopSection>
       <FirstPageBottomSection>
         <AnalysisSection>
@@ -66,7 +65,7 @@ const Temperature = () => {
               <FaArrowRightLong />
             </CurationIcon>
             <CurationText>
-              전체 감정탐험자 대비 상위 {testResult.expressionPercentile}%로
+              전체 감정탐험자 대비 상위 0%로
               <br />
               감정 표현을 어려워해요.
             </CurationText>
@@ -76,7 +75,7 @@ const Temperature = () => {
               <FaArrowRightLong />
             </CurationIcon>
             <CurationText>
-              전체 감정탐험자 대비 상위 {testResult.awarenessPercentile}%로
+              전체 감정탐험자 대비 상위 0%로
               <br />
               감정 인지를 어려워해요.
             </CurationText>

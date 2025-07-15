@@ -128,7 +128,7 @@ export default function ResultEnd() {
     if (captureRef.current) {
       try {
         const canvas = await html2canvas(captureRef.current, {
-          background: testResult.emotionType.hexCode,
+          background: testResult.rhythmColorHex,
           scale: 2,
         } as any);
         const image = canvas.toDataURL("image/jpeg", 1.0);
@@ -197,10 +197,10 @@ export default function ResultEnd() {
       <HiddenImageWrapper ref={captureRef}>
         <ResultImageExport
           userName={userName}
-          emotionCode={testResult.emotionType.code}
-          temperature={testResult.temperature}
-          rhythmDescription={testResult.rhythmDescription}
-          temperatureDescription={testResult.rhythmAnalysis}
+          emotionCode={testResult.emotionType.name}
+          temperature={testResult.temperatureAnalysis.temperature}
+          rhythmDescription={testResult.rhythm}
+          temperatureDescription={testResult.emotionType.description}
         />
       </HiddenImageWrapper>
     </Container>

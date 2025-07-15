@@ -4,7 +4,15 @@ import {
   getTemperaturePercentage,
   getTemperatureColor,
 } from "@/data/temperatureData";
-import { RhythmName, TemperatureAnalysis } from "@/data/types";
+
+// 로컬 타입 정의
+type RhythmName = string;
+
+interface TemperatureAnalysis {
+  temperature: number;
+  rhythmColor: string;
+  rhythmColorHex: string;
+}
 
 interface TemperatureCardProps {
   rhythm: RhythmName;
@@ -122,7 +130,7 @@ const TemperatureCard: React.FC<TemperatureCardProps> = ({ rhythm, temperatureAn
           감정 온도계
           </Title>
           <Description>
-            {temperatureAnalysis.temperatureDescription}
+            감정 온도 분석
           </Description>
           </CardHeader>
         <Value color={temperatureColor.background}>{temperatureAnalysis.temperature}°C</Value>

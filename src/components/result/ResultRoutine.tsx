@@ -60,11 +60,11 @@ const Routine = () => {
           </SubText>
           <KeywordSection>
             <KeywordContainer>
-              {healingRoutine.healingKeywords.map((kw, index) => (
+              {healingRoutine.keywords.map((kw, index) => (
                 <KeywordCircle
                   key={kw}
                   index={index}
-                  $mbtiType={testResult.emotionType.code}
+                  $mbtiType={testResult.emotionType.name}
                 >
                   '{kw}'
                 </KeywordCircle>
@@ -74,7 +74,7 @@ const Routine = () => {
           </KeywordSection>
           <div style={{ marginTop: "48px" }}>
             <SectionTitle>Contents</SectionTitle>
-            <RoutineCardList routines={healingRoutine.recommendedContents}>
+            <RoutineCardList routines={healingRoutine.recommendedContent}>
             </RoutineCardList>
           </div>
         </PageWrapper>
@@ -104,7 +104,7 @@ const Routine = () => {
                 <KeywordCircle
                   key={kw}
                   index={index}
-                  $mbtiType={testResult.emotionType.code}
+                  $mbtiType={testResult.emotionType.name}
                 >
                   '{kw}'
                 </KeywordCircle>
