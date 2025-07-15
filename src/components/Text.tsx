@@ -3,7 +3,7 @@
 import styled from "styled-components";
 
 const StyledText = styled.div.withConfig({
-  shouldForwardProp: (prop) => prop !== "center" && prop !== "variant",
+  shouldForwardProp: (prop: string | number) => prop !== "center" && prop !== "variant",
 })<{
   variant?: "loading" | "subtitle";
   center?: boolean;

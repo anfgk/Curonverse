@@ -100,7 +100,7 @@ const Routine = () => {
           </SubText>
           <KeywordSection>
             <KeywordContainer>
-              {healingRoutineFromPoem.healingKeywords.map((kw, index) => (
+              {healingRoutineFromPoem.keywords.map((kw, index) => (
                 <KeywordCircle
                   key={kw}
                   index={index}
@@ -114,7 +114,7 @@ const Routine = () => {
           </KeywordSection>
           <div style={{ marginTop: "48px" }}>
             <SectionTitle>Contents</SectionTitle>
-            <RoutineCardList routines={healingRoutineFromPoem.recommendedContents}>
+            <RoutineCardList routines={healingRoutineFromPoem.recommendedContent}>
             </RoutineCardList>
           </div>
         </PageWrapper>

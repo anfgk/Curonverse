@@ -128,9 +128,9 @@ export default function ResultEnd() {
     if (captureRef.current) {
       try {
         const canvas = await html2canvas(captureRef.current, {
-          backgroundColor: testResult.emotionType.hexCode,
+          background: testResult.emotionType.hexCode,
           scale: 2,
-        });
+        } as any);
         const image = canvas.toDataURL("image/jpeg", 1.0);
         const link = document.createElement("a");
         link.href = image;
