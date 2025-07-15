@@ -22,18 +22,13 @@ export function useProfileForm() {
   const handleFocus = (field: string) => () => setFocusedField(field);
   const handleBlur = () => setFocusedField(null);
 
-  const handleNextClick = async () => {
+  const handleNextClick = () => {
     if (!isFormValid) return;
-    try {
-      const profile = { name, gender, birthDate };
-      console.log("Submitting profile:", profile);
-      const response = await userService.createUser(profile);
-      console.log("Profile saved successfully:", response);
-      sessionStorage.setItem("user", JSON.stringify(response.data));
-      sessionStorage.setItem("userId", response.data.id.toString());
+    const profile = { name, gender, birthDate };
+    const user = userService.createUser(profile);
+    if (user) {
       router.replace("/step");
-    } catch (error) {
-      console.error("Error saving profile:", error);
+    } else {
       alert("사용자 정보 저장에 실패했습니다.");
     }
   };

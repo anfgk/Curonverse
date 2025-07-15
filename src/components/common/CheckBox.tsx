@@ -83,6 +83,7 @@ const CheckBox = ({ label, isSelected, onClick, onQuestionClick, size, isFocused
   };
 
   const handleCircleClick = () => {
+    console.log("CheckBox clicked:", label, "isSelected:", isSelected);
     onClick();
     onQuestionClick?.();
   };

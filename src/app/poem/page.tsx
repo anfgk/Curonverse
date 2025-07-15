@@ -8,7 +8,7 @@ export default function Poem() {
   usePageVisitLogger({
     pageType: "POEM_SELECT",
     getUserId: () => {
-      const id = sessionStorage.getItem("userId");
+      const id = localStorage.getItem("userId");
       return id ? parseInt(id) : null;
     },
   });

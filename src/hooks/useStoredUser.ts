@@ -9,8 +9,8 @@ export const useStoredUser = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const data = sessionStorage.getItem("user");
-    if (!data) {
+    const data = localStorage.getItem("user");
+    if (!data || data === "undefined" || data === "null") {
       alert("사용자 정보가 없습니다. 다시 시작해주세요.");
       router.replace("/start");
       return;
@@ -18,7 +18,7 @@ export const useStoredUser = () => {
 
     try {
       const parsed: User = JSON.parse(data);
-      setUser(parsed? parsed : null);
+      setUser(parsed);
     } catch (e) {
       console.error("user 파싱 실패", e);
       router.replace("/profile");

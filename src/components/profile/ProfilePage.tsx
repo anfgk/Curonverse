@@ -4,7 +4,7 @@ import styled from "styled-components";
 import ProfileForm from "./ProfileForm";
 import { useProfileForm } from "@/hooks/useProfileForm";
 
-const Container = styled.div<{ dimmed: boolean }>`
+const Container = styled.div<{ $dimmed: boolean }>`
   width: 375px;
   height: 812px;
   background: #393939;
@@ -18,7 +18,7 @@ const Container = styled.div<{ dimmed: boolean }>`
   }
 
   ${(props) =>
-    props.dimmed &&
+    props.$dimmed &&
     `
     &::after {
       content: '';
@@ -54,7 +54,7 @@ export default function ProfilePage() {
   } = useProfileForm();
 
   return (
-    <Container dimmed={focusedField !== null}>
+    <Container $dimmed={focusedField !== null}>
       <ContentWrapper>
         <ProfileForm
           name={name}

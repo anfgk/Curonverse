@@ -4,7 +4,7 @@ import Input from "@/components/Input";
 import Info from "@/components/Info";
 
 const InputWrapper = styled.div.withConfig({
-  shouldForwardProp: (prop: string | number) => prop !== "isFocused" && prop !== "anyFieldFocused",
+  shouldForwardProp: (prop) => prop !== "isFocused" && prop !== "anyFieldFocused",
 })<{
   $isFocused: boolean;
   $anyFieldFocused: boolean;

@@ -60,7 +60,7 @@ const ResultRhythm = () => {
 
   return (
     <section>
-      <GradientSection mbtiColor={testResult.rhythmColor}>
+      <GradientSection mbtiColor={testResult.emotionType.color}>
         <ResultHeader
           pageNumber="02"
           title={
@@ -71,15 +71,22 @@ const ResultRhythm = () => {
               머무르고 있어요.
             </>
           }
-          description={testResult.rhythm}
+          description={testResult.rhythmDescription}
           color="white"
         />
         <EmotionalMap currentRhythm={testResult.rhythm} />
       </GradientSection>
       <SecondPageBottomSection>
         <AnalysisSection>
-          <div style={{ fontWeight: "bold", fontSize: "18px", marginBottom: "8px" }}>리듬 설명</div>
-          <div>{testResult.rhythm}</div>
+          <AnalysisTitle2>감정 리듬 상세 분석</AnalysisTitle2>
+          <AnalysisItem>
+            <AnalysisTitle3>
+              <CurationIcon>
+                <FaArrowRightLong />
+              </CurationIcon>
+              {testResult.rhythmAnalysis}
+            </AnalysisTitle3>
+          </AnalysisItem>
         </AnalysisSection>
       </SecondPageBottomSection>
     </section>

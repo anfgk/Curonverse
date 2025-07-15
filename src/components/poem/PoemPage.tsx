@@ -4,18 +4,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import ResultHeader from "@/components/ResultHeader";
+import { Poem } from "@/data/types";
 import { poemService } from "@/services/poemService";
 import { useStoredUser } from "@/hooks/useStoredUser";
-
-// 더미 데이터에 맞는 Poem 타입 정의
-interface Poem {
-  id: number;
-  title: string;
-  content: string;
-  author: string;
-  category: string;
-  color: string;
-}
 
 const Section = styled.section<{ bg: string }>`
   background: ${({ bg }) => bg};
@@ -136,8 +127,8 @@ const ResultPoem = () => {
   useEffect(() => {
     const fetchPoem = async () => {
       try {
-        const response = await poemService.getPoems();
-        setPoemData(response.data as any);
+        const response = await poemService.getPoem();
+        setPoemData(response.data);
       } catch (error) {
         console.error("Failed to fetch poem data:", error);
       } finally {
@@ -157,7 +148,7 @@ const ResultPoem = () => {
 
         if (visibleEntry) {
           const index = Number(visibleEntry.target.getAttribute("data-index"));
-          const color = poemData[index]?.color;
+          const color = poemData[index]?.rhythmColorHex;
           if (color) setBgColor(color);
         }
       },
@@ -176,7 +167,7 @@ const ResultPoem = () => {
 
   const handleSelect = () => {
     if (selectedRhythm == null) return;
-    const selected = poemData.find((poem) => poem.id === selectedRhythm);
+    const selected = poemData.find((poem) => poem.rhythmId === selectedRhythm);
     if (selected) {
       console.log("Selected Poem:", selected);
       sessionStorage.setItem("selectedPoem", JSON.stringify(selected));
@@ -196,19 +187,19 @@ const ResultPoem = () => {
           {poemData.map((data, idx) => (
             <PoemCard
               data-index={idx}
-              key={data.id}
+              key={data.rhythmId}
               ref={(el) => {
                 cardRefs.current[idx] = el;
               }}
-              color={data.color}
-              selected={selectedRhythm === data.id}
-              onClick={() => setSelectedRhythm(data.id)}
+              color={data.rhythmColorHex}
+              selected={selectedRhythm === data.rhythmId}
+              onClick={() => setSelectedRhythm(data.rhythmId)}
             >
-              <TypeTag>{data.category}</TypeTag>
+              <TypeTag>{data.rhythmType}</TypeTag>
               <PoemIcon>
-                <IconImage src="/images/star1.svg"></IconImage>
+                <IconImage src={data.iconUrl}></IconImage>
               </PoemIcon>
-              <PoemText>{data.content}</PoemText>
+              <PoemText>{data.contents}</PoemText>
               <PoemSource>{data.title}</PoemSource>
             </PoemCard>
           ))}

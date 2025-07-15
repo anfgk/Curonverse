@@ -8,7 +8,7 @@ export default function Step() {
   usePageVisitLogger({
     pageType: "MBTI_RESULT",
     getUserId: () => {
-      const id = sessionStorage.getItem("userId");
+      const id = localStorage.getItem("userId");
       return id ? parseInt(id) : null;
     },
   });

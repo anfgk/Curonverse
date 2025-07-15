@@ -1,5 +1,3 @@
-const API_URL = "/api/test";
-
 interface QuestionParams {
   dimension?: string;
   orderIndex?: number;
@@ -8,77 +6,119 @@ interface QuestionParams {
 interface AnswerPayload {
   userId: number;
   type: string;
-  answers: Array<{
-    questionId: number;
-    score: number;
-  }>;
+  answers: { questionId: number; score: number }[];
 }
 
-// 클라이언트 사이드에서 사용할 더미 질문 데이터
-const dummyQuestions = [
-  { id: 1, text: "나는 새로운 사람들을 만나는 것을 좋아한다", dimension: "extraversion" },
-  { id: 2, text: "혼자 있는 시간을 즐긴다", dimension: "introversion" },
-  { id: 3, text: "계획을 세우고 그대로 실행한다", dimension: "judging" },
-  { id: 4, text: "즉흥적으로 행동하는 것을 좋아한다", dimension: "perceiving" },
-  { id: 5, text: "논리적으로 생각하는 것을 선호한다", dimension: "thinking" },
-  { id: 6, text: "감정에 따라 결정을 내린다", dimension: "feeling" },
-  { id: 7, text: "구체적인 사실을 선호한다", dimension: "sensing" },
-  { id: 8, text: "새로운 아이디어를 추구한다", dimension: "intuition" },
-  { id: 9, text: "안정적인 환경을 선호한다", dimension: "security" },
-  { id: 10, text: "변화를 추구한다", dimension: "change" },
-  { id: 11, text: "조용한 환경에서 일하는 것을 좋아한다", dimension: "quiet" },
-  { id: 12, text: "활기찬 환경에서 일하는 것을 좋아한다", dimension: "energetic" }
+// MBTI 성격 유형 검사 질문 (4가지 선호 경향별로 3개씩)
+const mockTestQuestions = [
+  // E(외향성) vs I(내향성) - 에너지 방향
+  {
+    id: 1,
+    text: "새로운 사람들과 만나는 것이 즐겁다",
+    dimension: "EI",
+    orderIndex: 1
+  },
+  {
+    id: 2,
+    text: "혼자 있는 시간이 필요하다",
+    dimension: "EI", 
+    orderIndex: 2
+  },
+  {
+    id: 3,
+    text: "사람들과 함께 있을 때 에너지가 생긴다",
+    dimension: "EI",
+    orderIndex: 3
+  },
+  
+  // S(감각) vs N(직관) - 정보 수집
+  {
+    id: 4,
+    text: "구체적이고 실용적인 정보를 선호한다",
+    dimension: "SN",
+    orderIndex: 4
+  },
+  {
+    id: 5,
+    text: "미래의 가능성과 아이디어에 관심이 많다",
+    dimension: "SN",
+    orderIndex: 5
+  },
+  {
+    id: 6,
+    text: "경험을 통해 배우는 것을 좋아한다",
+    dimension: "SN",
+    orderIndex: 6
+  },
+  
+  // T(사고) vs F(감정) - 의사결정
+  {
+    id: 7,
+    text: "논리적이고 객관적으로 판단한다",
+    dimension: "TF",
+    orderIndex: 7
+  },
+  {
+    id: 8,
+    text: "다른 사람의 감정을 고려한다",
+    dimension: "TF",
+    orderIndex: 8
+  },
+  {
+    id: 9,
+    text: "원칙과 기준에 따라 결정한다",
+    dimension: "TF",
+    orderIndex: 9
+  },
+  
+  // J(판단) vs P(인식) - 생활 방식
+  {
+    id: 10,
+    text: "계획을 세우고 그대로 실행한다",
+    dimension: "JP",
+    orderIndex: 10
+  },
+  {
+    id: 11,
+    text: "유연하고 즉흥적인 것을 선호한다",
+    dimension: "JP",
+    orderIndex: 11
+  },
+  {
+    id: 12,
+    text: "마감 시간을 지키는 것이 중요하다",
+    dimension: "JP",
+    orderIndex: 12
+  }
 ];
 
 export const testService = {
   async getTestQuestions(param?: QuestionParams) {
-    // 백엔드 API 호출 대신 더미 데이터 반환
-    console.log("Fetching dummy test questions");
+    // localStorage에서 질문 데이터를 가져오거나, 기본 데이터 사용
+    if (typeof window !== "undefined") {
+      const storedQuestions = localStorage.getItem("testQuestions");
+      if (storedQuestions) {
+        return JSON.parse(storedQuestions);
+      }
+    }
     
-    // 잠시 지연을 주어 실제 API 호출처럼 보이게 함
-    await new Promise(resolve => setTimeout(resolve, 100));
-    
-    return {
-      data: dummyQuestions,
-      statusCode: 200,
-      message: "Success"
-    };
+    // 기본 데이터 반환
+    return mockTestQuestions;
   },
 
   async submitTest(data: AnswerPayload) {
-    // 백엔드 API 호출 대신 클라이언트 사이드에서 처리
-    console.log("Submitting test with data:", data);
+    // localStorage에 테스트 결과 저장
+    if (typeof window !== "undefined") {
+      const testResult = {
+        ...data,
+        submittedAt: new Date().toISOString(),
+        id: Date.now()
+      };
+      
+      localStorage.setItem("testResult", JSON.stringify(testResult));
+      return testResult;
+    }
     
-    // 잠시 지연을 주어 실제 API 호출처럼 보이게 함
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    // 더미 테스트 결과 생성
-    const mockResult = {
-      data: {
-        id: Math.floor(Math.random() * 1000000) + 1,
-        userId: data.userId,
-        emotionType: {
-          id: Math.floor(Math.random() * 16) + 1,
-          name: "ENFP",
-          description: "열정적인 창의가"
-        },
-        rhythmId: Math.floor(Math.random() * 4) + 1,
-        rhythm: "Spark Flame",
-        rhythmColor: "#FF6B6B",
-        rhythmColorHex: "#FF6B6B",
-        temperatureAnalysis: {
-          temperature: 75,
-          rhythmColor: "#FF6B6B",
-          rhythmColorHex: "#FF6B6B"
-        },
-        answers: data.answers,
-        createdAt: new Date().toISOString()
-      },
-      statusCode: 200,
-      message: "Test submitted successfully"
-    };
-
-    console.log("Test result generated:", mockResult);
-    return mockResult;
+    return null;
   },
 };

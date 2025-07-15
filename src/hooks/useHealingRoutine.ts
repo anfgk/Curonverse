@@ -1,24 +1,8 @@
 import { useState, useEffect } from "react";
-
-// 더미 데이터에 맞는 HealingRoutine 타입 정의
-interface HealingRoutine {
-  id: number;
-  mbtiId: number;
-  rhythmId: number;
-  keywords: string[];
-  recommendedContent: Array<{
-    id: number;
-    title: string;
-    type: string;
-    url: string;
-    thumbnail: string;
-  }>;
-  rhythmColor: string;
-  rhythmColorHex: string;
-}
+import { HealingRoutine } from "@/data/types";
 
 export const useHealingRoutine = () => {
-    const [healingRoutine, setHealingRoutine] = useState<HealingRoutine | null>(null);
+    const [healingRoutine, setHealingRoutine] = useState<HealingRoutine>();
 
     useEffect(() => {
         const storedRoutine = sessionStorage.getItem("healingRoutine");
@@ -30,7 +14,8 @@ export const useHealingRoutine = () => {
                 console.error("Failed to parse healing routine from session storage:", e);
             }
         }
-    }, []);
+    }
+    , []);
 
     return healingRoutine;
 }

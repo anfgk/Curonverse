@@ -12,35 +12,23 @@ import BeforeButton from "@/components/buttons/BeforeButton";
 const QuestionContainer = styled.div<{
   $isFocused: boolean;
   $anyFieldFocused: boolean;
-  $isAnswered: boolean;
 }>`
   width: 336px;
   height: 200px;
   margin: 44px auto 0;
   padding: 5px 24px;
-  background: ${(props) => {
-    if (props.$isFocused) return "#FAFAFA";
-    if (props.$isAnswered) return "rgba(250, 250, 250, 0.3)";
-    return "transparent";
-  }};
+  background: ${(props) => (props.$isFocused ? "#FAFAFA" : "transparent")};
   border-radius: 10px;
-  transition: all 0.4s ease;
-  opacity: ${(props) => {
-    if (props.$isFocused) return 1;
-    if (props.$isAnswered) return 0.8;
-    return props.$anyFieldFocused ? 0.5 : 1;
-  }};
+  transition: all 0.3s ease;
+  opacity: ${(props) =>
+    props.$anyFieldFocused ? (props.$isFocused ? 1 : 0.5) : 1};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   scroll-margin-top: 100px;
-  border: ${(props) => props.$isAnswered ? "1px solid rgba(203, 89, 255, 0.3)" : "none"};
-  
-  &:hover {
-    background: ${(props) => props.$isFocused ? "#FAFAFA" : "rgba(250, 250, 250, 0.1)"};
-  }
+
 `;
 
 const CheckBoxGroup = styled.div`
@@ -90,29 +78,35 @@ export default function QuestionPage({
   }, [step, questions]);
 
   const handleAnswer = (questionId: number, score: number) => {
+    console.log("Answer selected:", questionId, score);
     onSaveAnswer(questionId, score);
-
-    // 답변 완료 시 시각적 피드백 (체크 표시 등)
-    const currentElement = document.getElementById(`question-${questionId}`);
-    if (currentElement) {
-      currentElement.style.transform = "scale(1.02)";
-      setTimeout(() => {
-        currentElement.style.transform = "scale(1)";
-      }, 200);
-    }
 
     const currentIndex = questions.findIndex((q) => q.id === questionId);
     const nextQuestion = questions[currentIndex + 1];
+    
+    console.log("Current index:", currentIndex, "Next question:", nextQuestion);
 
-    if (nextQuestion && !savedAnswers[nextQuestion.id]) {
-      // 약간의 지연 후 다음 질문으로 이동 (더 부드러운 전환)
+    // 답변 후 바로 다음 질문으로 이동
+    if (nextQuestion) {
+      console.log("Moving to next question:", nextQuestion.id);
+      
+      // 즉시 포커스 변경
+      setFocusedQuestion(nextQuestion.id);
+      
+      // 강제로 리렌더링을 위한 상태 업데이트
       setTimeout(() => {
         setFocusedQuestion(nextQuestion.id);
+      }, 0);
+      
+      // 약간의 지연 후 스크롤 실행
+      setTimeout(() => {
         const nextElement = document.getElementById(`question-${nextQuestion.id}`);
         if (nextElement) {
           nextElement.scrollIntoView({ behavior: "smooth", block: "center" });
         }
-      }, 500); // 500ms로 증가하여 사용자가 답변 완료를 더 잘 인지할 수 있도록
+      }, 100);
+    } else {
+      console.log("No next question available");
     }
   };
 
@@ -147,7 +141,7 @@ export default function QuestionPage({
     <>
       {questions.map((q) => {
         const isFocused = focusedQuestion === q.id;
-        const isAnswered = savedAnswers[q.id] !== undefined;
+        console.log(`Question ${q.id} focused:`, isFocused, "Current focusedQuestion:", focusedQuestion);
 
         return (
           <QuestionContainer
@@ -155,7 +149,6 @@ export default function QuestionPage({
             id={`question-${q.id}`}
             $isFocused={isFocused}
             $anyFieldFocused={!!focusedQuestion}
-            $isAnswered={isAnswered}
             onClick={(e) => handleQuestionClick(q.id, e)}
           >
             <QuesBadge

@@ -60,11 +60,11 @@ const Routine = () => {
           </SubText>
           <KeywordSection>
             <KeywordContainer>
-              {healingRoutine.keywords.map((kw, index) => (
+              {healingRoutine.healingKeywords.map((kw, index) => (
                 <KeywordCircle
                   key={kw}
                   index={index}
-                  $mbtiType={testResult.emotionType.name}
+                  $mbtiType={testResult.emotionType.code}
                 >
                   '{kw}'
                 </KeywordCircle>
@@ -74,7 +74,7 @@ const Routine = () => {
           </KeywordSection>
           <div style={{ marginTop: "48px" }}>
             <SectionTitle>Contents</SectionTitle>
-            <RoutineCardList routines={healingRoutine.recommendedContent}>
+            <RoutineCardList routines={healingRoutine.recommendedContents}>
             </RoutineCardList>
           </div>
         </PageWrapper>
@@ -100,11 +100,11 @@ const Routine = () => {
           </SubText>
           <KeywordSection>
             <KeywordContainer>
-              {healingRoutineFromPoem.keywords.map((kw, index) => (
+              {healingRoutineFromPoem.healingKeywords.map((kw, index) => (
                 <KeywordCircle
                   key={kw}
                   index={index}
-                  $mbtiType={testResult.emotionType.name}
+                  $mbtiType={testResult.emotionType.code}
                 >
                   '{kw}'
                 </KeywordCircle>
@@ -114,7 +114,7 @@ const Routine = () => {
           </KeywordSection>
           <div style={{ marginTop: "48px" }}>
             <SectionTitle>Contents</SectionTitle>
-            <RoutineCardList routines={healingRoutineFromPoem.recommendedContent}>
+            <RoutineCardList routines={healingRoutineFromPoem.recommendedContents}>
             </RoutineCardList>
           </div>
         </PageWrapper>

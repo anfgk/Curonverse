@@ -8,7 +8,7 @@ export default function Profile() {
   usePageVisitLogger({
     pageType: "USER_PROFILE",
     getUserId: () => {
-      const id = sessionStorage.getItem("userId");
+      const id = localStorage.getItem("userId");
       return id ? parseInt(id) : null;
     },
   });

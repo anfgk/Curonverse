@@ -32,7 +32,7 @@ export default function Start() {
   usePageVisitLogger({
     pageType: "OPEN_TEASER",
     getUserId: () => {
-      const id = sessionStorage.getItem("userId");
+      const id = localStorage.getItem("userId");
       return id ? parseInt(id) : null;
     },
   });

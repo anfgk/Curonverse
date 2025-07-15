@@ -1,29 +1,5 @@
 import { useState, useEffect } from "react";
-
-// 더미 데이터에 맞는 TestResult 타입 정의
-interface TestResult {
-  id: number;
-  userId: number;
-  emotionType: {
-    id: number;
-    name: string;
-    description: string;
-  };
-  rhythmId: number;
-  rhythm: string;
-  rhythmColor: string;
-  rhythmColorHex: string;
-  temperatureAnalysis: {
-    temperature: number;
-    rhythmColor: string;
-    rhythmColorHex: string;
-  };
-  answers: Array<{
-    questionId: number;
-    score: number;
-  }>;
-  createdAt: string;
-}
+import { TestResult } from "@/data/types";
 
 export const useTestResult = () => {
   const [testResult, setTestResult] = useState<TestResult | null>(null);

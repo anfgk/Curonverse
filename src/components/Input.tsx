@@ -65,7 +65,7 @@ const InfoInput = styled.input`
 `;
 
 const DateText = styled.span.withConfig({
-  shouldForwardProp: (prop: string | number) => prop !== "isPlaceholder",
+  shouldForwardProp: (prop) => prop !== "isPlaceholder",
 })<{ isPlaceholder?: boolean }>`
   position: absolute;
   left: 12px;
@@ -104,7 +104,7 @@ const GenderContainer = styled.div`
 `;
 
 const GenderButton = styled.button.withConfig({
-  shouldForwardProp: (prop: string | number) => prop !== "isPlaceholder" && prop !== "isSelected",
+  shouldForwardProp: (prop) => prop !== "isPlaceholder" && prop !== "isSelected",
 })<{
   isSelected: boolean;
   isPlaceholder: boolean;
